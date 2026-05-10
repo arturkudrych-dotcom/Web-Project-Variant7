@@ -10,6 +10,45 @@ function updateScrollIndicator() {
     document.getElementById("myBar").style.width = scrolled + "%";
 }
 
+const canvas = document.getElementById('oscilloscope');
+const ctx = canvas.getContext('2d');
+
+let offset = 0;
+
+function draw() {
+    // Налаштування розміру
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+    
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // Стиль лінії
+    ctx.strokeStyle = '#66fcf1'; // Твій колір акценту
+    ctx.lineWidth = 2;
+    ctx.shadowBlur = 10;
+    ctx.shadowColor = '#66fcf1';
+    
+    ctx.beginPath();
+    ctx.moveTo(0, canvas.height / 2);
+
+    for (let x = 0; x < canvas.width; x++) {
+        // Формула радіохвилі: амплітуда * sin(частота * x + зміщення) + шум
+        const amplitude = 30;
+        const frequency = 0.05;
+        const noise = (Math.random() - 0.5) * 5; // Легкі перешкоди
+        
+        const y = canvas.height / 2 + Math.sin(x * frequency + offset) * amplitude + noise;
+        
+        ctx.lineTo(x, y);
+    }
+
+    ctx.stroke();
+    offset += 0.15; // Швидкість руху хвилі
+    
+    requestAnimationFrame(draw);
+}
+
+draw();
 
 // --- НОВИЙ КОД: Повноекранне зображення (Модальне вікно) ---
 
@@ -53,3 +92,4 @@ modal.addEventListener('click', function(event) {
         closeModal();
     }
 });
+
