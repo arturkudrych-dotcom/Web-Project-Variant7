@@ -1,95 +1,153 @@
-// --- Існуючий код: Scroll Indicator ---
-window.onscroll = function() {
-    updateScrollIndicator();
-};
+document.addEventListener('DOMContentLoaded', () => {
+    console.log("Всі космічні системи моніторингу активовані!");
 
-function updateScrollIndicator() {
-    let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-    let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    let scrolled = (winScroll / height) * 100;
-    document.getElementById("myBar").style.width = scrolled + "%";
-}
-
-const canvas = document.getElementById('oscilloscope');
-const ctx = canvas.getContext('2d');
-
-let offset = 0;
-
-function draw() {
-    // Налаштування розміру
-    canvas.width = canvas.offsetWidth;
-    canvas.height = canvas.offsetHeight;
+    // --- 1. МОДАЛЬНЕ ВІКНО ДЛЯ ФОТО (НАЙНАДІЙНІША ВЕРСІЯ) ---
+    // Ми створюємо модалку динамічно, щоб вона не залежала від CSS файлу
     
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-    // Стиль лінії
-    ctx.strokeStyle = '#66fcf1'; // Твій колір акценту
-    ctx.lineWidth = 2;
-    ctx.shadowBlur = 10;
-    ctx.shadowColor = '#66fcf1';
-    
-    ctx.beginPath();
-    ctx.moveTo(0, canvas.height / 2);
+    // Створюємо фон модалки
+    const modal = document.createElement('div');
+    modal.id = 'dynamic-modal';
+    modal.style.cssText = `
+        display: none;
+        position: fixed;
+        z-index: 99999;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.95);
+        align-items: center;
+        justify-content: center;
+        cursor: zoom-out;
+    `;
 
-    for (let x = 0; x < canvas.width; x++) {
-        // Формула радіохвилі: амплітуда * sin(частота * x + зміщення) + шум
-        const amplitude = 30;
-        const frequency = 0.05;
-        const noise = (Math.random() - 0.5) * 5; // Легкі перешкоди
+    // Створюємо картинку всередині
+    const modalImg = document.createElement('img');
+    modalImg.id = 'modal-img';
+    modalImg.style.cssText = `
+        max-width: 90%;
+        max-height: 90%;
+        border: 2px solid #66fcf1;
+        box-shadow: 0 0 25px rgba(102, 252, 241, 0.5);
+        display: block;
+        margin: auto;
+    `;
+
+    // Створюємо хрестик
+    const closeBtn = document.createElement('span');
+    closeBtn.innerHTML = '&times;';
+    closeBtn.style.cssText = `
+        position: absolute;
+        top: 15px;
+        right: 35px;
+        color: #66fcf1;
+        font-size: 50px;
+        font-weight: bold;
+        cursor: pointer;
+        z-index: 100000;
+    `;
+
+    // Збираємо все докупи
+    modal.appendChild(closeBtn);
+    modal.appendChild(modalImg);
+    document.body.appendChild(modal);
+
+    // Шукаємо геть усі картинки на сторінці
+    const allImages = document.querySelectorAll('img');
+    
+    allImages.forEach(img => {
+        // Додаємо можливість кліку тільки для великих картинок (пропускаємо іконки)
+        if (img.id !== 'modal-img' && img.width > 50) { 
+            img.style.cursor = 'zoom-in';
+            img.addEventListener('click', (e) => {
+                e.stopPropagation(); // щоб клік не спрацював на фоні
+                modal.style.display = 'flex'; // показуємо модалку
+                modalImg.src = img.src; // переносимо шлях до фото
+            });
+        }
+    });
+
+    // Закриття при кліку на хрестик АБО на будь-яке місце фону
+    const closeModal = () => { modal.style.display = 'none'; };
+    modal.addEventListener('click', closeModal);
+    closeBtn.addEventListener('click', closeModal);
+
+    // Також закриваємо при натисканні Esc
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.style.display === 'flex') {
+            closeModal();
+        }
+    });
+
+
+    // --- 2. ГРАФІК-ОСЦИЛОГРАФ (БЕЗ ЗМІН) ---
+    const canvas = document.getElementById('oscilloscope');
+    const ctx = canvas ? canvas.getContext('2d') : null;
+    let offset = 0;
+
+    function drawOscilloscope() {
+        if (!canvas || !ctx) return;
+        canvas.width = canvas.clientWidth;
+        canvas.height = canvas.clientHeight;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         
-        const y = canvas.height / 2 + Math.sin(x * frequency + offset) * amplitude + noise;
-        
-        ctx.lineTo(x, y);
+        ctx.strokeStyle = 'rgba(102, 252, 241, 0.1)';
+        for(let i = 0; i < canvas.width; i += 50) {
+            ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, canvas.height); ctx.stroke();
+        }
+
+        ctx.beginPath();
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = '#66fcf1';
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = '#66fcf1';
+
+        for (let x = 0; x < canvas.width; x++) {
+            const amplitude = canvas.height * 0.25;
+            const frequency = 0.02;
+            const noise = (Math.random() - 0.5) * 4;
+            const y = canvas.height / 2 + Math.sin(x * frequency + offset) * amplitude + noise;
+            if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+        offset += 0.08;
+        requestAnimationFrame(drawOscilloscope);
     }
 
-    ctx.stroke();
-    offset += 0.15; // Швидкість руху хвилі
-    
-    requestAnimationFrame(draw);
-}
 
-draw();
+    // --- 3. ДИНАМІЧНІ ДАНІ (БЕЗ ЗМІН) ---
+    function updateTelemetry() {
+        // Оновлення затримки сигналу
+        const delayEl = document.getElementById('signal-delay');
+        if (delayEl) {
+            delayEl.innerText = (14 + Math.random()).toFixed(1) + " мс";
+        }
 
-// --- НОВИЙ КОД: Повноекранне зображення (Модальне вікно) ---
+        // Оновлення частот у таблиці
+        const baseFreqs = {
+            'freq-earth': 14.15,
+            'freq-mars': 8.42,
+            'freq-voyager': 2.30
+        };
 
-// 1. Отримуємо елементи
-// Оригінальне зображення
-const originalImg = document.querySelector('.image-box img');
-// Модальне вікно
-const modal = document.getElementById('imageModal');
-// Зображення в модальному вікні
-const modalImg = document.getElementById('img01');
-// Кнопка закриття (хрестик)
-const span = document.getElementsByClassName('close')[0];
+        for (let id in baseFreqs) {
+            const el = document.getElementById(id);
+            if (el) {
+                const fluctuation = (Math.random() * 0.04 - 0.02).toFixed(2);
+                const newValue = (baseFreqs[id] + parseFloat(fluctuation)).toFixed(2);
+                el.innerText = `${newValue} GHz`;
+            }
+        }
 
-// 2. Функція для ВІДКРИТТЯ модального вікна
-function openModal() {
-    modal.classList.add('open'); // Додаємо клас для показу
-    modalImg.src = originalImg.src; // Копіюємо джерело оригінального зображення
-    document.body.style.overflow = 'hidden'; // Вимикаємо прокрутку основної сторінки
-}
-
-// 3. Функція для ЗАКРИТТЯ модального вікна
-function closeModal() {
-    modal.classList.remove('open'); // Видаляємо клас для показу
-    document.body.style.overflow = 'auto'; // Повертаємо прокрутку сторінки
-}
-
-// 4. Додаємо обробники подій
-// Відкрити при кліку на оригінальне зображення
-if (originalImg) {
-    originalImg.addEventListener('click', openModal);
-}
-
-// Закрити при кліку на хрестик
-if (span) {
-    span.addEventListener('click', closeModal);
-}
-
-// ДОДАТКОВО: Закрити при кліку в будь-яке місце на фоні (поза зображенням)
-modal.addEventListener('click', function(event) {
-    if (event.target === modal) { // Перевіряємо, що клік був на фоні, а не на картинці
-        closeModal();
+        // Оновлення смужок потужності
+        document.querySelectorAll('.power-bar').forEach(bar => {
+            const val = Math.floor(Math.random() * 60) + 35; // 35-95%
+            bar.style.width = val + "%";
+            bar.style.backgroundColor = val < 40 ? "#ff4b2b" : "#66fcf1";
+        });
     }
+
+    // Запуск систем
+    if (canvas) drawOscilloscope();
+    setInterval(updateTelemetry, 2500); // Оновлення даних кожні 2.5 сек
 });
-

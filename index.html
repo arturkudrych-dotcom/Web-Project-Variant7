@@ -11,15 +11,15 @@
     <div class="scroll-container">
         <div class="scroll-indicator" id="myBar"></div>
     </div>
-
+    
     <div class="layout-wrapper">
         
         <header class="header">
-    <a href="index.html" class="logo-link">
-        <h1>ВІДКРИТИЙ <span>КОСМОС</span></h1>
-    </a>
-</header>
-           
+            <a href="index.html" class="logo-link">
+                <h1>ВІДКРИТИЙ <span>КОСМОС</span></h1>
+            </a>
+        </header>
+               
         <div class="image-box">
             <img src="space-img.jpg" alt="Галактика" id="theme-image">
         </div>
@@ -38,90 +38,94 @@
         </nav>
 
         <main class="main-content">
-    <section class="intro-section">
-        <h2>🛰️ ТЕХНІЧНИЙ МОНІТОРІНГ СИСТЕМ</h2>
-        <p>Аналіз сигналів далекого космосу та стан ретрансляторів у реальному часі.</p>
-    </section>
-	
-<div class="signal-container">
-    <h3 style="color: var(--accent); font-size: 0.9rem; margin-bottom: 10px;">🔴 LIVE SIGNAL MONITOR</h3>
-    <canvas id="oscilloscope"></canvas>
-</div>
-    <div class="stats-grid">
-        <div class="stat-card">
-            <span class="stat-label">Активні місії</span>
-            <span class="stat-value">12</span>
-        </div>
-        <div class="stat-card">
-            <span class="stat-label">Затримка сигналу</span>
-            <span class="stat-value">14.2 мс</span>
-        </div>
-        <div class="stat-card">
-            <span class="stat-label">Статус мережі</span>
-            <span class="stat-value green">ONLINE</span>
-        </div>
-    </div>
+            <section class="intro-section">
+                <h2>🛰️ ТЕХНІЧНИЙ МОНІТОРІНГ СИСТЕМ</h2>
+                <p>Аналіз сигналів далекого космосу та стан ретрансляторів у реальному часі.</p>
+            </section>
+    
+            <div class="signal-container">
+                <h3 style="color: var(--accent); font-size: 0.9rem; margin-bottom: 10px;">🔴 LIVE SIGNAL MONITOR</h3>
+                <div class="signal-monitor-box">
+                    <canvas id="oscilloscope"></canvas>
+                </div>
+            </div>
 
-<div class="table-container">
-    <div class="table-header-box">
-        <h3>📡 ТЕЛЕМЕТРІЯ ДАЛЕКОГО ЗВ'ЯЗКУ</h3>
-        <span class="live-indicator">LIVE SCANNING</span>
-    </div>
-    <table class="space-table">
-        <thead>
-            <tr>
-                <th>ОБ'ЄКТ</th>
-                <th>ТИП СИГНАЛУ</th>
-                <th>ЧАСТОТА</th>
-                <th>ПОТУЖНІСТЬ</th>
-                <th>СТАТУС МОДУЛЯ</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><div class="obj-name"><span>🌍</span> Земля (Base)</div></td>
-                <td>Широкосмуговий</td>
-                <td><code class="freq">14.15 GHz</code></td>
-                <td>
-                    <div class="signal-bar"><div class="fill" style="width: 100%"></div></div>
-                </td>
-                <td><span class="badge status-ok">CONNECTED</span></td>
-            </tr>
-            <tr>
-                <td><div class="obj-name"><span>🔴</span> Марс-Орбітер</div></td>
-                <td>Цифровий пакет</td>
-                <td><code class="freq">8.42 GHz</code></td>
-                <td>
-                    <div class="signal-bar"><div class="fill" style="width: 78%"></div></div>
-                </td>
-                <td><span class="badge status-ok">CONNECTED</span></td>
-            </tr>
-            <tr>
-                <td><div class="obj-name"><span>🛰️</span> Вояджер-1</div></td>
-                <td>Слабкий імпульс</td>
-                <td><code class="freq">2.30 GHz</code></td>
-                <td>
-                    <div class="signal-bar"><div class="fill warning" style="width: 12%"></div></div>
-                </td>
-                <td><span class="badge status-error">SIGNAL LOSS</span></td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-label">Активні місії</span>
+                    <span class="stat-value">12</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Затримка сигналу</span>
+                    <span class="stat-value" id="signal-delay">14.2 мс</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Статус мережі</span>
+                    <span class="stat-value green">ONLINE</span>
+                </div>
+            </div>
 
-    <section class="details-section">
-        <h3>Дослідження космічного випромінювання</h3>
-        <p>Для аналізу об'єктів ми використовуємо фазовані антенні решітки та напівпровідникові детектори останнього покоління. Це дозволяє мінімізувати вплив власних паразитних параметрів на роботу високочастотних ланцюгів.</p>
-        <p>Сучасна радіотехніка дозволяє нам зазирнути за межі видимого спектра, перетворюючи слабкі радіохвилі на чіткі дані про склад атмосфер далеких планет.</p>
-    </section>
-</main>
+            <div class="table-container">
+                <div class="table-header-box">
+                    <h3>📡 ТЕЛЕМЕТРІЯ ДАЛЕКОГО ЗВ'ЯЗКУ</h3>
+                    <span class="live-indicator">LIVE SCANNING</span>
+                </div>
+                <table class="space-table">
+                    <thead>
+                        <tr>
+                            <th>ОБ'ЄКТ</th>
+                            <th>ТИП СИГНАЛУ</th>
+                            <th>ЧАСТОТА</th>
+                            <th>ПОТУЖНІСТЬ</th>
+                            <th>СТАТУС МОДУЛЯ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><div class="obj-name"><span>🌍</span> Земля (Base)</div></td>
+                            <td>Широкосмуговий</td>
+                            <td><code class="freq" id="freq-earth">14.15 GHz</code></td>
+                            <td>
+                                <div class="signal-bar"><div class="fill power-bar" style="width: 100%"></div></div>
+                            </td>
+                            <td><span class="badge status-ok">CONNECTED</span></td>
+                        </tr>
+                        <tr>
+                            <td><div class="obj-name"><span>🔴</span> Марс-Орбітер</div></td>
+                            <td>Цифровий пакет</td>
+                            <td><code class="freq" id="freq-mars">8.42 GHz</code></td>
+                            <td>
+                                <div class="signal-bar"><div class="fill power-bar" style="width: 78%"></div></div>
+                            </td>
+                            <td><span class="badge status-ok">CONNECTED</span></td>
+                        </tr>
+                        <tr>
+                            <td><div class="obj-name"><span>🛰️</span> Вояджер-1</div></td>
+                            <td>Слабкий імпульс</td>
+                            <td><code class="freq" id="freq-voyager">2.30 GHz</code></td>
+                            <td>
+                                <div class="signal-bar"><div class="fill warning power-bar" style="width: 12%"></div></div>
+                            </td>
+                            <td><span class="badge status-error">SIGNAL LOSS</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <section class="details-section">
+                <h3>Дослідження космічного випромінювання</h3>
+                <p>Для аналізу об'єктів ми використовуємо фазовані антенні решітки та напівпровідникові детектори останнього покоління. Це дозволяє мінімізувати вплив власних паразитних параметрів на роботу високочастотних ланцюгів.</p>
+                <p>Сучасна радіотехніка дозволяє нам зазирнути за межі видимого спектра, перетворюючи слабкі радіохвилі на чіткі дані про склад атмосфер далеких планет.</p>
+            </section>
+        </main>
 
         <footer class="footer">
             <p>© 2026 Проєкт розроблено: <span class="highlight">Кудрич А.О.</span> | Факультет: <b>Фізичний</b> | Спеціальність: <span class="highlight">Телекомунікації та радіотехніка</span></p>
         </footer>
 
     </div>
-<div id="imageModal" class="modal">
+
+    <div id="imageModal" class="modal">
         <span class="close">&times;</span>
         <img class="modal-content" id="img01">
     </div>
