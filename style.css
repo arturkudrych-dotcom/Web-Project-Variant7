@@ -487,14 +487,34 @@ body {
 }
 
 /* Підвал (Коричневий блок) */
-.footer {
+footer {
     grid-area: footer;
-    background-color: var(--footer-bg);
-    padding: 15px;
+    /* Міняємо оранжевий на глибокий темно-синій з прозорістю */
+    background: rgba(11, 12, 16, 0.9); 
+    backdrop-filter: blur(10px);
+    
+    /* Додаємо тонку бірюзову лінію зверху для зв'язку з дизайном */
+    border-top: 1px solid var(--accent);
+    
+    color: var(--text-main);
+    padding: 20px;
     text-align: center;
-    border-radius: 4px;
-    font-weight: bold;
-    color: #fff;
+    
+    /* Додаємо легке світіння */
+    box-shadow: 0 -5px 15px rgba(102, 252, 241, 0.05);
+}
+footer p {
+    margin: 0;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    /* Робимо текст підпису м'яким */
+    color: #c5c6c7;
+}
+
+/* Виділяємо твоє прізвище та спеціальність */
+footer b, footer .highlight {
+    color: var(--accent);
+    text-shadow: 0 0 8px rgba(102, 252, 241, 0.5);
 }
 
 
