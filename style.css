@@ -172,6 +172,74 @@ body {
     color: #1f2833;
 }
 
+.modal {
+    display: none; /* За замовчуванням приховане */
+    position: fixed; /* Залишається на місці при прокрутці */
+    z-index: 2000; /* Поверх всього (навіть Scroll Indicator) */
+    padding-top: 50px; /* Відступ від верху */
+    left: 0;
+    top: 0;
+    width: 100%; /* Повна ширина */
+    height: 100%; /* Повна висота */
+    overflow: auto; /* Дозволяє прокрутку всередині модального, якщо зображення завелике */
+    background-color: rgba(0,0,0,0.9); /* Чорний фон з прозорістю */
+    display: flex;
+    align-items: center; /* Центрування по вертикалі */
+    justify-content: center; /* Центрування по горизонталі */
+}
+
+.modal:not(.open) {
+    display: none !important;
+}
+
+/* Зображення всередині модального */
+.modal-content {
+    margin: auto;
+    display: block;
+    max-width: 80%; /* Щоб не було впритул до країв */
+    max-height: 80vh; /* Максимальна висота - 80% висоти вікна */
+    border: 3px solid rgba(102, 252, 241, 0.3); /* Тонка рамка в колір акценту */
+    border-radius: 4px;
+    box-shadow: 0 0 25px rgba(102, 252, 241, 0.2);
+    transition: all 0.3s ease;
+}
+
+/* Анімація для відкриття */
+.modal-content {
+    animation-name: zoom;
+    animation-duration: 0.4s;
+}
+
+@keyframes zoom {
+    from {transform:scale(0)} 
+    to {transform:scale(1)}
+}
+
+/* Кнопка закриття (хрестик) */
+.close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+    cursor: pointer;
+    z-index: 2001;
+}
+
+.close:hover,
+.close:focus {
+    color: var(--accent); /* Стає бірюзовим при наведенні */
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Клас для відкриття модального */
+.modal.open {
+    display: flex !important;
+}
+
 /* Стилізація таблиці (імітація W3Schools) */
 .w3-table {
     width: 100%;
