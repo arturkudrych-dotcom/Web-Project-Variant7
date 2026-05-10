@@ -433,6 +433,23 @@ body {
     z-index: 2001;
 }
 
+/* Основний текст у розділі дослідження */
+.details-section p {
+    color: #e0e6ed; /* Світлий сіро-блакитний, ідеальний для темного фону */
+    line-height: 1.7; /* Додаємо трохи простору між рядками */
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+    opacity: 0.9; /* Робимо текст м'яким, але розбірливим */
+}
+
+/* Заголовки розділів */
+.details-section h3 {
+    color: var(--accent); /* Використовуємо твій фірмовий бірюзовий */
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
 .close:hover,
 .close:focus {
     color: var(--accent); /* Стає бірюзовим при наведенні */
@@ -479,6 +496,7 @@ body {
     font-weight: bold;
     color: #fff;
 }
+
 
 /* --- Адаптивність (Responsive) для мобільних пристроїв --- */
 @media (max-width: 850px) {
