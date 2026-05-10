@@ -9,16 +9,19 @@
 </head>
 <body>
     <div class="scroll-container">
-        <div class="scroll-indicator" id="myBar"></div>
-    </div>
+    <div class="scroll-indicator" id="progress-bar"></div>
+	</div>
     
     <div class="layout-wrapper">
         
         <header class="header">
-            <a href="index.html" class="logo-link">
-                <h1>ВІДКРИТИЙ <span>КОСМОС</span></h1>
-            </a>
-        </header>
+    <a href="index.html" class="logo-link">
+        <h1>
+            <span class="glitch-word" data-text="ВІДКРИТИЙ">ВІДКРИТИЙ</span>
+            <span class="neon-word">КОСМОС</span>
+        </h1>
+    </a>
+</header>
                
         <div class="image-box">
             <img src="space-img.jpg" alt="Галактика" id="theme-image">
@@ -129,7 +132,14 @@
         <span class="close">&times;</span>
         <img class="modal-content" id="img01">
     </div>
-
+<script>
+    window.onscroll = function() {
+        let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        let scrolled = (winScroll / height) * 100;
+        document.getElementById("progress-bar").style.width = scrolled + "%";
+    };
+</script>
     <script src="script.js"></script>
 </body>
 </html>
