@@ -10,6 +10,197 @@
     --text-light: #ffffff;
     --text-dark: #0b0c10;
     --accent: #66fcf1;
+	--bg-dark: #0b0c10;      /* Глибокий чорний для фону */
+    --bg-panel: #1f2833;     /* Темно-синій для блоків */
+    --accent: #66fcf1;       /* Яскравий бірюзовий для важливого */
+    --text-main: #c5c6c7;    /* Світло-сірий для основного тексту (приємний для очей) */
+    --white: #ffffff;
+}
+/* Сітка карток */
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.stat-card {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid var(--accent);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.8rem;
+    color: #666;
+    text-transform: uppercase;
+}
+
+.stat-value {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.stat-value.green { color: #27ae60; }
+
+/* Таблиця */
+.table-container {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(102, 252, 241, 0.2);
+    border-radius: 12px;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.table-header-box h3 {
+    color: var(--accent); /* Тепер назву таблиці точно видно */
+}
+
+.table-header-box {
+    background: rgba(0, 0, 0, 0.4);
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--accent);
+}
+
+.live-indicator {
+    color: var(--accent);
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    animation: blink 1.5s infinite;
+}
+
+/* Сама таблиця */
+.space-table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #e0e0e0;
+}
+
+.space-table th {
+    background: transparent;
+    color: #008080; /* Темний Teal, добре видно на світлому фоні */
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    padding: 15px;
+    text-align: left;
+    font-weight: bold;
+}
+
+.space-table td {
+  padding: 15px;
+    border-bottom: 1px solid #e0e0e0; /* Світло-сіра лінія розділення */
+    color: #2c3e50; /* Темно-синій/сірий колір для ідеальної читабельності */
+    font-size: 0.95rem;
+}
+
+/* Ефект підсвітки рядка при наведенні */
+.space-table tr:hover {
+   background: rgba(0, 128, 128, 0.05); /* Дуже легкий бірюзовий відтінок */
+    transition: 0.3s;
+}
+
+/* Стилізація елементів всередині */
+.obj-name { 
+    display: flex; 
+    align-items: center; 
+    gap: 10px; 
+    font-weight: 600; 
+    color: #1a1a1a; /* Майже чорний колір */
+}
+
+.freq {
+   background: #f0f4f8; /* Ніжний світло-блакитний фон */
+    color: #0b5345; /* Темно-смарагдовий текст */
+    border: 1px solid #bdc3c7; /* Акуратна тонка рамка */
+    padding: 4px 8px;
+    border-radius: 6px; /* Більш округлі та сучасні краї */
+    font-family: 'Courier New', monospace;
+    font-weight: 700;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1); /* Легкий об'єм */
+}
+
+/* Смужка сигналу */
+.signal-bar {
+    width: 100px;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.signal-bar .fill {
+    height: 100%;
+    background: var(--accent);
+    box-shadow: 0 0 10px var(--accent);
+}
+
+.signal-bar .fill.warning {
+    background: #ff4d4d;
+    box-shadow: 0 0 10px #ff4d4d;
+}
+
+/* Статуси-бейджи */
+.badge {
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.status-ok { background: rgba(39, 174, 96, 0.2); color: #2ecc71; border: 1px solid #2ecc71; }
+.status-error { background: rgba(231, 76, 60, 0.2); color: #e74c3c; border: 1px solid #e74c3c; }
+
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0.3; }
+    100% { opacity: 1; }
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+th {
+    background-color: var(--accent);
+    color: white;
+    text-align: left;
+    padding: 12px;
+}
+
+td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+}
+
+/* Статуси */
+.status {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.status.active { background: #e8f5e9; color: #2e7d32; }
+.status.warning { background: #fff3e0; color: #ef6c00; }
+
+.details-section p {
+    line-height: 1.6;
+    margin-bottom: 15px;
+    color: #444;
 }
 
 body {
@@ -173,16 +364,17 @@ body {
 
 /* Основний вміст (Світлий блок) */
 .main-content {
-    grid-area: main;
-    background-color: var(--main-bg);
-    color: var(--text-dark);
-    padding: 20px;
-    border-radius: 4px;
+   grid-area: main;
+   background-color: var(--bg-panel); /* Темний фон замість білого */
+   color: var(--text-main);           /* Світлий текст */
+   padding: 25px;
+   border-radius: 8px;
+   border: 1px solid rgba(102, 252, 241, 0.1);
 }
 
 .main-content h2 {
-    margin-top: 0;
-    color: #1f2833;
+    color: var(--white); /* Заголовки тепер білі і чіткі */
+    text-shadow: 0 0 10px rgba(102, 252, 241, 0.3);
 }
 
 .modal {
