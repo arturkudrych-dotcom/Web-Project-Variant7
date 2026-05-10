@@ -1,0 +1,222 @@
+/* Базові налаштування та космічна кольорова палітра */
+:root {
+    --bg-color: #0b0c10;
+    --wrapper-bg: #1f2833;
+    --header-bg: #e21838; /* За шаблоном червоний, але адаптований під дизайн */
+    --image-bg: #45a29e;
+    --menu-bg: #111;
+    --main-bg: #c5c6c7;
+    --footer-bg: #8b572a;
+    --text-light: #ffffff;
+    --text-dark: #0b0c10;
+    --accent: #66fcf1;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    background-image: radial-gradient(circle, #1a1a2e 0%, #0b0c10 100%);
+    color: var(--text-light);
+    line-height: 1.6;
+}
+
+/* --- Scroll Indicator --- */
+.scroll-container {
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.scroll-indicator {
+    height: 6px;
+    background: var(--accent);
+    width: 0%;
+    box-shadow: 0 0 10px var(--accent);
+}
+
+/* --- Основна Grid-структура (Зелений фон на схемі) --- */
+.layout-wrapper {
+    max-width: 1100px; /* Трохи зменшили загальну ширину */
+    margin: 20px auto; /* Менший відступ від верху екрана */
+    padding: 12px;     /* Зменшили зовнішню "рамку" (зелений блок на схемі) */
+    background-color: var(--wrapper-bg);
+    border: 1px solid rgba(102, 252, 241, 0.1); /* Тонша лінія */
+    border-radius: 6px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 250px; /* Трохи вужче меню */
+    grid-template-areas: 
+        "header image menu"
+        "main main menu"
+        "footer footer footer";
+    gap: 12px; /* Зменшили проміжки між усіма блоками (було 20px) */
+}
+
+
+.header {
+    grid-area: header;
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); /* Глибокий космос */
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    text-align: center;
+    box-shadow: 0 0 15px rgba(102, 252, 241, 0.2); /* Легке світіння навколо */
+    border: 1px solid rgba(102, 252, 241, 0.3);
+    transition: all 0.3s ease;
+}
+
+.header:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0 20px rgba(102, 252, 241, 0.4);
+}
+
+/* Стиль посилання всередині заголовка */
+.logo-link {
+    text-decoration: none;
+    color: white;
+    display: block;
+    width: 100%;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 300; /* Робимо шрифт витонченішим */
+    text-transform: uppercase;
+    letter-spacing: 5px; /* Технологічний відступ між літерами */
+    line-height: 1.2;
+}
+
+.header h1 span {
+    display: block;
+    font-weight: 800; /* Друге слово робимо жирнішим для контрасту */
+    color: var(--accent); /* Використовуємо бірюзовий акцент */
+    font-size: 1.4rem;
+    letter-spacing: 8px;
+}
+
+/* Ефект при наведенні на текст */
+.logo-link:hover h1 {
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* Малюнок (Синій блок) */
+.image-box {
+    grid-area: image;
+    background-color: var(--image-bg);
+    border-radius: 4px;
+	max-height: 180px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Меню (Сірий блок) */
+.menu {
+    grid-area: menu;
+    background-color: var(--menu-bg);
+    padding: 15px;
+    border-radius: 4px;
+    border: 1px solid #333;
+}
+
+.menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.menu li a {
+    display: block;
+    padding: 12px 15px;
+    background-color: #333;
+    color: var(--text-light);
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background 0.3s, color 0.3s;
+    border-left: 4px solid transparent;
+}
+
+.menu li a:hover {
+    background-color: var(--accent);
+    color: var(--text-dark);
+    border-left: 4px solid #fff;
+}
+
+/* Основний вміст (Світлий блок) */
+.main-content {
+    grid-area: main;
+    background-color: var(--main-bg);
+    color: var(--text-dark);
+    padding: 20px;
+    border-radius: 4px;
+}
+
+.main-content h2 {
+    margin-top: 0;
+    color: #1f2833;
+}
+
+/* Стилізація таблиці (імітація W3Schools) */
+.w3-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.w3-table th, .w3-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+.w3-table th {
+    background-color: #04AA6D; /* Фірмовий колір W3Schools */
+    color: white;
+}
+
+.w3-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Підвал (Коричневий блок) */
+.footer {
+    grid-area: footer;
+    background-color: var(--footer-bg);
+    padding: 15px;
+    text-align: center;
+    border-radius: 4px;
+    font-weight: bold;
+    color: #fff;
+}
+
+/* --- Адаптивність (Responsive) для мобільних пристроїв --- */
+@media (max-width: 850px) {
+    .layout-wrapper {
+        grid-template-columns: 1fr;
+        grid-template-areas: 
+            "header"
+            "image"
+            "menu"
+            "main"
+            "footer";
+        margin: 10px;
+    }
+}
