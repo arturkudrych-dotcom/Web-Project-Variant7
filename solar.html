@@ -3,93 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Сонячна Система</title>
+    <title>Сонячна Система | ВІДКРИТИЙ КОСМОС</title>
     <link rel="stylesheet" href="style.css">
-    
     <style>
-        /* РОЗМІТКА ДЛЯ СТОРІНКИ СОНЯЧНОЇ СИСТЕМИ */
-        
-        /* 1. Дозволяємо скролл, якщо контент не поміщається (як на головній) */
+        /* Базові виправлення для всієї сторінки */
         body, html {
             margin: 0;
             padding: 0;
-            height: auto; 
-            overflow-y: auto; 
+            background: #0b0c10;
+            color: #c5c6c7;
+            overflow-x: hidden;
+            overflow-y: auto; /* Повертаємо скролл */
         }
 
-        /* 2. Твоя основна обгортка */
         .layout-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
             display: flex;
-            flex-direction: column; /* Шапка зверху, все інше знизу */
-            min-height: 100vh;
-            padding: 0 20px;
-            box-sizing: border-box;
+            flex-direction: column;
+            gap: 30px;
         }
 
-        /* 3. ШАПКА ЯК НА ГОЛОВНІЙ (центрована) */
+        /* Центрована шапка як на головній */
         .header {
-            width: 100%;
             text-align: center;
-            padding: 30px 0;
-            box-sizing: border-box;
+            padding: 20px 0;
+            width: 100%;
         }
 
-        /* 4. ОСНОВНИЙ КОНТЕНТ (Карта зліва, Меню справа) */
-        .main-content {
+        /* Основний ряд: Текст+Карта зліва, Меню справа */
+        .main-display-row {
             display: flex;
             flex-direction: row;
-            gap: 20px;
-            width: 100%;
-            margin-bottom: 40px;
-            box-sizing: border-box;
+            gap: 30px;
+            align-items: flex-start;
         }
 
-        /* 5. БЛОК ДЛЯ КАРТИ (Зліва) */
-        .visualizer-area {
-            flex: 1; /* Карта займає все місце зліва */
-        }
-
-        /* 6. ТЕХНІЧНИЙ ЗАГОЛОВОК НАД КАРТОЮ (Те, що ти просив) */
-        .terminal-header-box {
+        /* Контейнер для лівої частини (текст над картою) */
+        .content-area {
+            flex: 1;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border: 1px solid var(--accent);
-            border-bottom: none; /* Рамка тільки зверху і з боків */
-            background: rgba(11, 12, 16, 0.8);
-            padding: 10px 15px;
-            border-radius: 4px 4px 0 0;
+            flex-direction: column;
+            gap: 20px;
+            min-width: 0;
         }
 
-        .terminal-header-box h2 {
-            font-size: 0.9rem;
-            color: var(--accent);
-            text-transform: uppercase;
-        }
-
-        .terminal-header-box .badge {
-            font-size: 0.7rem;
-            color: #66fcf1;
-            background: rgba(102, 252, 241, 0.1);
-            padding: 4px 8px;
-            border-radius: 4px;
-        }
-
-        /* 7. ОПИС НАД КАРТОЮ (Розумний текст) */
+        /* Твій новий український текст */
         .intro-text-block {
-            margin-bottom: 15px;
-            font-size: 0.8rem;
-            line-height: 1.4;
-            color: #c5c6c7;
+            background: rgba(102, 252, 241, 0.05);
+            border-left: 4px solid var(--accent);
+            padding: 20px;
+            border-radius: 0 4px 4px 0;
         }
 
-        /* 8. САМА КАРТА (Iframe) */
+        .intro-text-block h2 {
+            color: var(--accent);
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+        }
+
+        /* Вікно 3D карти */
         .iframe-window {
-            height: 600px;
+            width: 100%;
+            height: 650px;
             border: 1px solid var(--accent);
-            border-radius: 0 0 4px 4px; /* Рамка тільки знизу і з боків */
-            overflow: hidden;
+            border-radius: 4px;
             background: rgba(0, 0, 0, 0.5);
+            overflow: hidden;
         }
 
         iframe {
@@ -98,36 +80,66 @@
             border: none;
         }
 
-        /* 9. БЛОК МЕНЮ (Справа) */
-       .sidebar-right {
-        width: 280px; 
-        flex-shrink: 0;
-        border: 1px solid var(--accent);
-        border-radius: 4px;
-        padding: 20px;
-        background: rgba(11, 12, 16, 0.9);
-        display: flex;
-        flex-direction: column; /* Стовпчик */
-        gap: 10px; /* Відступ між кнопками */
-        box-sizing: border-box;
-        align-self: flex-start; /* Щоб блок не розтягувався по висоті карти */
-    }
-	
-		.menu-container {
-        display: flex;
-        flex-direction: column; /* Кнопки суворо одна під одною */
-        gap: 8px;
-        width: 100%;
-    }
+        /* Правильне вертикальне меню справа */
+        .sidebar-right {
+            width: 280px;
+            flex-shrink: 0;
+            border: 1px solid var(--accent);
+            padding: 25px 15px;
+            background: rgba(11, 12, 16, 0.95);
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
 
         .sidebar-right .terminal-btn {
-        width: 100%; /* Кнопка на всю ширину віконця */
-        display: block;
-        text-align: center;
-        padding: 12px 5px;
-        box-sizing: border-box;
-        white-space: nowrap; /* Забороняємо тексту переноситись */
-    }
+            width: 100%;
+            display: block;
+            text-align: center;
+            padding: 12px;
+            box-sizing: border-box;
+            text-decoration: none;
+        }
+
+        /* Блок фактів СУВОРО знизу на всю ширину */
+        .facts-section {
+            width: 100%;
+            border-top: 1px solid rgba(102, 252, 241, 0.3);
+            padding-top: 30px;
+            margin-top: 20px;
+        }
+
+        .facts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .fact-card {
+            background: rgba(31, 40, 51, 0.4);
+            border: 1px solid #1f2833;
+            padding: 20px;
+            border-radius: 4px;
+            transition: border 0.3s;
+        }
+
+        .fact-card:hover {
+            border-color: var(--accent);
+        }
+
+        .fact-card h4 {
+            color: var(--accent);
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .fact-card p {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: #c5c6c7;
+        }
     </style>
 </head>
 <body>
@@ -136,7 +148,7 @@
     <div class="layout-wrapper">
         
         <header class="header">
-            <a href="index.html" class="logo-link">
+            <a href="index.html" style="text-decoration: none;">
                 <h1>
                     <span class="glitch-word" data-text="ВІДКРИТИЙ">ВІДКРИТИЙ</span>
                     <span class="neon-word">КОСМОС</span>
@@ -144,38 +156,68 @@
             </a>
         </header>
 
-        <main class="main-content">
+        <main class="main-display-row">
             
-            <div class="visualizer-area">
-                
-                <div class="intro-text-block">
-                    <p>⚡ <b>3D ПЛАНЕТАРНИЙ МОНІТОРИНГ</b></p>
-                    <p style="color: #45a29e;">Використовується для візуалізації поточного положення небесних тіл у Сонячній системі. Інструмент базується на реальних даних телеметрії DSN та ефемеридах NASA, що дозволяє проводити астрономічний аналіз у реальному часі. Навігація здійснюється мишею.</p>
-                </div>
+            <div class="content-area">
+                <div class="intro-text-block" style="background: rgba(102, 252, 241, 0.05); border-left: 3px solid var(--accent); padding: 15px; margin-bottom: 20px;">
+    <h2 style="color: var(--accent); font-size: 1rem; letter-spacing: 1px; margin-bottom: 10px;">
+        📡 ДИНАМІЧНА МОДЕЛЬ СОНЯЧНОЇ СИСТЕМИ
+    </h2>
+    <div style="font-size: 0.9rem; color: #e1e1e1; line-height: 1.6;">
+        <p>
+            <b style="color: var(--accent);">ДЖЕРЕЛО ДАНИХ:</b> Перед вами інтерактивна проекція, що базується на точних обчисленнях траєкторій небесних тіл. Система відображає реальний рух планет, комет та відомих наукових зондів у космічному просторі.
+        </p>
+        <p style="margin-top: 10px;">
+            <b style="color: var(--accent);">ТЕХНІЧНЕ ЗАУВАЖЕННЯ:</b> Модель враховує гравітаційні параметри та реальні часові інтервали. Всі координати синхронізовані з глобальною мережею космічного зв'язку для максимальної точності візуалізації.
+        </p>
+        <div style="margin-top: 12px; display: flex; gap: 15px; font-size: 0.8rem; color: #45a29e; font-weight: bold;">
+            <span>● РЕЖИМ: АКТИВНИЙ</span>
+            <span>● ОНОВЛЕННЯ: РЕАЛЬНИЙ ЧАС</span>
+            <span>● СТАНЦІЯ: УЖГОРОД</span>
+        </div>
+    </div>
 
-                <div class="terminal-header-box">
-                    <h2>🛰️ ІНТЕРФЕЙС СПОСТЕРЕЖЕННЯ JPL/NASA Eyes</h2>
-                    <span class="badge">ACTIVE SCANNING</span>
                 </div>
 
                 <div class="iframe-window">
-                    <iframe src="https://eyes.nasa.gov/apps/solar-system/#/home" frameborder="0"></iframe>
+                    <iframe src="https://eyes.nasa.gov/apps/solar-system/#/home"></iframe>
                 </div>
             </div>
 
-            <aside class="sidebar-menu sidebar-right">
-                <nav class="menu-container">
-                    <a href="index.html" class="terminal-btn">ГОЛОВНА</a>
-                    <a href="solar.html" class="terminal-btn active">СОНЯЧНА СИСТЕМА</a>
-                    <a href="exo.html" class="terminal-btn">ЕКЗОПЛАНЕТИ</a>
-                    <a href="#" class="terminal-btn">ЧОРНІ ДІРИ</a>
-                    <a href="#" class="terminal-btn">ТЕЛЕСКОПИ</a>
-                    <a href="#" class="terminal-btn">МІСІЇ NASA</a>
-                    <a href="#" class="terminal-btn">ГАЛЕРЕЯ</a>
-                    <a href="#" class="terminal-btn">КОНТАКТИ</a>
-                </nav>
+            <aside class="sidebar-right">
+                <a href="index.html" class="terminal-btn">ГОЛОВНА</a>
+                <a href="solar.html" class="terminal-btn active">СОНЯЧНА СИСТЕМА</a>
+                <a href="exo.html" class="terminal-btn">ЕКЗОПЛАНЕТИ</a>
+                <a href="#" class="terminal-btn">ЧОРНІ ДІРИ</a>
+                <a href="#" class="terminal-btn">ТЕЛЕСКОПИ</a>
+                <a href="#" class="terminal-btn">МІСІЇ NASA</a>
+                <a href="#" class="terminal-btn">ГАЛЕРЕЯ</a>
+                <a href="#" class="terminal-btn">КОНТАКТИ</a>
             </aside>
+
         </main>
+
+        <section class="facts-section">
+            <h2 style="color: var(--accent);">🌠 АСТРОФІЗИЧНИЙ ДАЙДЖЕСТ: ЦІКАВІ ФАКТИ</h2>
+            <div class="facts-grid">
+                <div class="fact-card">
+                    <h4>📏 Гігантські масштаби</h4>
+                    <p>Якби Сонце було як футбольний м’яч, Земля була б горошиною за 25 метрів від нього.</p>
+                </div>
+                <div class="fact-card">
+                    <h4>📻 Радіошум Юпітера</h4>
+                    <p>Юпітер — потужна радіостанція. Його магнітне поле генерує шуми, чутні на Землі.</p>
+                </div>
+                <div class="fact-card">
+                    <h4>⏳ Світло з минулого</h4>
+                    <p>Ми бачимо Сонце з затримкою у 8 хвилин і 20 секунд — стільки світло йде до нас.</p>
+                </div>
+                <div class="fact-card">
+                    <h4>💨 Вітри-рекордсмени</h4>
+                    <p>На Нептуні швидкість вітру сягає 2100 км/год, що вдвічі швидше за звук.</p>
+                </div>
+            </div>
+        </section>
 
     </div>
 
