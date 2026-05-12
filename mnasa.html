@@ -112,16 +112,17 @@
         }
 
         .sidebar-right {
-            width: 280px;
-            flex-shrink: 0;
-            border: 1px solid var(--accent);
-            padding: 25px 15px;
-            background: rgba(11, 12, 16, 0.95);
-            border-radius: 4px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
+         width: 280px;
+    flex-shrink: 0;
+    border: 1px solid var(--accent);
+    padding: 15px; /* Трохи менше падінг, щоб було просторіше всередині */
+    background: rgba(11, 12, 16, 0.95);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Відстань між кнопками */
+    box-sizing: border-box; /* Щоб падінги не розпирали блок */
+}
 
         .sidebar-right .terminal-btn {
             width: 100%;
@@ -130,6 +131,45 @@
             padding: 12px;
             text-decoration: none;
         }
+		
+		.terminal-btn {
+    width: 100%; /* Тепер всі кнопки точно на всю ширину */
+    box-sizing: border-box; 
+    display: block;
+    text-align: left; /* Текст зліва виглядає професійніше */
+    padding: 10px 15px;
+    background: transparent;
+    border: 1px solid rgba(102, 252, 241, 0.3);
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.terminal-btn:hover, .terminal-btn.active {
+    background: rgba(102, 252, 241, 0.1);
+    border-color: var(--accent);
+    padding-left: 20px; /* Ефект зміщення при наведенні */
+    box-shadow: 0 0 10px rgba(102, 252, 241, 0.2);
+}
+
+/* Додамо символ "> " перед текстом активної кнопки */
+.terminal-btn.active::before {
+    content: "> ";
+}
+
+.site-footer {
+    margin-top: 50px;
+    padding: 20px;
+    text-align: center;
+    border-top: 1px solid rgba(102, 252, 241, 0.2);
+    font-size: 0.8rem;
+    color: #45a29e;
+}
+
     </style>
 </head>
 <body>
@@ -148,21 +188,6 @@
                     <h2>🚀 ХРОНІКИ КОСМІЧНОЇ ЕКСПАНСІЇ</h2>
                     <p>Від перших кроків на Місяці до пошуку життя на Марсі. Технічний огляд найважливіших експедицій NASA за всю історію.</p>
                 </div>
-				
-				<article class="mission-card" style="border-color: #f5a623;">
-                    <div class="video-container">
-                        <iframe 
-                            src="https://www.youtube-nocookie.com/embed/vMGuObY8_sw?rel=0&showinfo=0" 
-                            title="NASA Video" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowfullscreen>
-                        </iframe>
-                    </div>
-                    <div class="mission-body">
-                        <h2 style="color: #f5a623;">🎬 Відеозвіт: Artemis II</h2>
-                        <p>Цей плеєр використовує захищений канал YouTube-NoCookie, що дозволяє відтворювати контент без зайвих скриптів відстеження. Це допомагає обійти стандартні блокування в деяких браузерах при локальному перегляді.</p>
-                    </div>
-                </article>
 
                 <article class="mission-card">
     <img src="mnasa1.jpg" 

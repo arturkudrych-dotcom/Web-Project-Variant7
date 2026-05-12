@@ -82,25 +82,58 @@
             background: rgba(11, 12, 16, 0.9);
         }
 
-        .sidebar-right {
-            width: 280px;
-            flex-shrink: 0;
-            border: 1px solid var(--accent);
-            padding: 25px 15px;
-            background: rgba(11, 12, 16, 0.95);
-            border-radius: 4px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
+        /* ВИПРАВЛЕННЯ МЕНЮ */
+.sidebar-right {
+    width: 280px;
+    flex-shrink: 0;
+    border: 1px solid var(--accent);
+    padding: 15px; /* Трохи менше падінг, щоб було просторіше всередині */
+    background: rgba(11, 12, 16, 0.95);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Відстань між кнопками */
+    box-sizing: border-box; /* Щоб падінги не розпирали блок */
+}
 
-        .sidebar-right .terminal-btn {
-            width: 100%;
-            display: block;
-            text-align: center;
-            padding: 12px;
-            text-decoration: none;
-        }
+.terminal-btn {
+    width: 100%; /* Тепер всі кнопки точно на всю ширину */
+    box-sizing: border-box; 
+    display: block;
+    text-align: left; /* Текст зліва виглядає професійніше */
+    padding: 10px 15px;
+    background: transparent;
+    border: 1px solid rgba(102, 252, 241, 0.3);
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.terminal-btn:hover, .terminal-btn.active {
+    background: rgba(102, 252, 241, 0.1);
+    border-color: var(--accent);
+    padding-left: 20px; /* Ефект зміщення при наведенні */
+    box-shadow: 0 0 10px rgba(102, 252, 241, 0.2);
+}
+
+/* Додамо символ "> " перед текстом активної кнопки */
+.terminal-btn.active::before {
+    content: "> ";
+}
+
+/* ФУТЕР */
+.site-footer {
+    margin-top: 50px;
+    padding: 20px;
+    text-align: center;
+    border-top: 1px solid rgba(102, 252, 241, 0.2);
+    font-size: 0.8rem;
+    color: #45a29e;
+}
 
         .facts-section {
             width: 100%;
