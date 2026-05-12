@@ -920,83 +920,78 @@ footer {
 }
 
 /* ПОВНИЙ ФІКС ДЛЯ ВСІХ СТОРІНОК (MOBILE) */
-/* РЕЖИМ ПРИМУСОВОЇ МОБІЛЬНОЇ ВЕРСІЇ */
-@media screen and (max-width: 900px) {
-    /* Прибираємо сітку і змушуємо все йти одним стовпчиком */
-    body .layout-wrapper {
+/* РОЗУМНА АДАПТАЦІЯ ДЛЯ ВСІХ СТОРІНОК */
+@media screen and (max-width: 950px) {
+    /* Дозволяємо контейнеру переходити з сітки у звичайний стовпчик */
+    .layout-wrapper {
         display: flex !important;
         flex-direction: column !important;
-        grid-template-columns: 1fr !important;
-        width: 100% !important;
-        max-width: 100vw !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        border: none !important;
-    }
-
-    /* Ліва панель (текст "ДИНАМІЧНА...") */
-    body .sidebar-left {
-        width: 100% !important;
-        min-width: 100% !important;
         height: auto !important;
+        min-height: 100vh !important;
+        width: 100% !important;
         border: none !important;
-        border-bottom: 2px solid #00fff2 !important;
-        padding: 15px 0 !important;
-        display: block !important;
     }
 
-    /* Текст робимо горизонтальним */
-    body .vertical-text {
+    /* Ліва панель стає горизонтальною шапкою */
+    .sidebar-left {
+        width: 100% !important;
+        height: auto !important;
+        border-right: none !important;
+        border-bottom: 2px solid var(--accent);
+        padding: 15px 0 !important;
+        order: -1; /* Завжди перша зверху */
+    }
+
+    .vertical-text {
         writing-mode: horizontal-tb !important;
         transform: none !important;
         text-align: center !important;
         display: block !important;
-        width: 100% !important;
+        font-size: 1.2rem !important;
         margin: 0 !important;
-        font-size: 1.1rem !important;
-        letter-spacing: 2px !important;
     }
 
-    /* Права панель з кнопками меню */
-    body .sidebar-right {
+    /* Основний контент */
+    .main-content {
         width: 100% !important;
-        min-width: 100% !important;
-        position: static !important; /* Відключаємо абсолютне позиціювання */
-        padding: 10px !important;
-        margin: 0 !important;
-        display: flex !important;
-        flex-direction: column !important;
-        box-sizing: border-box !important;
+        min-width: 0 !important;
+        padding: 20px !important;
+        order: 1;
     }
 
-    /* Кнопки меню */
-    body .menu {
+    /* Права панель з кнопками (твоє меню) */
+    .sidebar-right {
         width: 100% !important;
-        display: flex !important;
-        flex-direction: column !important;
+        position: static !important;
+        border-left: none !important;
+        border-top: 2px solid var(--accent);
+        padding: 20px !important;
+        order: 2; /* Меню буде під контентом або над ним, залежно від потреби */
+    }
+
+    /* Фікс кнопок */
+    .menu {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important; /* Кнопки у два ряди для економії місця */
         gap: 10px !important;
     }
 
-    body .terminal-btn {
+    .terminal-btn {
         width: 100% !important;
-        max-width: 100% !important;
-        box-sizing: border-box !important;
-        clip-path: none !important; /* Прибираємо зрізи, щоб не ховати текст */
         margin: 0 !important;
-        padding: 12px !important;
-        display: block !important;
-        text-align: center !important;
+        font-size: 0.8rem !important;
+        clip-path: none !important;
     }
 
-    /* Основний текст сторінки */
-    body .main-content {
-        width: 100% !important;
-        padding: 20px !important;
-        box-sizing: border-box !important;
-    }
-
-    /* Ховаємо великі картинки, які не влазять */
-    body .image-box, body .image-box img {
+    /* Ховаємо картинки, які створюють горизонтальну прокрутку */
+    .image-box {
         display: none !important;
+    }
+}
+
+/* Якщо екран зовсім маленький (телефони вертикально) */
+@media screen and (max-width: 480px) {
+    .menu {
+        grid-template-columns: 1fr !important; /* Кнопки в один ряд */
     }
 }
