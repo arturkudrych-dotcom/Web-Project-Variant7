@@ -202,16 +202,16 @@
                 </div>
             </div>
 
-            <aside class="sidebar-right">
+            
                 <aside class="sidebar-right">
-                <a href="index.html" class="terminal-btn">ГОЛОВНА</a>
-                <a href="solar.html" class="terminal-btn active">СОНЯЧНА СИСТЕМА</a>
-                <a href="exo.html" class="terminal-btn">ЕКЗОПЛАНЕТИ</a>
-                <a href="chorni.html" class="terminal-btn">ЧОРНІ ДІРИ</a>
-                <a href="teles.html" class="terminal-btn">ТЕЛЕСКОПИ</a>
-                <a href="mnasa.html" class="terminal-btn">МІСІЇ NASA</a>
-                <a href="gallarey.html" class="terminal-btn">ГАЛЕРЕЯ</a>
-                <a href="contact.html" class="terminal-btn">КОНТАКТИ</a>
+					<a href="index.html" class="terminal-btn">ГОЛОВНА</a>
+					<a href="solar.html" class="terminal-btn">СОНЯЧНА СИСТЕМА</a>
+					<a href="exo.html" class="terminal-btn">ЕКЗОПЛАНЕТИ</a>
+					<a href="chorni.html" class="terminal-btn">ЧОРНІ ДІРИ</a>
+					<a href="teles.html" class="terminal-btn">ТЕЛЕСКОПИ</a>
+					<a href="mnasa.html" class="terminal-btn">МІСІЇ NASA</a> 
+					<a href="gallarey.html" class="terminal-btn">ГАЛЕРЕЯ</a>
+					<a href="contact.html" class="terminal-btn">КОНТАКТИ</a>
             </aside>
 
         </main>
@@ -239,6 +239,25 @@
         </section>
 
     </div>
+	
+	<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Отримуємо назву поточного файлу (наприклад, missions.html)
+        const currentPath = window.location.pathname.split("/").pop();
+        
+        // Знаходимо всі кнопки меню
+        const navLinks = document.querySelectorAll('.terminal-btn');
+
+        navLinks.forEach(link => {
+            // Якщо посилання кнопки збігається з назвою файлу
+            if (link.getAttribute('href') === currentPath) {
+                link.classList.add('active'); // Додаємо підсвітку
+            } else {
+                link.classList.remove('active'); // Прибираємо у всіх інших
+            }
+        });
+    });
+</script>
 
     <script src="script.js"></script>
 </body>

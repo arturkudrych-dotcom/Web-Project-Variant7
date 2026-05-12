@@ -83,56 +83,56 @@
         }
 
         /* ВИПРАВЛЕННЯ МЕНЮ */
+        /* ВИПРАВЛЕННЯ МЕНЮ */
 .sidebar-right {
-    width: 280px;
+    width: 280px;            /* Фіксована ширина контейнера */
     flex-shrink: 0;
     border: 1px solid var(--accent);
-    padding: 15px; /* Трохи менше падінг, щоб було просторіше всередині */
+    padding: 20px 15px;      /* Внутрішні відступи */
     background: rgba(11, 12, 16, 0.95);
     border-radius: 4px;
     display: flex;
     flex-direction: column;
-    gap: 8px; /* Відстань між кнопками */
-    box-sizing: border-box; /* Щоб падінги не розпирали блок */
+    gap: 10px;               /* Рівномірна відстань між кнопками */
+    box-sizing: border-box;  /* Важливо: щоб padding не розширював блок */
 }
 
 .terminal-btn {
-    width: 100%; /* Тепер всі кнопки точно на всю ширину */
-    box-sizing: border-box; 
-    display: block;
-    text-align: left; /* Текст зліва виглядає професійніше */
-    padding: 10px 15px;
-    background: transparent;
-    border: 1px solid rgba(102, 252, 241, 0.3);
+    display: block;          /* Кнопка стає блоком */
+    width: 100%;             /* Займає 100% ширини батьківського контейнера */
+    box-sizing: border-box;  /* Враховує внутрішні відступи в ширину */
+    padding: 12px 15px;
+    background: rgba(102, 252, 241, 0.02);
+    border: 1px solid rgba(102, 252, 241, 0.2);
     color: var(--accent);
     text-decoration: none;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
+    text-align: left;        /* Вирівнювання по лівому краю для стабільності */
     letter-spacing: 1px;
     transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
+    white-space: nowrap;     /* Текст не переноситься на інший рядок */
+    overflow: hidden;        /* Якщо текст задовгий — він не зламає кнопку */
 }
 
-.terminal-btn:hover, .terminal-btn.active {
+/* Ефект при наведенні та для активної сторінки */
+.terminal-btn:hover, 
+.terminal-btn.active {
     background: rgba(102, 252, 241, 0.1);
     border-color: var(--accent);
-    padding-left: 20px; /* Ефект зміщення при наведенні */
-    box-shadow: 0 0 10px rgba(102, 252, 241, 0.2);
+    box-shadow: inset 0 0 10px rgba(102, 252, 241, 0.2);
+    padding-left: 22px;      /* Легке зміщення вправо при ховері */
 }
 
-/* Додамо символ "> " перед текстом активної кнопки */
-.terminal-btn.active::before {
-    content: "> ";
+/* Додаємо невеликий префікс перед текстом для стилю */
+.terminal-btn::before {
+    content: "[ ";
+    opacity: 0.5;
 }
 
-/* ФУТЕР */
-.site-footer {
-    margin-top: 50px;
-    padding: 20px;
-    text-align: center;
-    border-top: 1px solid rgba(102, 252, 241, 0.2);
-    font-size: 0.8rem;
-    color: #45a29e;
+.terminal-btn::after {
+    content: " ]";
+    opacity: 0.5;
+    float: right;            /* Закриваюча дужка завжди справа */
 }
 
         .facts-section {
@@ -185,14 +185,14 @@
             </div>
 
             <aside class="sidebar-right">
-                <a href="index.html" class="terminal-btn">ГОЛОВНА</a>
-                <a href="solar.html" class="terminal-btn active">СОНЯЧНА СИСТЕМА</a>
-                <a href="exo.html" class="terminal-btn">ЕКЗОПЛАНЕТИ</a>
-                <a href="chorni.html" class="terminal-btn">ЧОРНІ ДІРИ</a>
-                <a href="teles.html" class="terminal-btn">ТЕЛЕСКОПИ</a>
-                <a href="mnasa.html" class="terminal-btn">МІСІЇ NASA</a>
-                <a href="gallarey.html" class="terminal-btn">ГАЛЕРЕЯ</a>
-                <a href="contact.html" class="terminal-btn">КОНТАКТИ</a>
+               <a href="index.html" class="terminal-btn">ГОЛОВНА</a>
+					<a href="solar.html" class="terminal-btn">СОНЯЧНА СИСТЕМА</a>
+					<a href="exo.html" class="terminal-btn">ЕКЗОПЛАНЕТИ</a>
+					<a href="chorni.html" class="terminal-btn">ЧОРНІ ДІРИ</a>
+					<a href="teles.html" class="terminal-btn">ТЕЛЕСКОПИ</a>
+					<a href="mnasa.html" class="terminal-btn">МІСІЇ NASA</a> 
+					<a href="gallarey.html" class="terminal-btn">ГАЛЕРЕЯ</a>
+					<a href="contact.html" class="terminal-btn">КОНТАКТИ</a>
             </aside>
         </main>
 
@@ -214,6 +214,26 @@
             </div>
         </section>
     </div>
+	
+	<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Отримуємо назву поточного файлу (наприклад, missions.html)
+        const currentPath = window.location.pathname.split("/").pop();
+        
+        // Знаходимо всі кнопки меню
+        const navLinks = document.querySelectorAll('.terminal-btn');
+
+        navLinks.forEach(link => {
+            // Якщо посилання кнопки збігається з назвою файлу
+            if (link.getAttribute('href') === currentPath) {
+                link.classList.add('active'); // Додаємо підсвітку
+            } else {
+                link.classList.remove('active'); // Прибираємо у всіх інших
+            }
+        });
+    });
+</script>
+	
 	<script src="script.js"></script>
 </body>
 </html>

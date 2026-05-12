@@ -657,34 +657,46 @@ footer {
     background: rgba(102, 252, 241, 0.1);
 }
 
-.terminal-btn {
-    background: transparent;
-    color: #66fcf1;
-    border: 1px solid #66fcf1;
-    padding: 10px 20px;
-    font-family: 'Courier New', monospace;
-    font-size: 0.8rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    
-    /* Зрізані кути для Sci-Fi вигляду */
-    clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%);
-    
-    /* Тінь/Сяйво */
-    box-shadow: inset 0 0 10px rgba(102, 252, 241, 0.2);
+/* ГОЛОВНИЙ КОНТЕЙНЕР МЕНЮ */
+.sidebar-right {
+    width: 280px;            /* Фіксована ширина, щоб меню не "гуляло" */
+    flex-shrink: 0;
+    border: 1px solid #66fcf1; /* Бірюзова рамка як на скріні */
+    padding: 15px;
+    background: rgba(11, 12, 16, 0.95);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;               /* Відстань між кнопками */
+    box-sizing: border-box;  /* Важливо: падінги не розширюють блок */
 }
 
-/* Ефект при наведенні */
-.terminal-btn:hover {
-    background: rgba(102, 252, 241, 0.1);
-    box-shadow: 0 0 20px rgba(102, 252, 241, 0.5), inset 0 0 15px rgba(102, 252, 241, 0.3);
-    text-shadow: 0 0 8px #66fcf1;
-    padding-left: 25px; /* Легке зміщення тексту */
+/* СТИЛЬ КНОПОК */
+.terminal-btn {
+    display: block;
+    width: 100%;             /* Всі кнопки стають однакової довжини */
+    box-sizing: border-box;
+    padding: 12px;
+    background: rgba(102, 252, 241, 0.05); /* Легкий фон */
+    border: 1px solid rgba(102, 252, 241, 0.3);
+    color: #66fcf1;
+    text-decoration: none;
+    font-size: 0.85rem;
+    text-align: center;      /* Текст по центру як на скріні */
+    letter-spacing: 2px;     /* Космічний відступ між літерами */
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    position: relative;
+    clip-path: polygon(0 0, 100% 0, 100% 70%, 90% 100%, 0 100%); /* Зрізаний кут як на фото */
+}
+
+/* ЕФЕКТ ПРИ НАВЕДЕННІ ТА АКТИВНА СТОРІНКА */
+.terminal-btn:hover, 
+.terminal-btn.active {
+    background: rgba(102, 252, 241, 0.2);
+    border-color: #66fcf1;
+    box-shadow: 0 0 15px rgba(102, 252, 241, 0.3);
+    transform: translateX(5px); /* Легке зміщення вбік */
 }
 
 /* Декоративна лінія збоку */
