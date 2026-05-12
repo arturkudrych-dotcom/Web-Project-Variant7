@@ -867,3 +867,37 @@ footer {
     animation: fadeInUp 1.2s ease-out forwards;
 }
 
+/* Налаштування для телефонів */
+@media (max-width: 768px) {
+    .terminal-container, .space-terminal {
+        padding: 15px; /* Менше відступів по боках */
+        margin: 10px;
+    }
+
+    .terminal-main, .term-main {
+        flex-direction: column; /* Ставимо радар зверху, а текст знизу */
+        align-items: center;
+        gap: 20px;
+    }
+
+    .radar-box, .term-radar-box {
+        flex: 0 0 auto; /* Дозволяємо радару самому займати місце */
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .radar-circle, .radar-circle-new {
+        width: 200px; /* Трохи зменшуємо радар для маленьких екранів */
+        height: 200px;
+    }
+
+    .data-panel, .term-info {
+        border-left: none;
+        border-top: 2px solid #66fcf1; /* Лінія тепер зверху, а не збоку */
+        padding-left: 0;
+        padding-top: 20px;
+        width: 100%;
+        max-width: none;
+    }
+}
