@@ -919,78 +919,72 @@ footer {
     }
 }
 
-/* Аварійна адаптація */
-/* РАДИКАЛЬНИЙ ФІКС ДЛЯ МОБІЛОК */
-@/* --- ПОВНА МОБІЛЬНА АДАПТАЦІЯ ДЛЯ ВСІХ СТОРІНОК --- */
+/* ПОВНИЙ ФІКС ДЛЯ ВСІХ СТОРІНОК (MOBILE) */
 @media screen and (max-width: 850px) {
-    /* 1. Головний контейнер: перетворюємо сітку на один стовпчик */
-    .layout-wrapper {
-        display: flex !important;
-        flex-direction: column !important;
-        grid-template-columns: 1fr !important;
-        grid-template-areas: none !important;
-        padding: 10px !important;
-        max-width: 100% !important;
-        border: none !important;
-    }
-
-    /* 2. Бічна панель з кнопками (sidebar-right) */
-    .sidebar-right, .menu {
+    /* 1. Скидаємо Grid-сітку для всього сайту */
+    .layout-wrapper, body, html {
+        display: block !important; /* Міняємо grid на звичайний блок */
         width: 100% !important;
-        max-width: 100% !important;
-        position: relative !important;
-        left: 0 !important;
-        top: 0 !important;
-        padding: 10px !important;
-        margin: 10px 0 !important;
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 8px !important;
-        box-sizing: border-box !important;
+        overflow-x: hidden !important;
     }
 
-    /* 3. Кнопки меню (terminal-btn) */
+    /* 2. Фікс лівої панелі (де вертикальний текст) */
+    .sidebar-left {
+        width: 100% !important;
+        height: auto !important;
+        position: relative !important;
+        padding: 20px 0 !important;
+        border-right: none !important;
+        border-bottom: 2px solid var(--accent);
+    }
+
+    /* Повертаємо текст у горизонтальний стан */
+    .vertical-text {
+        writing-mode: horizontal-tb !important;
+        transform: none !important;
+        display: block !important;
+        text-align: center !important;
+        width: 100% !important;
+        font-size: 1.2rem !important;
+        letter-spacing: 5px !important;
+    }
+
+    /* 3. Фікс правої панелі з меню (яка на скріншоті зламана) */
+    .sidebar-right {
+        width: 100% !important;
+        position: relative !important;
+        padding: 15px !important;
+        box-sizing: border-box !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 10px !important;
+    }
+
+    /* 4. Кнопки меню робимо на весь екран */
+    .menu {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+    }
+
     .terminal-btn {
         width: 100% !important;
-        min-height: 50px !important; /* Робимо їх зручними для натискання пальцем */
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        font-size: 0.9rem !important;
-        letter-spacing: 1px !important;
-        clip-path: none !important; /* Прибираємо зрізаний кут, щоб текст не затискало */
-        transform: none !important;
-        margin: 0 !important;
-    }
-
-    /* 4. Вертикальний текст (той, що "Д И Н А М І Ч Н А...") */
-    /* Якщо це заголовок або span, ми повертаємо його у нормальний стан */
-    .header h1, .glitch-word, .neon-word, [class*="title"] {
-        display: block !important;
-        width: 100% !important;
+        margin-bottom: 10px !important;
+        padding: 15px !important;
+        clip-path: none !important; /* Щоб не «з'їдало» текст на мобілках */
         text-align: center !important;
-        font-size: 1.4rem !important;
-        letter-spacing: 2px !important;
-        writing-mode: horizontal-tb !important; /* Скасовуємо вертикальний текст */
-        white-space: normal !important;
+        display: block !important;
     }
 
-    /* 5. Основний контент (main-content) */
+    /* 5. Основний контент сторінок (текст про планети тощо) */
     .main-content {
         width: 100% !important;
         padding: 15px !important;
-        margin: 0 !important;
         box-sizing: border-box !important;
     }
 
-    /* 6. Ховаємо зайві декоративні елементи, що можуть штовхати екран */
+    /* 6. Ховаємо декоративну картинку (image-box), яка займає місце */
     .image-box {
-        display: none !important; /* На тлі маленького екрана краще сховати бокове фото */
-    }
-
-    /* 7. Заборона горизонтального скролу */
-    body, html {
-        overflow-x: hidden !important;
-        width: 100% !important;
+        display: none !important;
     }
 }
