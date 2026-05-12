@@ -921,114 +921,76 @@ footer {
 
 /* Аварійна адаптація */
 /* РАДИКАЛЬНИЙ ФІКС ДЛЯ МОБІЛОК */
-@media screen and (max-width: 900px) {
-    /* 1. Скидаємо фіксовану ширину для ВСІХ блоків */
-    div, section, header, main, footer, table {
-        width: 100% !important;
-        max-width: 100% !important;
-        min-width: 0 !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-        padding-left: 10px !important;
-        padding-right: 10px !important;
-        box-sizing: border-box !important;
-        float: none !important;
-        position: relative !important;
-        left: 0 !important;
-    }
-
-    /* 2. Фікс заголовків (щоб текст не вилазив) */
-    h1, h2, h3, .logo-link h1, .logo-link h2 {
-        font-size: 1.5rem !important;
-        white-space: normal !important; /* Дозволяємо перенос тексту */
-        text-align: center !important;
-        word-wrap: break-word !important;
-    }
-
-    /* 3. Фікс картинок (Венера на скріншоті) */
-    img, iframe {
-        max-width: 100% !important;
-        height: auto !important;
-        display: block !important;
-        margin: 0 auto !important;
-    }
-
-    /* 4. Якщо у тебе Flexbox (блоки в ряд), ставимо їх у стовпчик */
-    .terminal-main, .flex-container, [style*="display: flex"] {
-        flex-direction: column !important;
-        display: flex !important;
-    }
-
-    /* 5. Прибираємо горизонтальну прокрутку назавжди */
-    body, html {
-        overflow-x: hidden !important;
-        width: 100% !important;
-        position: relative !important;
-    }
-}
-
-/* УНІВЕРСАЛЬНИЙ ФІКС ДЛЯ ВСІХ СТОРІНОК (MOBILE) */
-@media screen and (max-width: 900px) {
-    /* 1. Головна команда для всіх твоїх блоків */
-    div, section, header, main, footer, table, 
-    .layout-wrapper, .main-content, .sidebar-right, 
-    .table-container, .radar-card, .terminal-window, 
-    .solar-system-container, .menu, .image-box {
-        width: 100% !important;
-        max-width: 100vw !important;
-        min-width: 0 !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-        padding-left: 10px !important;
-        padding-right: 10px !important;
-        box-sizing: border-box !important;
-        display: block !important; /* Перетворюємо сітку в стовпчик */
-        float: none !important;
-        position: relative !important;
-    }
-
-    /* 2. Скидаємо Grid-сітку, яка ламає "Головну" */
+@/* --- ПОВНА МОБІЛЬНА АДАПТАЦІЯ ДЛЯ ВСІХ СТОРІНОК --- */
+@media screen and (max-width: 850px) {
+    /* 1. Головний контейнер: перетворюємо сітку на один стовпчик */
     .layout-wrapper {
         display: flex !important;
         flex-direction: column !important;
-        gap: 20px !important;
-        border: none !important; /* Прибираємо подвійні рамки на малих екранах */
+        grid-template-columns: 1fr !important;
+        grid-template-areas: none !important;
+        padding: 10px !important;
+        max-width: 100% !important;
+        border: none !important;
     }
 
-    /* 3. Фікс кнопок меню (terminal-btn) */
+    /* 2. Бічна панель з кнопками (sidebar-right) */
+    .sidebar-right, .menu {
+        width: 100% !important;
+        max-width: 100% !important;
+        position: relative !important;
+        left: 0 !important;
+        top: 0 !important;
+        padding: 10px !important;
+        margin: 10px 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 8px !important;
+        box-sizing: border-box !important;
+    }
+
+    /* 3. Кнопки меню (terminal-btn) */
     .terminal-btn {
         width: 100% !important;
-        margin: 5px 0 !important;
-        clip-path: none !important; /* Прибираємо зрізаний кут, якщо він заважає тексту */
-        font-size: 0.8rem !important;
+        min-height: 50px !important; /* Робимо їх зручними для натискання пальцем */
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 0.9rem !important;
+        letter-spacing: 1px !important;
+        clip-path: none !important; /* Прибираємо зрізаний кут, щоб текст не затискало */
+        transform: none !important;
+        margin: 0 !important;
     }
 
-    /* 4. Таблиця стає прокручуваною, а не ламає сайт */
-    .table-container {
-        overflow-x: auto !important;
-        -webkit-overflow-scrolling: touch;
-    }
-    .space-table {
-        min-width: 500px; /* Дозволяємо таблиці бути широкою всередині контейнера */
-    }
-
-    /* 5. Радар та інфо-панель (один під одним) */
-    .radar-main {
-        flex-direction: column !important;
-        gap: 20px !important;
-    }
-    .radar-display, .info-panel {
-        width: 280px !important;
-        margin: 0 auto !important;
-        border-left: none !important;
-        border-top: 2px solid var(--accent);
-    }
-
-    /* 6. Заголовки (щоб не вилазили) */
-    h1, h2, h3, .glitch-word, .neon-word {
-        font-size: 1.3rem !important;
+    /* 4. Вертикальний текст (той, що "Д И Н А М І Ч Н А...") */
+    /* Якщо це заголовок або span, ми повертаємо його у нормальний стан */
+    .header h1, .glitch-word, .neon-word, [class*="title"] {
+        display: block !important;
+        width: 100% !important;
+        text-align: center !important;
+        font-size: 1.4rem !important;
         letter-spacing: 2px !important;
+        writing-mode: horizontal-tb !important; /* Скасовуємо вертикальний текст */
         white-space: normal !important;
-        word-wrap: break-word !important;
+    }
+
+    /* 5. Основний контент (main-content) */
+    .main-content {
+        width: 100% !important;
+        padding: 15px !important;
+        margin: 0 !important;
+        box-sizing: border-box !important;
+    }
+
+    /* 6. Ховаємо зайві декоративні елементи, що можуть штовхати екран */
+    .image-box {
+        display: none !important; /* На тлі маленького екрана краще сховати бокове фото */
+    }
+
+    /* 7. Заборона горизонтального скролу */
+    body, html {
+        overflow-x: hidden !important;
+        width: 100% !important;
     }
 }
