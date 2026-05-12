@@ -265,3 +265,45 @@ function drawStars() {
 }
 
 drawStars();
+
+const logContainer = document.getElementById('log-container');
+
+// База повідомлень (радіотехнічна тематика)
+const logMessages = [
+    { text: "Receiving encrypted telemetry from Voyager-1", type: "info" },
+    { text: "Signal-to-noise ratio: 12.4dB (STABLE)", type: "info" },
+    { text: "Adjusting deep space antenna azimuth... Done", type: "info" },
+    { text: "Packet loss detected in Sector X-2026", type: "warn" },
+    { text: "Synchronizing atomic clock with UzhNU station", type: "info" },
+    { text: "Decoding QPSK modulation sequence", type: "info" },
+    { text: "Solar flare interference detected. Re-routing signal", type: "warn" },
+    { text: "New object identified in Sector B-4", type: "info" }
+];
+
+function addLog() {
+    const time = new Date().toLocaleTimeString();
+    const message = logMessages[Math.floor(Math.random() * logMessages.length)];
+    
+    const entry = document.createElement('div');
+    entry.className = 'log-entry';
+    
+    const typeClass = message.type === 'warn' ? 'log-msg-warn' : 'log-msg-info';
+    
+    entry.innerHTML = `
+        <span class="log-time">[${time}]</span>
+        <span class="${typeClass}">> ${message.text}</span>
+    `;
+    
+    logContainer.prepend(entry); // Додаємо зверху
+
+    // Видаляємо застарілі рядки, щоб не перевантажувати пам'ять
+    if (logContainer.childNodes.length > 8) {
+        logContainer.removeChild(logContainer.lastChild);
+    }
+}
+
+// Запускаємо потік (новий лог кожні 3-5 секунд)
+setInterval(addLog, 3500);
+
+// Додаємо перший лог відразу при завантаженні
+addLog();

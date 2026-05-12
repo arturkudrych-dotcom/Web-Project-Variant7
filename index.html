@@ -170,6 +170,19 @@
     </div>
 </section>
 
+<section class="log-section fade-in-section">
+    <div class="terminal-window">
+        <div class="terminal-header">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+            <span class="terminal-title">SYSTEM_LOG_STREAM: VOYAGER_LINK</span>
+        </div>
+        <div id="log-container" class="terminal-body">
+            </div>
+    </div>
+</section>
+
             <section class="details-section">
                 <h3>Дослідження космічного випромінювання</h3>
                 <p>Для аналізу об'єктів ми використовуємо фазовані антенні решітки та напівпровідникові детектори останнього покоління. Це дозволяє мінімізувати вплив власних паразитних параметрів на роботу високочастотних ланцюгів.</p>
@@ -182,6 +195,7 @@
         </footer>
 
     </div>
+	
 	
 	<div class="monitor-card fade-in-section">...</div>
 <div class="telemetry-table fade-in-section">...</div>
@@ -209,8 +223,7 @@
             <button onclick="closeSignalModal()" class="modal-btn">ПРИЙНЯТИ</button>
         </div>
     </div>
-</div>
-	
+</div>	
 <script>
     window.onscroll = function() {
         let winScroll = document.body.scrollTop || document.documentElement.scrollTop;

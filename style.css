@@ -794,3 +794,47 @@ footer {
     border: none;
     filter: hue-rotate(180deg) brightness(0.8) contrast(1.2); /* Підганяємо під твій неоновий колір */
 }
+
+.terminal-window {
+    background: rgba(10, 10, 15, 0.9);
+    border: 1px solid #66fcf1;
+    border-radius: 5px;
+    margin: 20px auto;
+    max-width: 1000px;
+    box-shadow: 0 0 15px rgba(102, 252, 241, 0.2);
+    font-family: 'Courier New', monospace;
+}
+
+.terminal-header {
+    background: rgba(102, 252, 241, 0.1);
+    padding: 8px;
+    border-bottom: 1px solid #66fcf1;
+    display: flex;
+    align-items: center;
+}
+
+.dot { height: 8px; width: 8px; border-radius: 50%; margin-right: 6px; }
+.red { background: #ff5f56; }
+.yellow { background: #ffbd2e; }
+.green { background: #27c93f; }
+
+.terminal-title {
+    color: #66fcf1;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.terminal-body {
+    height: 150px;
+    padding: 15px;
+    overflow-y: hidden; /* Логи будуть витісняти старі самі */
+    color: #c5c6c7;
+    font-size: 0.85rem;
+    line-height: 1.4;
+}
+
+.log-entry { margin-bottom: 5px; }
+.log-time { color: #45a29e; margin-right: 10px; }
+.log-msg-info { color: #66fcf1; }
+.log-msg-warn { color: #ffbd2e; }
