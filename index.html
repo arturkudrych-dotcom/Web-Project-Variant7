@@ -114,6 +114,33 @@
                     </tbody>
                 </table>
             </div>
+			
+			<section class="radar-section">
+    <div class="radar-card">
+        <div class="radar-header">
+            <h3><i class="fas fa-satellite-dish"></i> СЕКТОР СПОСТЕРЕЖЕННЯ: X-2026</h3>
+            <span class="live-indicator">ACTIVE SCANNING</span>
+        </div>
+        
+        <div class="radar-main">
+            <div class="radar-display">
+                <div class="radar-sweep"></div>
+                <div class="radar-circles"></div>
+                
+                <div class="satellite-point" id="earth-target" onclick="showInfo('EARTH-01', 'Земля (Base)', '0 km', '14.15 GHz', 'STABLE')"></div>
+                <div class="satellite-point" id="mars-target" onclick="showInfo('MARS-ORB', 'Марс-Орбітер', '225 млн км', '8.42 GHz', 'STABLE')"></div>
+                <div class="satellite-point" id="voyager-target" onclick="showInfo('VYGR-1', 'Вояджер-1', '24 млрд км', '2.29 GHz', 'WEAK')"></div>
+            </div>
+
+            <div class="info-panel" id="info-panel">
+                <div class="panel-glitch">DATA TERMINAL</div>
+                <div id="target-details">
+                    <p class="placeholder">Виберіть об'єкт на радарі для отримання даних...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
             <section class="details-section">
                 <h3>Дослідження космічного випромінювання</h3>

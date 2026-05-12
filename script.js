@@ -151,3 +151,25 @@ document.addEventListener('DOMContentLoaded', () => {
     if (canvas) drawOscilloscope();
     setInterval(updateTelemetry, 2500); // Оновлення даних кожні 2.5 сек
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Весь твій код (window.onscroll, функції тощо) помісти сюди
+    console.log("Система готова до моніторингу!");
+});
+
+function showInfo(id, name, dist, freq, status) {
+    const panel = document.getElementById('target-details');
+    if (panel) {
+        panel.innerHTML = `
+            <div style="animation: fadeIn 0.5s">
+                <p class="detail-row"><span class="detail-label">ID:</span> ${id}</p>
+                <p class="detail-row"><span class="detail-label">OBJECT:</span> ${name}</p>
+                <p class="detail-row"><span class="detail-label">DISTANCE:</span> ${dist}</p>
+                <p class="detail-row"><span class="detail-label">FREQ:</span> ${freq}</p>
+                <p class="detail-row"><span class="detail-label">STATUS:</span> <span style="color: ${status === 'WEAK' ? '#ff4d4d' : '#00ff88'}">${status}</span></p>
+                <hr style="border: 0; border-top: 1px solid rgba(102, 252, 241, 0.2); margin: 15px 0;">
+                <button onclick="alert('Сигнал відправлено на ${name}')" class="terminal-btn">Відправити сигнал</button>
+            </div>
+        `;
+    }
+}
