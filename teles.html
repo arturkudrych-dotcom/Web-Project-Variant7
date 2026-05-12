@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Телескопи | ВІДКРИТИЙ КОСМОС</title>
     <link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="style.css">
     <style>
         body, html {
             margin: 0;
@@ -15,7 +16,7 @@
         }
 
         .layout-wrapper {
-            max-width: 1200px; /* Уніфікована ширина */
+            max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
             display: flex;
@@ -39,12 +40,6 @@
             min-width: 0;
         }
 
-        .intro-text-block {
-            background: rgba(102, 252, 241, 0.05);
-            border-left: 4px solid var(--accent);
-            padding: 20px;
-        }
-
         /* Картки телескопів */
         .telescope-grid {
             display: grid;
@@ -58,34 +53,45 @@
             border: 1px solid #1f2833;
             border-radius: 4px;
             overflow: hidden;
-            transition: 0.3s;
         }
 
-        .telescope-card:hover {
-            border-color: var(--accent);
-            transform: translateY(-5px);
-        }
-
+        /* Стиль для фото, які можна "відкрити" */
         .telescope-img {
             width: 250px;
             height: 180px;
             object-fit: cover;
             border-right: 1px solid var(--accent);
+            cursor: pointer; /* Показуємо, що можна клікнути */
+            transition: opacity 0.3s;
         }
 
-        .telescope-info {
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
+        .telescope-img:hover {
+            opacity: 0.8;
+        }
+
+        /* МОДАЛЬНЕ ВІКНО (для відкриття фото) */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
             justify-content: center;
+            align-items: center;
+            cursor: pointer;
         }
 
-        .telescope-info h3 {
-            color: var(--accent);
-            margin-bottom: 8px;
-            text-transform: uppercase;
+        .modal img {
+            max-width: 90%;
+            max-height: 90%;
+            border: 2px solid var(--accent);
+            box-shadow: 0 0 20px var(--accent);
         }
 
+        /* Бокове меню */
         .sidebar-right {
             width: 280px;
             flex-shrink: 0;
@@ -105,15 +111,13 @@
             padding: 12px;
             text-decoration: none;
         }
-
-        .facts-section {
-            width: 100%;
-            border-top: 1px solid rgba(102, 252, 241, 0.3);
-            padding-top: 30px;
-        }
     </style>
 </head>
 <body>
+    <div id="imageModal" class="modal" onclick="this.style.display='none'">
+        <img id="modalImg" src="">
+    </div>
+
     <div class="layout-wrapper">
         <header class="header">
             <h1><span class="glitch-word">ВІДКРИТИЙ</span> <span class="neon-word">КОСМОС</span></h1>
@@ -121,37 +125,36 @@
 
         <main class="main-display-row">
             <div class="content-area">
-                <div class="intro-text-block">
-                    <h2>📡 СИСТЕМИ ДАЛЕКОГО СПОСТЕРЕЖЕННЯ</h2>
-                    <p><b>ОПИС:</b> Аналіз інструментів, що дозволяють людству бачити об'єкти на відстані мільярдів світлових років.</p>
-                    <p style="margin-top: 8px;"><b>ТЕХНОЛОГІЇ:</b> Від оптичних дзеркал до фазованих антенних решіток, що фіксують космічне мікрохвильове випромінювання.</p>
+                <div class="intro-text-block" style="background: rgba(102, 252, 241, 0.05); border-left: 4px solid var(--accent); padding: 20px;">
+                    <h2>📡 АРХІВ ОПТИЧНИХ ТА РАДІОСИСТЕМ</h2>
+                    <p>Клікніть на зображення телескопа, щоб роздивитися деталі конструкції антени чи дзеркала.</p>
                 </div>
 
                 <div class="telescope-grid">
-                    <!-- James Webb -->
                     <div class="telescope-card">
-                        <img src="" alt="James Webb">
-                        <div class="telescope-info">
-                            <h3>James Webb (JWST)</h3>
-                            <p>Найпотужніший інфрачервоний телескоп. Його 6.5-метрове золоте дзеркало бачить крізь хмари пилу перші зірки Всесвіту.</p>
+                        <img src="teles1.jpg" 
+                             class="telescope-img" onclick="openModal(this.src)" alt="James Webb">
+                        <div class="telescope-info" style="padding: 15px;">
+                            <h3 style="color: var(--accent);">James Webb (JWST)</h3>
+                            <p>Працює в інфрачервоному діапазоні. Його головна фішка — позолочене дзеркало з 18 сегментів.</p>
                         </div>
                     </div>
 
-                    <!-- Hubble -->
                     <div class="telescope-card">
-                        <img src=".jpg" class="telescope-img" alt="Hubble">
-                        <div class="telescope-info">
-                            <h3>Hubble Space Telescope</h3>
-                            <p>Легендарна обсерваторія, що працює на орбіті вже понад 30 років, подарувавши нам найчіткіші знімки галактик.</p>
+                        <img src="teles2.jpg" 
+                             class="telescope-img" onclick="openModal(this.src)" alt="Hubble">
+                        <div class="telescope-info" style="padding: 15px;">
+                            <h3 style="color: var(--accent);">Hubble Space Telescope</h3>
+                            <p>Стара добра класика. Знаходиться на орбіті з 1990 року і досі передає унікальні дані.</p>
                         </div>
                     </div>
 
-                    <!-- ALMA -->
                     <div class="telescope-card">
-                        <img src="" class="telescope-img" alt="ALMA">
-                        <div class="telescope-info">
-                            <h3>Радіотелескоп ALMA</h3>
-                            <p>Система з 66 антен у пустелі Атакама. Вивчає молекулярний газ і пил, де народжуються нові планети.</p>
+                        <img src="teles3.jpg" 
+                             class="telescope-img" onclick="openModal(this.src)" alt="Radio Telescope">
+                        <div class="telescope-info" style="padding: 15px;">
+                            <h3 style="color: var(--accent);">Система ALMA</h3>
+                            <p>Радіоінтерферометр, що складається з 66 радіотелескопів. Ідеально для вивчення холодного газу.</p>
                         </div>
                     </div>
                 </div>
@@ -159,17 +162,17 @@
 
             <aside class="sidebar-right">
                 <a href="index.html" class="terminal-btn">ГОЛОВНА</a>
-                <a href="solar.html" class="terminal-btn">СОНЯЧНА СИСТЕМА</a>
+                <a href="solar.html" class="terminal-btn active">СОНЯЧНА СИСТЕМА</a>
                 <a href="exo.html" class="terminal-btn">ЕКЗОПЛАНЕТИ</a>
-                <a href="blackholes.html" class="terminal-btn">ЧОРНІ ДІРИ</a>
-                <a href="telescopes.html" class="terminal-btn active">ТЕЛЕСКОПИ</a>
-                <a href="#" class="terminal-btn">МІСІЇ NASA</a>
-                <a href="#" class="terminal-btn">ГАЛЕРЕЯ</a>
-                <a href="#" class="terminal-btn">КОНТАКТИ</a>
+                <a href="chorni.html" class="terminal-btn">ЧОРНІ ДІРИ</a>
+                <a href="teles.html" class="terminal-btn">ТЕЛЕСКОПИ</a>
+                <a href="mnasa.html" class="terminal-btn">МІСІЇ NASA</a>
+                <a href="gallarey.html" class="terminal-btn">ГАЛЕРЕЯ</a>
+                <a href="contact.html" class="terminal-btn">КОНТАКТИ</a>
             </aside>
         </main>
-
-        <section class="facts-section">
+		
+		<section class="facts-section">
             <h2 style="color: var(--accent);">🔍 ТЕХНІЧНІ ОСОБЛИВОСТІ</h2>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 20px;">
                 <div style="background: rgba(31, 40, 51, 0.4); padding: 15px; border: 1px solid #1f2833;">
@@ -183,5 +186,13 @@
             </div>
         </section>
     </div>
+
+    <script>
+        // Функція для відкриття модального вікна
+        function openModal(src) {
+            document.getElementById('imageModal').style.display = "flex";
+            document.getElementById('modalImg').src = src;
+        }
+    </script>
 </body>
 </html>

@@ -1,5 +1,213 @@
+<!DOCTYPE html>
+<html lang="uk">
 <head>
-    <link rel="stylesheet" href="style.css"> </head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Місії NASA | ВІДКРИТИЙ КОСМОС</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            background: #0b0c10;
+            color: #c5c6c7;
+            overflow-y: auto;
+        }
+
+        .layout-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .header { text-align: center; padding: 20px 0; }
+
+        .main-display-row {
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+        }
+
+        .content-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            min-width: 0;
+        }
+
+        /* Стилізація карток місій */
+        .mission-card {
+            background: rgba(31, 40, 51, 0.4);
+            border: 1px solid #1f2833;
+            border-radius: 4px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: 0.3s;
+        }
+
+        .mission-card:hover {
+            border-color: var(--accent);
+        }
+
+        .mission-header-img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            cursor: pointer;
+            transition: 0.5s;
+        }
+
+        .mission-header-img:hover {
+            filter: brightness(1.2);
+        }
+
+        .mission-body {
+            padding: 20px;
+        }
+
+        .mission-body h2 {
+            color: var(--accent);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .mission-body p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .stats-row {
+            display: flex;
+            gap: 20px;
+            font-size: 0.8rem;
+            color: #45a29e;
+            border-top: 1px solid rgba(102, 252, 241, 0.2);
+            padding-top: 10px;
+        }
+
+        /* Модальне вікно */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal img {
+            max-width: 90%;
+            max-height: 90%;
+            border: 1px solid var(--accent);
+        }
+
+        .sidebar-right {
+            width: 280px;
+            flex-shrink: 0;
+            border: 1px solid var(--accent);
+            padding: 25px 15px;
+            background: rgba(11, 12, 16, 0.95);
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .sidebar-right .terminal-btn {
+            width: 100%;
+            display: block;
+            text-align: center;
+            padding: 12px;
+            text-decoration: none;
+        }
+    </style>
+</head>
 <body>
-    ...
-    <script src="script.js"></script> </body>
+    <div id="imgModal" class="modal" onclick="this.style.display='none'">
+        <img id="fullImg" src="">
+    </div>
+
+    <div class="layout-wrapper">
+        <header class="header">
+            <h1><span class="glitch-word">ВІДКРИТИЙ</span> <span class="neon-word">КОСМОС</span></h1>
+        </header>
+
+        <main class="main-display-row">
+            <div class="content-area">
+                <div class="intro-text-block" style="background: rgba(102, 252, 241, 0.05); border-left: 4px solid var(--accent); padding: 20px;">
+                    <h2>🚀 ХРОНІКИ КОСМІЧНОЇ ЕКСПАНСІЇ</h2>
+                    <p>Від перших кроків на Місяці до пошуку життя на Марсі. Технічний огляд найважливіших експедицій NASA за всю історію.</p>
+                </div>
+
+                <article class="mission-card">
+                    <img src="https://www.nasa.gov/wp-content/uploads/2022/11/artemis-i-official-flight-photo.jpg" 
+                         class="mission-header-img" onclick="showImg(this.src)">
+                    <div class="mission-body">
+                        <h2>Artemis: Повернення на Місяць</h2>
+                        <p>Програма «Артеміда» має на меті висадку першої жінки та наступного чоловіка на Місяць. Це не просто візит, а створення постійної бази Gateway для подальшого стрибка на Марс.</p>
+                        <div class="stats-row">
+                            <span>СТАТУС: АКТИВНА</span>
+                            <span>ЦІЛЬ: ЛУННА БАЗА</span>
+                            <span>РАКЕТА: SLS</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="mission-card">
+                    <img src="https://mars.nasa.gov/system/resources/detail_files/25611_PIA24424-web.jpg" 
+                         class="mission-header-img" onclick="showImg(this.src)">
+                    <div class="mission-body">
+                        <h2>Mars Perseverance Rover</h2>
+                        <p>Найскладніша лабораторія на колесах, що будь-коли висаджувалася на іншу планету. Він збирає зразки ґрунту в кратері Єзеро, де колись могла бути річкова дельта.</p>
+                        <div class="stats-row">
+                            <span>СТАТУС: НА МАРСІ</span>
+                            <span>ОБЛАДНАННЯ: ГЕЛІКОПТЕР INGENUITY</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="mission-card">
+                    <img src="https://www.nasa.gov/wp-content/uploads/2023/03/voyager_grand_tour.jpg" 
+                         class="mission-header-img" onclick="showImg(this.src)">
+                    <div class="mission-body">
+                        <h2>Voyager: Вихід у міжзоряний простір</h2>
+                        <p>Запущені в 1977 році, ці апарати стали першими рукотворними об'єктами, що покинули геліосферу Сонця. Вони несуть «Золоту пластинку» з інформацією про Землю для позаземних цивілізацій.</p>
+                        <div class="stats-row">
+                            <span>СТАТУС: ЗА МЕЖАМИ СИСТЕМИ</span>
+                            <span>ВІДСТАНЬ: 24 МЛРД КМ</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <aside class="sidebar-right">
+                <a href="index.html" class="terminal-btn">ГОЛОВНА</a>
+                <a href="solar.html" class="terminal-btn">СОНЯЧНА СИСТЕМА</a>
+                <a href="exo.html" class="terminal-btn">ЕКЗОПЛАНЕТИ</a>
+                <a href="blackholes.html" class="terminal-btn">ЧОРНІ ДІРИ</a>
+                <a href="telescopes.html" class="terminal-btn">ТЕЛЕСКОПИ</a>
+                <a href="missions.html" class="terminal-btn active">МІСІЇ NASA</a>
+                <a href="#" class="terminal-btn">ГАЛЕРЕЯ</a>
+                <a href="#" class="terminal-btn">КОНТАКТИ</a>
+            </aside>
+        </main>
+    </div>
+
+    <script>
+        function showImg(src) {
+            document.getElementById('imgModal').style.display = 'flex';
+            document.getElementById('fullImg').src = src;
+        }
+    </script>
+</body>
+</html>
