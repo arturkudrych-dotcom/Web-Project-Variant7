@@ -552,3 +552,107 @@ footer {
     border: 1px solid #4d94ff;
     animation: pulse 2s infinite;
 }
+
+/* Оверлей (затемнення фону) */
+.modal-overlay {
+    display: none; /* Сховано за замовчуванням */
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Саме вікно */
+.modal-window {
+    width: 350px;
+    background: #0b0c10;
+    border: 1px solid #66fcf1;
+    box-shadow: 0 0 30px rgba(102, 252, 241, 0.3);
+    border-radius: 5px;
+    overflow: hidden;
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* Шапка вікна */
+.modal-header {
+    background: rgba(102, 252, 241, 0.1);
+    padding: 10px 15px;
+    border-bottom: 1px solid rgba(102, 252, 241, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.status-dot {
+    width: 8px; height: 8px;
+    background: #00ff88;
+    border-radius: 50%;
+    box-shadow: 0 0 5px #00ff88;
+}
+
+.modal-header .title {
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    color: #66fcf1;
+}
+
+/* Тіло вікна */
+.modal-body {
+    padding: 30px 20px;
+    text-align: center;
+    color: #c5c6c7;
+}
+
+.pulse-icon {
+    font-size: 2rem;
+    color: #66fcf1;
+    margin-bottom: 15px;
+    display: block;
+}
+
+/* Смужка завантаження */
+.mini-progress {
+    width: 100%; height: 4px;
+    background: rgba(102, 252, 241, 0.1);
+    margin-top: 20px;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.mini-bar {
+    width: 100%; height: 100%;
+    background: #66fcf1;
+    animation: barFill 1.5s ease-in-out;
+}
+
+@keyframes barFill {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+/* Кнопка */
+.modal-btn {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-top: 1px solid rgba(102, 252, 241, 0.2);
+    padding: 15px;
+    color: #66fcf1;
+    cursor: pointer;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    transition: 0.3s;
+}
+
+.modal-btn:hover {
+    background: rgba(102, 252, 241, 0.1);
+}

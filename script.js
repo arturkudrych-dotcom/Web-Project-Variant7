@@ -157,6 +157,7 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log("Система готова до моніторингу!");
 });
 
+// Оновлена функція виводу даних
 function showInfo(id, name, dist, freq, status) {
     const panel = document.getElementById('target-details');
     if (panel) {
@@ -168,8 +169,23 @@ function showInfo(id, name, dist, freq, status) {
                 <p class="detail-row"><span class="detail-label">FREQ:</span> ${freq}</p>
                 <p class="detail-row"><span class="detail-label">STATUS:</span> <span style="color: ${status === 'WEAK' ? '#ff4d4d' : '#00ff88'}">${status}</span></p>
                 <hr style="border: 0; border-top: 1px solid rgba(102, 252, 241, 0.2); margin: 15px 0;">
-                <button onclick="alert('Сигнал відправлено на ${name}')" class="terminal-btn">Відправити сигнал</button>
+                
+                <button onclick="showSignalModal('${name}')" class="terminal-btn">Відправити сигнал</button>
             </div>
         `;
     }
+}
+
+// Функція відкриття модалки
+function showSignalModal(targetName) {
+    const modal = document.getElementById('signal-modal');
+    const text = document.getElementById('signal-status-text');
+    
+    text.innerText = `СИГНАЛ УСПІШНО ВІДПРАВЛЕНО НА: ${targetName}`;
+    modal.style.display = 'flex';
+}
+
+// Функція закриття
+function closeSignalModal() {
+    document.getElementById('signal-modal').style.display = 'none';
 }

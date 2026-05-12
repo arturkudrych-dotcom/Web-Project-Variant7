@@ -162,6 +162,26 @@
         <span class="close">&times;</span>
         <img class="modal-content" id="img01">
     </div>
+	
+	<div id="signal-modal" class="modal-overlay">
+    <div class="modal-window">
+        <div class="modal-header">
+            <span class="status-dot"></span>
+            <span class="title">SYSTEM TRANSMISSION</span>
+        </div>
+        <div class="modal-body">
+            <i class="fas fa-satellite-dish pulse-icon"></i>
+            <p id="signal-status-text">Ініціалізація зв'язку...</p>
+            <div class="mini-progress">
+                <div class="mini-bar"></div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button onclick="closeSignalModal()" class="modal-btn">ПРИЙНЯТИ</button>
+        </div>
+    </div>
+</div>
+	
 <script>
     window.onscroll = function() {
         let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
