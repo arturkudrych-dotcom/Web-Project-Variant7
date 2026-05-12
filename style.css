@@ -867,37 +867,54 @@ footer {
     animation: fadeInUp 1.2s ease-out forwards;
 }
 
-/* Налаштування для телефонів */
-@media (max-width: 768px) {
-    .terminal-container, .space-terminal {
-        padding: 15px; /* Менше відступів по боках */
-        margin: 10px;
-    }
 
-    .terminal-main, .term-main {
-        flex-direction: column; /* Ставимо радар зверху, а текст знизу */
-        align-items: center;
-        gap: 20px;
-    }
-
-    .radar-box, .term-radar-box {
-        flex: 0 0 auto; /* Дозволяємо радару самому займати місце */
+/* Універсальні виправлення для мобілок */
+@media (max-width: 600px) {
+    
+    /* 1. Виправляємо логотип (щоб не обрізався як на скріншоті) */
+    h1, h2, .logo-link h1, .logo-link h2 {
+        font-size: 24px !important; /* Зменшуємо текст заголовка */
+        text-align: center;
         width: 100%;
-        display: flex;
-        justify-content: center;
     }
 
-    .radar-circle, .radar-circle-new {
-        width: 200px; /* Трохи зменшуємо радар для маленьких екранів */
-        height: 200px;
+    /* 2. Контейнери (щоб не вилазили за краї) */
+    .container, .terminal-container, .space-terminal {
+        width: 95% !important;
+        margin: 10px auto !important;
+        padding: 10px !important;
+        box-sizing: border-box;
     }
 
-    .data-panel, .term-info {
-        border-left: none;
-        border-top: 2px solid #66fcf1; /* Лінія тепер зверху, а не збоку */
-        padding-left: 0;
-        padding-top: 20px;
-        width: 100%;
-        max-width: none;
+    /* 3. Кнопки меню (щоб стали акуратнішими) */
+    .menu-item, .nav-btn, [class*="button"] {
+        width: 100% !important;
+        font-size: 14px !important;
+        padding: 10px !important;
+        margin-bottom: 5px !important;
+    }
+
+    /* 4. Картинки (Венера та інші) */
+    img, .planet-card img {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+
+    /* 5. Радар та Панель (якщо вони на цій сторінці) */
+    .terminal-main {
+        flex-direction: column !important; /* Ставимо один під одного */
+        align-items: center !important;
+    }
+
+    .radar-box, .radar-circle {
+        width: 200px !important; /* Зменшуємо радар */
+        height: 200px !important;
+    }
+
+    .data-panel {
+        width: 100% !important;
+        border-left: none !important;
+        border-top: 2px solid #66fcf1;
+        padding: 15px 0 !important;
     }
 }
