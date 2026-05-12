@@ -14,6 +14,27 @@
             color: #c5c6c7;
             overflow-y: auto;
         }
+		
+		body {
+    /* Колір глибокого космосу */
+    background-color: #05080a; 
+    
+    /* Комбінація: зірковий пил + радіальний градієнт для об'єму */
+    background-image: 
+        radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 40px 70px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 130px 80px, #fff, rgba(0,0,0,0)),
+        radial-gradient(circle at center, #0b1a24 0%, #05080a 100%);
+    
+    /* Щоб зірки повторювалися по всьому екрану */
+    background-size: 200px 200px, 200px 200px, 300px 300px, 250px 250px, 220px 220px, 100% 100%;
+    background-attachment: fixed; /* Фон не рухається при прокрутці */
+    
+    margin: 0;
+    color: #fff;
+}
 
         .layout-wrapper {
             max-width: 1400px; 
@@ -252,6 +273,7 @@
     </style>
 </head>
 <body>
+<div class="content-container animate-appearance">
     <div class="layout-wrapper">
         <header class="header">
             <h1><span class="glitch-word">ВІДКРИТИЙ</span> <span class="neon-word">КОСМОС</span></h1>
