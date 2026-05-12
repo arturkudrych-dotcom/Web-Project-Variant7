@@ -656,3 +656,107 @@ footer {
 .modal-btn:hover {
     background: rgba(102, 252, 241, 0.1);
 }
+
+.terminal-btn {
+    background: transparent;
+    color: #66fcf1;
+    border: 1px solid #66fcf1;
+    padding: 10px 20px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    
+    /* Зрізані кути для Sci-Fi вигляду */
+    clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%);
+    
+    /* Тінь/Сяйво */
+    box-shadow: inset 0 0 10px rgba(102, 252, 241, 0.2);
+}
+
+/* Ефект при наведенні */
+.terminal-btn:hover {
+    background: rgba(102, 252, 241, 0.1);
+    box-shadow: 0 0 20px rgba(102, 252, 241, 0.5), inset 0 0 15px rgba(102, 252, 241, 0.3);
+    text-shadow: 0 0 8px #66fcf1;
+    padding-left: 25px; /* Легке зміщення тексту */
+}
+
+/* Декоративна лінія збоку */
+.terminal-btn::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(102, 252, 241, 0.4), transparent);
+    transition: 0.5s;
+}
+
+.terminal-btn:hover::before {
+    left: 100%;
+}
+
+/* Початковий стан для всіх блоків, які мають з'явитися */
+.fade-in-section {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+/* Клас, який ми будемо додавати через JavaScript */
+.fade-in-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Екран завантаження */
+#loader-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: #0b0c10;
+    z-index: 9999;
+    display: flex;
+    align-items: center; justify-content: center;
+    transition: opacity 0.8s ease;
+}
+
+.loading-text {
+    color: #66fcf1;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 5px;
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+}
+
+.progress-container {
+    width: 300px;
+    height: 4px;
+    background: rgba(102, 252, 241, 0.1);
+    border-radius: 2px;
+}
+
+#progress-fill {
+    width: 0%;
+    height: 100%;
+    background: #66fcf1;
+    box-shadow: 0 0 15px #66fcf1;
+    transition: width 1.5s ease-in-out;
+}
+
+/* Стилі для контенту, який з'являється поступово */
+.fade-in-section {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fade-in-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}

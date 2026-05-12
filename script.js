@@ -170,7 +170,7 @@ function showInfo(id, name, dist, freq, status) {
                 <p class="detail-row"><span class="detail-label">STATUS:</span> <span style="color: ${status === 'WEAK' ? '#ff4d4d' : '#00ff88'}">${status}</span></p>
                 <hr style="border: 0; border-top: 1px solid rgba(102, 252, 241, 0.2); margin: 15px 0;">
                 
-                <button onclick="showSignalModal('${name}')" class="terminal-btn">Відправити сигнал</button>
+                 <button onclick="showSignalModal('${name}')" class="terminal-btn">Відправити сигнал</button>
             </div>
         `;
     }
@@ -188,4 +188,33 @@ function showSignalModal(targetName) {
 // Функція закриття
 function closeSignalModal() {
     document.getElementById('signal-modal').style.display = 'none';
+}
+
+window.addEventListener('load', () => {
+    const progress = document.getElementById('progress-fill');
+    const loader = document.getElementById('loader-overlay');
+    
+    // 1. Починаємо заповнення смужки
+    setTimeout(() => {
+        progress.style.width = '100%';
+    }, 100);
+
+    // 2. Коли смужка заповнилась, прибираємо заставку
+    setTimeout(() => {
+        loader.style.opacity = '0';
+        setTimeout(() => {
+            loader.style.display = 'none';
+            // 3. Запускаємо почергову появу блоків
+            revealSections();
+        }, 800);
+    }, 1800);
+});
+
+function revealSections() {
+    const sections = document.querySelectorAll('.fade-in-section');
+    sections.forEach((section, index) => {
+        setTimeout(() => {
+            section.classList.add('visible');
+        }, index * 400); // Кожен наступний блок з'являється через 0.4 сек
+    });
 }
