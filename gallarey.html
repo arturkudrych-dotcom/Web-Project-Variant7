@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Чорні Діри | ВІДКРИТИЙ КОСМОС</title>
+    <title>ГАЛЕРЕЯ | ВІДКРИТИЙ КОСМОС</title>
     <link rel="stylesheet" href="style.css">
-	<link rel="stylesheet" href="style.css">
+	<link rel="icon" href="favicon.ico" type="image/x-icon">
     <style>
         body, html {
             margin: 0;
@@ -27,10 +27,17 @@
         .header { text-align: center; padding: 20px 0; }
 
         .main-display-row {
-            display: flex;
-            gap: 30px;
-            align-items: flex-start;
-        }
+           display: flex;
+    gap: 20px;
+    align-items: flex-start; /* ОСНОВНА КОМАНДА: меню буде зверху */
+}
+		
+		.main-container {
+    display: flex;
+    align-items: flex-start; /* Підтягує меню до самого верху заголовка */
+    gap: 20px;
+    max-width: 100%;
+}
 
         .content-area {
             flex: 1;
@@ -43,6 +50,8 @@
         .intro-text-block {
             background: rgba(102, 252, 241, 0.05);
             border-left: 4px solid var(--accent);
+			width: 100%;      /* Текст займає всю ширину ЛІВОЇ частини */
+			box-sizing: border-box;
             padding: 20px;
         }
 
@@ -81,19 +90,19 @@
             text-align: center;
             background: rgba(11, 12, 16, 0.9);
         }
-
-        /* ВИПРАВЛЕННЯ МЕНЮ */
-        /* ВИПРАВЛЕННЯ МЕНЮ */
+/* ВИПРАВЛЕННЯ МЕНЮ */
 .sidebar-right {
-    width: 280px;            /* Фіксована ширина контейнера */
+    width: 260px;            /* Фіксована ширина контейнера */
     flex-shrink: 0;
     border: 1px solid var(--accent);
     padding: 20px 15px;      /* Внутрішні відступи */
     background: rgba(11, 12, 16, 0.95);
     border-radius: 4px;
     display: flex;
+	position: sticky;
     flex-direction: column;
-    gap: 10px;               /* Рівномірна відстань між кнопками */
+    gap: 10px;
+	top: 20px;	/* Рівномірна відстань між кнопками */
     box-sizing: border-box;  /* Важливо: щоб padding не розширював блок */
 }
 
@@ -135,6 +144,8 @@
     float: right;            /* Закриваюча дужка завжди справа */
 }
 
+}
+
         .facts-section {
             width: 100%;
             border-top: 1px solid rgba(102, 252, 241, 0.3);
@@ -156,9 +167,17 @@
 		/* Стилі для сітки галереї */
 .gallery-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 колонки */
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Авто-заповнення */
     gap: 15px;
-    padding: 15px;
+}
+
+.planet-card img {
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.planet-card img:hover {
+    filter: brightness(1.2);
 }
 
 .planet-card {
@@ -191,6 +210,44 @@
     text-transform: uppercase;
     letter-spacing: 1px;
 }
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.9);
+    padding-top: 50px;
+}
+
+.modal-content {
+    margin: auto;
+    display: block;
+    max-width: 80%;
+    max-height: 80vh;
+    border: 2px solid var(--accent);
+}
+
+.close-modal {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: var(--accent);
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#caption {
+    text-align: center;
+    color: var(--accent);
+    padding: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
 		
     </style>
 </head>
@@ -200,73 +257,110 @@
             <h1><span class="glitch-word">ВІДКРИТИЙ</span> <span class="neon-word">КОСМОС</span></h1>
         </header>
 
-        <!-- Вставити всередину .description-panel -->
-<h2>🪐 РЕЄСТР ПОЗАСОНЯЧНИХ ОБ'ЄКТІВ</h2>
-<div class="info-text">
-    <span class="cyan-label">ОПИС:</span> Даний розділ містить дані про планети, що обертаються навколо інших зірок. Візуалізація дозволяє досліджувати тисячі відкритих світів за межами нашої системи.
-</div>
-<div class="info-text">
-    <span class="cyan-label">МЕТОДИ ДЕТЕКЦІЇ:</span> Аналіз базується на транзитній фотометрії та вимірюванні радіальних швидкостей зірок. Використовуються дані телескопів <span class="cyan-label">Kepler, TESS та James Webb</span>.
-</div>
-<div class="status-footer">
-    <span>● СТАТУС: АРХІВ ДОСТУПНИЙ</span>
-    <span>● СИСТЕМА: ГАЛАКТИКА_NET</span>
-    <span>● ОНОВЛЕНО: 12.05.2026</span>
-</div>
-
-<!-- Вставити всередину .media-container -->
-<div class="gallery-grid">
-    <!-- Картка 1 -->
-    <div class="planet-card">
-        <img src="https://www.nasa.gov/wp-content/uploads/2023/03/55_cancri_e_art.jpg" alt="Exoplanet">
-        <div class="planet-info">55 Cancri e (Янссен)</div>
-    </div>
-
-    <!-- Картка 2 -->
-    <div class="planet-card">
-        <img src="https://exoplanets.nasa.gov/internal_resources/120" alt="Exoplanet">
-        <div class="planet-info">Kepler-186f</div>
-    </div>
-
-    <!-- Картка 3 -->
-    <div class="planet-card">
-        <img src="https://www.nasa.gov/wp-content/uploads/2023/03/trappist-1b_art.jpg" alt="Exoplanet">
-        <div class="planet-info">TRAPPIST-1b</div>
-    </div>
-
-    <!-- Картка 4 -->
-    <div class="planet-card">
-        <img src="https://exoplanets.nasa.gov/internal_resources/202" alt="Exoplanet">
-        <div class="planet-info">Proxima Centauri b</div>
-    </div>
-
-    <!-- Картка 5 -->
-    <div class="planet-card">
-        <img src="https://www.nasa.gov/wp-content/uploads/2015/07/art_kepler-452b.jpg" alt="Exoplanet">
-        <div class="planet-info">Kepler-452b (Земля 2.0)</div>
-    </div>
-
-    <!-- Картка 6 -->
-    <div class="planet-card">
-        <img src="https://exoplanets.nasa.gov/internal_resources/242" alt="Exoplanet">
-        <div class="planet-info">WASP-12b (Планета-вугілля)</div>
-    </div>
-</div>
-
-            <aside class="sidebar-right">
-               <a href="index.html" class="terminal-btn">ГОЛОВНА</a>
-					<a href="solar.html" class="terminal-btn">СОНЯЧНА СИСТЕМА</a>
-					<a href="exo.html" class="terminal-btn">ЕКЗОПЛАНЕТИ</a>
-					<a href="chorni.html" class="terminal-btn">ЧОРНІ ДІРИ</a>
-					<a href="teles.html" class="terminal-btn">ТЕЛЕСКОПИ</a>
-					<a href="mnasa.html" class="terminal-btn">МІСІЇ NASA</a> 
-					<a href="gallarey.html" class="terminal-btn">ГАЛЕРЕЯ</a>
-					<a href="contact.html" class="terminal-btn">КОНТАКТИ</a>
-            </aside>
-        </main>
-
+ <div class="main-container">
+    <!-- ЛІВА ЧАСТИНА: Контент (Текст + Галерея) -->
+    <div class="content-area">
         
-    </div>
+        <!-- Блок з текстом -->
+        <section class="intro-text-block">
+            <h2>🚀 РЕЄСТР ПОЗАСОНЯЧНИХ ОБ'ЄКТІВ</h2>
+            <p>Від перших кроків у пошуку екзопланет до аналізу атмосфер далеких світів. Технічний огляд найважливіших об'єктів за межами Сонячної системи.</p>
+            <p style="font-size: 11px;"><span class="cyan-label">● СТАТУС: АРХІВ ДОСТУПНИЙ ● ОНОВЛЕНО: 12.05.2026</span></p>
+        </section>
+
+        <!-- Сітка галереї -->
+        <div class="gallery-grid">
+            <!-- Картка 1 -->
+            <div class="planet-card">
+                <img src="g1.jpg" alt="55 Cancri e">
+                <div class="planet-info">55 CANCRI E</div>
+            </div>
+            <!-- Картка 2 -->
+            <div class="planet-card">
+                <img src="g2.jpg" alt="Kepler-186f">
+                <div class="planet-info">KEPLER-186F</div>
+            </div>
+            <!-- Картка 3 -->
+            <div class="planet-card">
+                <img src="g3.jpg" alt="Trappist-1b">
+                <div class="planet-info">TRAPPIST-1B</div>
+            </div>
+            <!-- Картка 4 -->
+            <div class="planet-card">
+                <img src="g4.jpg" alt="Proxima b">
+                <div class="planet-info">PROXIMA B</div>
+            </div>
+            <!-- Картка 5 -->
+            <div class="planet-card">
+                <img src="g5.jpg" alt="Kepler-452b">
+                <div class="planet-info">KEPLER-452B (ЗЕМЛЯ 2.0)</div>
+            </div>
+            <!-- Картка 6 -->
+            <div class="planet-card">
+                <img src="g6.jpg" alt="WASP-12b">
+                <div class="planet-info">WASP-12B</div>
+            </div>
+            <!-- Картка 7 -->
+            <div class="planet-card">
+                <img src="g7.jpg" alt="Gliese 1214b">
+                <div class="planet-info">GLIESE 1214B</div>
+            </div>
+            <!-- Картка 8 -->
+            <div class="planet-card">
+                <img src="g8.jpg" alt="HD 189733b">
+                <div class="planet-info">HD 189733B</div>
+            </div>
+            <!-- Картка 9 -->
+            <div class="planet-card">
+                <img src="g9.jpg" alt="K2-18b">
+                <div class="planet-info">K2-18B</div>
+            </div>
+            <!-- Картка 10 -->
+            <div class="planet-card">
+                <img src="g10.jpg" alt="LHS 1140b">
+                <div class="planet-info">LHS 1140B</div>
+            </div>
+            <!-- Картка 11 -->
+            <div class="planet-card">
+                <img src="g11.jpg" alt="TOI 700 d">
+                <div class="planet-info">TOI 700 D</div>
+            </div>
+            <!-- Картка 12 -->
+            <div class="planet-card">
+                <img src="g12.jpg" alt="Kepler-16b">
+                <div class="planet-info">KEPLER-16B</div>
+            </div>
+            <!-- Картка 13 -->
+            <div class="planet-card">
+                <img src="g13.jpg" alt="WASP-76b">
+                <div class="planet-info">WASP-76B</div>
+            </div>
+            <!-- Картка 14 -->
+            <div class="planet-card">
+                <img src="g14.jpg" alt="Kepler-22b">
+                <div class="planet-info">KEPLER-22B</div>
+            </div>
+            <!-- Картка 15 -->
+            <div class="planet-card">
+                <img src="g15.jpg" alt="HD 106906 b">
+                <div class="planet-info">HD 106906 B</div>
+            </div>
+        </div>
+    </div> <!-- Кінець content-area -->
+
+    <!-- ПРАВА ЧАСТИНА: Меню -->
+    <nav class="sidebar-right">
+          <a href="index.html" class="terminal-btn">ГОЛОВНА</a>
+		<a href="solar.html" class="terminal-btn">СОНЯЧНА СИСТЕМА</a>
+		<a href="exo.html" class="terminal-btn">ЕКЗОПЛАНЕТИ</a>
+		<a href="chorni.html" class="terminal-btn">ЧОРНІ ДІРИ</a>
+		<a href="teles.html" class="terminal-btn">ТЕЛЕСКОПИ</a>
+		<a href="mnasa.html" class="terminal-btn">МІСІЇ NASA</a> 
+		<a href="gallarey.html" class="terminal-btn">ГАЛЕРЕЯ</a>
+		<a href="contact.html" class="terminal-btn">КОНТАКТИ</a>
+    </nav>
+</div>
+</main>
 	
 	<script>
     document.addEventListener("DOMContentLoaded", function() {
@@ -285,6 +379,34 @@
             }
         });
     });
+</script>
+
+<script>
+    const modal = document.getElementById("photoModal");
+    const modalImg = document.getElementById("fullImage");
+    const captionText = document.getElementById("caption");
+
+    // Знаходимо всі картинки в картках
+    document.querySelectorAll('.planet-card img').forEach(img => {
+        img.onclick = function() {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            // Беремо текст з блоку planet-info, який іде після картинки
+            captionText.innerHTML = this.parentElement.querySelector('.planet-info').innerHTML;
+        }
+    });
+
+    // Закриття при кліку на хрестик
+    document.querySelector('.close-modal').onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // Закриття при кліку поза фото
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
 </script>
 	
 	<script src="script.js"></script>
