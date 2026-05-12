@@ -1,5 +1,185 @@
+<!DOCTYPE html>
+<html lang="uk">
 <head>
-    <link rel="stylesheet" href="style.css"> </head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Чорні Діри | ВІДКРИТИЙ КОСМОС</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            background: #0b0c10;
+            color: #c5c6c7;
+            overflow-y: auto;
+        }
+
+        .layout-wrapper {
+            max-width: 1200px; /* Одинакова ширина з іншими сторінками */
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .header { text-align: center; padding: 20px 0; }
+
+        .main-display-row {
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+        }
+
+        .content-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            min-width: 0;
+        }
+
+        .intro-text-block {
+            background: rgba(102, 252, 241, 0.05);
+            border-left: 4px solid var(--accent);
+            padding: 20px;
+        }
+
+        /* Стилі для фотогалереї */
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .photo-item {
+            border: 1px solid var(--accent);
+            border-radius: 4px;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s;
+            opacity: 0.8;
+        }
+
+        .photo-item img:hover {
+            transform: scale(1.1);
+            opacity: 1;
+        }
+
+        .photo-caption {
+            padding: 10px;
+            font-size: 0.8rem;
+            text-align: center;
+            background: rgba(11, 12, 16, 0.9);
+        }
+
+        .sidebar-right {
+            width: 280px;
+            flex-shrink: 0;
+            border: 1px solid var(--accent);
+            padding: 25px 15px;
+            background: rgba(11, 12, 16, 0.95);
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .sidebar-right .terminal-btn {
+            width: 100%;
+            display: block;
+            text-align: center;
+            padding: 12px;
+            text-decoration: none;
+        }
+
+        .facts-section {
+            width: 100%;
+            border-top: 1px solid rgba(102, 252, 241, 0.3);
+            padding-top: 30px;
+        }
+
+        .facts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .fact-card {
+            background: rgba(31, 40, 51, 0.4);
+            border: 1px solid #1f2833;
+            padding: 20px;
+        }
+    </style>
+</head>
 <body>
-    ...
-    <script src="script.js"></script> </body>
+    <div class="layout-wrapper">
+        <header class="header">
+            <h1><span class="glitch-word">ВІДКРИТИЙ</span> <span class="neon-word">КОСМОС</span></h1>
+        </header>
+
+        <main class="main-display-row">
+            <div class="content-area">
+                <div class="intro-text-block">
+                    <h2>🕳️ АНОМАЛІЇ ПРОСТОРУ-ЧАСУ</h2>
+                    <p><b>ОБ'ЄКТ:</b> Чорна діра — область простору-часу, гравітаційне тяжіння якої настільки велике, що навіть світло не може її покинути.</p>
+                    <p style="margin-top: 8px;"><b>МОНІТОРИНГ:</b> Спостереження ведеться через аналіз рентгенівського випромінювання та викривлення орбіт сусідніх зірок.</p>
+                </div>
+
+                <div class="photo-gallery">
+                    <div class="photo-item">
+                        <img src="сhorni1.jpg" alt="M87*">
+                        <div class="photo-caption">Чорна діра M87</div>
+                    </div>
+                    <div class="photo-item">
+                        <img src="chorni2.jpg" alt="Sagittarius A*">
+                        <div class="photo-caption">Стрілець A* (Центр нашої Галактики)</div>
+                    </div>
+                    <div class="photo-item">
+                        <img src="chorni3.jpg" alt="Accretion disk">
+                        <div class="photo-caption">Симуляція акреційного диска</div>
+                    </div>
+                </div>
+            </div>
+
+            <aside class="sidebar-right">
+                <a href="index.html" class="terminal-btn">ГОЛОВНА</a>
+                <a href="solar.html" class="terminal-btn">СОНЯЧНА СИСТЕМА</a>
+                <a href="exo.html" class="terminal-btn">ЕКЗОПЛАНЕТИ</a>
+                <a href="blackholes.html" class="terminal-btn active">ЧОРНІ ДІРИ</a>
+                <a href="#" class="terminal-btn">ТЕЛЕСКОПИ</a>
+                <a href="#" class="terminal-btn">МІСІЇ NASA</a>
+                <a href="#" class="terminal-btn">ГАЛЕРЕЯ</a>
+                <a href="#" class="terminal-btn">КОНТАКТИ</a>
+            </aside>
+        </main>
+
+        <section class="facts-section">
+            <h2 style="color: var(--accent);">🌪️ ГРАВІТАЦІЙНІ ПАРАДОКСИ</h2>
+            <div class="facts-grid">
+                <div class="fact-card">
+                    <h4>⏳ Уповільнення часу</h4>
+                    <p>Поблизу чорної діри час тече повільніше. Для зовнішнього спостерігача ви будете вічно "застигати" на межі горизонту подій.</p>
+                </div>
+                <div class="fact-card">
+                    <h4>🍝 Ефект спагетіфікації</h4>
+                    <p>Якщо потрапити в чорну діру, величезна різниця гравітації між вашою головою та ногами розтягне ваше тіло у довгу тонку нитку.</p>
+                </div>
+                <div class="fact-card">
+                    <h4>🔊 Звук чорної діри</h4>
+                    <p>NASA записало звукові хвилі від чорної діри у скупченні Персея. Це низькочастотний гул, перетворений у чутний для людей діапазон.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+	<script src="script.js"></script>
+</body>
+</html>

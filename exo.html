@@ -1,5 +1,214 @@
+<!DOCTYPE html>
+<html lang="uk">
 <head>
-    <link rel="stylesheet" href="style.css"> </head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Екзопланети | ВІДКРИТИЙ КОСМОС</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Уніфіковані стилі для дотримання однакової ширини */
+        body, html {
+            margin: 0;
+            padding: 0;
+            background: #0b0c10;
+            color: #c5c6c7;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        .layout-wrapper {
+            max-width: 1200px; /* Така сама ширина, як на головній */
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 20px 0;
+            width: 100%;
+        }
+
+        /* Основний ряд: Контент зліва + Меню справа */
+        .main-display-row {
+            display: flex;
+            flex-direction: row;
+            gap: 30px;
+            align-items: flex-start;
+        }
+
+        .content-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            min-width: 0;
+        }
+
+        /* Технічний опис */
+        .intro-text-block {
+            background: rgba(102, 252, 241, 0.05);
+            border-left: 4px solid var(--accent);
+            padding: 20px;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .intro-text-block h2 {
+            color: var(--accent);
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Вікно 3D карти екзопланет */
+        .iframe-window {
+            width: 100%;
+            height: 600px;
+            border: 1px solid var(--accent);
+            border-radius: 4px;
+            background: rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Бокове меню */
+        .sidebar-right {
+            width: 280px;
+            flex-shrink: 0;
+            border: 1px solid var(--accent);
+            padding: 25px 15px;
+            background: rgba(11, 12, 16, 0.95);
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .sidebar-right .terminal-btn {
+            width: 100%;
+            display: block;
+            text-align: center;
+            padding: 12px;
+            box-sizing: border-box;
+            text-decoration: none;
+        }
+
+        /* Блок фактів знизу */
+        .facts-section {
+            width: 100%;
+            border-top: 1px solid rgba(102, 252, 241, 0.3);
+            padding-top: 30px;
+            margin-top: 20px;
+        }
+
+        .facts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .fact-card {
+            background: rgba(31, 40, 51, 0.4);
+            border: 1px solid #1f2833;
+            padding: 15px;
+            border-radius: 4px;
+            transition: 0.3s;
+        }
+
+        .fact-card:hover {
+            border-color: var(--accent);
+        }
+
+        .fact-card h4 {
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+
+        .fact-card p {
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+    </style>
+</head>
 <body>
-    ...
-    <script src="script.js"></script> </body>
+    <canvas id="stars-canvas"></canvas>
+
+    <div class="layout-wrapper">
+        
+        <header class="header">
+            <a href="index.html" style="text-decoration: none;">
+                <h1>
+                    <span class="glitch-word" data-text="ВІДКРИТИЙ">ВІДКРИТИЙ</span>
+                    <span class="neon-word">КОСМОС</span>
+                </h1>
+            </a>
+        </header>
+
+        <main class="main-display-row">
+            
+            <div class="content-area">
+                <div class="intro-text-block">
+                    <h2>🌌 РЕЄСТР ПОЗАСОНЯЧНИХ ОБ'ЄКТІВ</h2>
+                    <p><b>ОПИС:</b> Даний розділ містить дані про планети, що обертаються навколо інших зірок. Візуалізація дозволяє досліджувати тисячі відкритих світів за межами нашої системи.</p>
+                    <p style="margin-top: 8px;"><b>МЕТОДИ ДЕТЕКЦІЇ:</b> Аналіз базується на транзитній фотометрії та вимірюванні радіальних швидкостей зірок. Використовуються дані телескопів <b>Kepler, TESS та James Webb</b>.</p>
+                    <div style="margin-top: 15px; display: flex; gap: 20px; font-size: 0.8rem; color: #45a29e; font-weight: bold;">
+                        <span>● СТАТУС: АРХІВ ДОСТУПНИЙ</span>
+                        <span>● СИСТЕМА: ГАЛАКТИКА_NET</span>
+                    </div>
+                </div>
+
+                <div class="iframe-window">
+                    <iframe src="https://eyes.nasa.gov/apps/exo/#/"></iframe>
+                </div>
+            </div>
+
+            <aside class="sidebar-right">
+                <aside class="sidebar-right">
+                <a href="index.html" class="terminal-btn">ГОЛОВНА</a>
+                <a href="solar.html" class="terminal-btn active">СОНЯЧНА СИСТЕМА</a>
+                <a href="exo.html" class="terminal-btn">ЕКЗОПЛАНЕТИ</a>
+                <a href="chorni.html" class="terminal-btn">ЧОРНІ ДІРИ</a>
+                <a href="teles.html" class="terminal-btn">ТЕЛЕСКОПИ</a>
+                <a href="mnasa.html" class="terminal-btn">МІСІЇ NASA</a>
+                <a href="gallarey.html" class="terminal-btn">ГАЛЕРЕЯ</a>
+                <a href="contact.html" class="terminal-btn">КОНТАКТИ</a>
+            </aside>
+
+        </main>
+
+        <section class="facts-section">
+            <h2 style="color: var(--accent);">🔭 ДАЛЕКІ СВІТИ: ЦІКАВІ ФАКТИ</h2>
+            <div class="facts-grid">
+                <div class="fact-card">
+                    <h4>💎 Діамантова планета</h4>
+                    <p>Планета <b>55 Cancri e</b> вдвічі більша за Землю і, за розрахунками фізиків, на третину складається з чистого алмазу через високий тиск та вміст вуглецю.</p>
+                </div>
+                <div class="fact-card">
+                    <h4>💧 Скляні дощі</h4>
+                    <p>На яскраво-блакитній планеті <b>HD 189733b</b> дмуть вітри швидкістю 7000 км/год, а замість води там йдуть дощі з розплавленого скла.</p>
+                </div>
+                <div class="fact-card">
+                    <h4>🔴 Сім сестер TRAPPIST-1</h4>
+                    <p>У цій системі відкрито цілих сім скелястих планет, схожих на Землю, три з яких знаходяться в "зоні життя", де може бути рідка вода.</p>
+                </div>
+                <div class="fact-card">
+                    <h4>🌑 Найтемніший світ</h4>
+                    <p>Екзопланета <b>TrES-2b</b> відбиває менше 1% світла, що падає на неї. Вона чорніша за вугілля і світиться ледь помітним червоним кольором.</p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
