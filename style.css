@@ -505,12 +505,6 @@ footer {
     transform: scale(1.5);
     background: #fff;
 }
-
-/* Координати точок */
-#earth-target { top: 50%; left: 50%; transform: translate(-50%, -50%); background: #4d94ff; box-shadow: 0 0 15px #4d94ff; }
-#mars-target { top: 30%; left: 70%; }
-#voyager-target { top: 80%; left: 20%; background: #ff4d4d; box-shadow: 0 0 10px #ff4d4d; }
-
 /* Інфо-панель */
 .info-panel {
     width: 300px;
@@ -535,3 +529,26 @@ footer {
 }
 
 .detail-label { color: rgba(102, 252, 241, 0.6); }
+
+/* Координати для нових точок */
+#earth-target { top: 50%; left: 50%; transform: translate(-50%, -50%); background: #4d94ff; box-shadow: 0 0 15px #4d94ff; }
+#moon-target { top: 45%; left: 58%; width: 6px; height: 6px; background: #ddd; }
+#mars-target { top: 25%; left: 75%; background: #ff7675; }
+#starlink-target { top: 40%; left: 35%; width: 4px; height: 4px; background: #55efc4; }
+#cassini-target { top: 15%; left: 20%; background: #fab1a0; opacity: 0.5; }
+#voyager-target { top: 85%; left: 15%; background: #ff4d4d; box-shadow: 0 0 10px #ff4d4d; }
+
+/* Додамо пульсацію для активних об'єктів */
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(1.5); opacity: 0.4; }
+}
+
+#earth-target::after {
+    content: '';
+    position: absolute;
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    border: 1px solid #4d94ff;
+    animation: pulse 2s infinite;
+}
