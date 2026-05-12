@@ -218,3 +218,50 @@ function revealSections() {
         }, index * 400); // Кожен наступний блок з'являється через 0.4 сек
     });
 }
+
+const canvas = document.getElementById('stars-canvas');
+const ctx = canvas.getContext('2d');
+
+let stars = [];
+const starCount = 150; // Кількість зірок
+
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+// Створюємо об'єкти зірок
+for (let i = 0; i < starCount; i++) {
+    stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: Math.random() * 1.5,
+        opacity: Math.random(),
+        speed: Math.random() * 0.02 // Швидкість мерехтіння
+    });
+}
+
+function drawStars() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#ffffff"; // акцентний колір для зірок
+
+    stars.forEach(star => {
+        ctx.globalAlpha = star.opacity;
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Ефект мерехтіння
+        star.opacity += star.speed;
+        if (star.opacity > 1 || star.opacity < 0) {
+            star.speed = -star.speed;
+        }
+    });
+
+    requestAnimationFrame(drawStars);
+}
+
+drawStars();
