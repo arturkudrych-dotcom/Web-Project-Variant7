@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Чорні Діри | ВІДКРИТИЙ КОСМОС</title>
+    <link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="style.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            background: #0b0c10;
+            color: #c5c6c7;
+            overflow-y: auto;
+        }
+
+        .layout-wrapper {
+            max-width: 1400px; 
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .header { text-align: center; padding: 20px 0; }
+
+        .main-display-row {
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+        }
+
+        .content-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            min-width: 0;
+        }
+
+        .intro-text-block {
+            background: rgba(102, 252, 241, 0.05);
+            border-left: 4px solid var(--accent);
+            padding: 20px;
+        }
+
+        /* Стилі для фотогалереї */
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .photo-item {
+            border: 1px solid var(--accent);
+            border-radius: 4px;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s;
+            opacity: 0.8;
+        }
+
+        .photo-item img:hover {
+            transform: scale(1.1);
+            opacity: 1;
+        }
+
+        .photo-caption {
+            padding: 10px;
+            font-size: 0.8rem;
+            text-align: center;
+            background: rgba(11, 12, 16, 0.9);
+        }
+
+        /* ВИПРАВЛЕННЯ МЕНЮ */
+        /* ВИПРАВЛЕННЯ МЕНЮ */
+.sidebar-right {
+    width: 280px;            /* Фіксована ширина контейнера */
+    flex-shrink: 0;
+    border: 1px solid var(--accent);
+    padding: 20px 15px;      /* Внутрішні відступи */
+    background: rgba(11, 12, 16, 0.95);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;               /* Рівномірна відстань між кнопками */
+    box-sizing: border-box;  /* Важливо: щоб padding не розширював блок */
+}
+
+.terminal-btn {
+    display: block;          /* Кнопка стає блоком */
+    width: 100%;             /* Займає 100% ширини батьківського контейнера */
+    box-sizing: border-box;  /* Враховує внутрішні відступи в ширину */
+    padding: 12px 15px;
+    background: rgba(102, 252, 241, 0.02);
+    border: 1px solid rgba(102, 252, 241, 0.2);
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.85rem;
+    text-align: left;        /* Вирівнювання по лівому краю для стабільності */
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    white-space: nowrap;     /* Текст не переноситься на інший рядок */
+    overflow: hidden;        /* Якщо текст задовгий — він не зламає кнопку */
+}
+
+/* Ефект при наведенні та для активної сторінки */
+.terminal-btn:hover, 
+.terminal-btn.active {
+    background: rgba(102, 252, 241, 0.1);
+    border-color: var(--accent);
+    box-shadow: inset 0 0 10px rgba(102, 252, 241, 0.2);
+    padding-left: 22px;      /* Легке зміщення вправо при ховері */
+}
+
+/* Додаємо невеликий префікс перед текстом для стилю */
+.terminal-btn::before {
+    content: "[ ";
+    opacity: 0.5;
+}
+
+.terminal-btn::after {
+    content: " ]";
+    opacity: 0.5;
+    float: right;            /* Закриваюча дужка завжди справа */
+}
+
+        .facts-section {
+            width: 100%;
+            border-top: 1px solid rgba(102, 252, 241, 0.3);
+            padding-top: 30px;
+        }
+
+        .facts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .fact-card {
+            background: rgba(31, 40, 51, 0.4);
+            border: 1px solid #1f2833;
+            padding: 20px;
+        }
+		
+		/* Стилі для сітки галереї */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 колонки */
+    gap: 15px;
+    padding: 15px;
+}
+
+.planet-card {
+    border: 1px solid rgba(102, 252, 241, 0.4);
+    background: #000;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.planet-card:hover {
+    border-color: #66fcf1;
+    box-shadow: 0 0 15px rgba(102, 252, 241, 0.2);
+    transform: translateY(-3px);
+}
+
+.planet-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    display: block;
+    filter: grayscale(30%);
+}
+
+.planet-info {
+    padding: 10px;
+    text-align: center;
+    border-top: 1px solid rgba(102, 252, 241, 0.2);
+    font-size: 11px;
+    color: #66fcf1;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+		
+    </style>
+</head>
+<body>
+    <div class="layout-wrapper">
+        <header class="header">
+            <h1><span class="glitch-word">ВІДКРИТИЙ</span> <span class="neon-word">КОСМОС</span></h1>
+        </header>
+
+        <!-- Вставити всередину .description-panel -->
+<h2>🪐 РЕЄСТР ПОЗАСОНЯЧНИХ ОБ'ЄКТІВ</h2>
+<div class="info-text">
+    <span class="cyan-label">ОПИС:</span> Даний розділ містить дані про планети, що обертаються навколо інших зірок. Візуалізація дозволяє досліджувати тисячі відкритих світів за межами нашої системи.
+</div>
+<div class="info-text">
+    <span class="cyan-label">МЕТОДИ ДЕТЕКЦІЇ:</span> Аналіз базується на транзитній фотометрії та вимірюванні радіальних швидкостей зірок. Використовуються дані телескопів <span class="cyan-label">Kepler, TESS та James Webb</span>.
+</div>
+<div class="status-footer">
+    <span>● СТАТУС: АРХІВ ДОСТУПНИЙ</span>
+    <span>● СИСТЕМА: ГАЛАКТИКА_NET</span>
+    <span>● ОНОВЛЕНО: 12.05.2026</span>
+</div>
+
+<!-- Вставити всередину .media-container -->
+<div class="gallery-grid">
+    <!-- Картка 1 -->
+    <div class="planet-card">
+        <img src="https://www.nasa.gov/wp-content/uploads/2023/03/55_cancri_e_art.jpg" alt="Exoplanet">
+        <div class="planet-info">55 Cancri e (Янссен)</div>
+    </div>
+
+    <!-- Картка 2 -->
+    <div class="planet-card">
+        <img src="https://exoplanets.nasa.gov/internal_resources/120" alt="Exoplanet">
+        <div class="planet-info">Kepler-186f</div>
+    </div>
+
+    <!-- Картка 3 -->
+    <div class="planet-card">
+        <img src="https://www.nasa.gov/wp-content/uploads/2023/03/trappist-1b_art.jpg" alt="Exoplanet">
+        <div class="planet-info">TRAPPIST-1b</div>
+    </div>
+
+    <!-- Картка 4 -->
+    <div class="planet-card">
+        <img src="https://exoplanets.nasa.gov/internal_resources/202" alt="Exoplanet">
+        <div class="planet-info">Proxima Centauri b</div>
+    </div>
+
+    <!-- Картка 5 -->
+    <div class="planet-card">
+        <img src="https://www.nasa.gov/wp-content/uploads/2015/07/art_kepler-452b.jpg" alt="Exoplanet">
+        <div class="planet-info">Kepler-452b (Земля 2.0)</div>
+    </div>
+
+    <!-- Картка 6 -->
+    <div class="planet-card">
+        <img src="https://exoplanets.nasa.gov/internal_resources/242" alt="Exoplanet">
+        <div class="planet-info">WASP-12b (Планета-вугілля)</div>
+    </div>
+</div>
+
+            <aside class="sidebar-right">
+               <a href="index.html" class="terminal-btn">ГОЛОВНА</a>
+					<a href="solar.html" class="terminal-btn">СОНЯЧНА СИСТЕМА</a>
+					<a href="exo.html" class="terminal-btn">ЕКЗОПЛАНЕТИ</a>
+					<a href="chorni.html" class="terminal-btn">ЧОРНІ ДІРИ</a>
+					<a href="teles.html" class="terminal-btn">ТЕЛЕСКОПИ</a>
+					<a href="mnasa.html" class="terminal-btn">МІСІЇ NASA</a> 
+					<a href="gallarey.html" class="terminal-btn">ГАЛЕРЕЯ</a>
+					<a href="contact.html" class="terminal-btn">КОНТАКТИ</a>
+            </aside>
+        </main>
+
+        
+    </div>
+	
+	<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Отримуємо назву поточного файлу (наприклад, missions.html)
+        const currentPath = window.location.pathname.split("/").pop();
+        
+        // Знаходимо всі кнопки меню
+        const navLinks = document.querySelectorAll('.terminal-btn');
+
+        navLinks.forEach(link => {
+            // Якщо посилання кнопки збігається з назвою файлу
+            if (link.getAttribute('href') === currentPath) {
+                link.classList.add('active'); // Додаємо підсвітку
+            } else {
+                link.classList.remove('active'); // Прибираємо у всіх інших
+            }
+        });
+    });
+</script>
+	
+	<script src="script.js"></script>
+</body>
+</html>
