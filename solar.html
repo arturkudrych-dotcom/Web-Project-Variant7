@@ -6,193 +6,157 @@
     <title>Сонячна Система | ВІДКРИТИЙ КОСМОС</title>
     <link rel="stylesheet" href="style.css">
 	<link rel="icon" href="favicon.ico" type="image/x-icon">
-    <style>
-        /* Базові виправлення для всієї сторінки */
-        body, html {
-            margin: 0;
-            padding: 0;
-            background: #0b0c10;
-            color: #c5c6c7;
-            overflow-x: hidden;
-            overflow-y: auto; /* Повертаємо скролл */
-        }
-		
-		body {
-    /* Колір глибокого космосу */
-    background-color: #05080a; 
+   <style>
+    /* Базові виправлення для всієї сторінки */
+    body, html {
+        margin: 0;
+        padding: 0;
+        background: #0b0c10;
+        color: #c5c6c7;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
     
-    /* Комбінація: зірковий пил + радіальний градієнт для об'єму */
-    background-image: 
-        radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 40px 70px, #ffffff, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 130px 80px, #fff, rgba(0,0,0,0)),
-        radial-gradient(circle at center, #0b1a24 0%, #05080a 100%);
-    
-    /* Щоб зірки повторювалися по всьому екрану */
-    background-size: 200px 200px, 200px 200px, 300px 300px, 250px 250px, 220px 220px, 100% 100%;
-    background-attachment: fixed; /* Фон не рухається при прокрутці */
-    
-    margin: 0;
-    color: #fff;
-}
+    body {
+        background-color: #05080a; 
+        background-image: 
+            radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+            radial-gradient(2px 2px at 40px 70px, #ffffff, rgba(0,0,0,0)),
+            radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0,0,0,0)),
+            radial-gradient(circle at center, #0b1a24 0%, #05080a 100%);
+        background-size: 200px 200px, 200px 200px, 300px 300px, 100% 100%;
+        background-attachment: fixed;
+        margin: 0;
+        color: #fff;
+    }
 
-        .layout-wrapper {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-        }
+    .layout-wrapper {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
 
-        /* Центрована шапка як на головній */
-        .header {
-            text-align: center;
-            padding: 20px 0;
-            width: 100%;
-        }
+    .header {
+        text-align: center;
+        padding: 20px 0;
+        width: 100%;
+    }
 
-        /* Основний ряд: Текст+Карта зліва, Меню справа */
+    /* ОСНОВНИЙ ФІКС ТУТ: Міняємо flex-direction на мобілках */
+    .main-display-row {
+        display: flex;
+        flex-direction: row;
+        gap: 30px;
+        align-items: flex-start;
+    }
+
+    /* Адаптація для телефонів */
+    @media screen and (max-width: 900px) {
         .main-display-row {
-            display: flex;
-            flex-direction: row;
-            gap: 30px;
-            align-items: flex-start;
+            flex-direction: column !important; /* Контент і меню стають один під одним */
+        }
+        
+        .sidebar-right {
+            width: 100% !important; /* Меню на всю ширину */
+            order: 2; /* Меню йде після карти */
         }
 
-        /* Контейнер для лівої частини (текст над картою) */
-        .content-area {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            min-width: 0;
-        }
-
-        /* Твій новий український текст */
-        .intro-text-block {
-            background: rgba(102, 252, 241, 0.05);
-            border-left: 4px solid var(--accent);
-            padding: 20px;
-            border-radius: 0 4px 4px 0;
-        }
-
-        .intro-text-block h2 {
-            color: var(--accent);
-            font-size: 1.1rem;
-            margin-bottom: 12px;
-            letter-spacing: 1px;
-        }
-
-        /* Вікно 3D карти */
         .iframe-window {
-            width: 100%;
-            height: 650px;
-            border: 1px solid var(--accent);
-            border-radius: 4px;
-            background: rgba(0, 0, 0, 0.5);
-            overflow: hidden;
-        }
-
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-               /* ВИПРАВЛЕННЯ МЕНЮ */
-.sidebar-right {
-    width: 280px;            /* Фіксована ширина контейнера */
-    flex-shrink: 0;
-    border: 1px solid var(--accent);
-    padding: 20px 15px;      /* Внутрішні відступи */
-    background: rgba(11, 12, 16, 0.95);
-    border-radius: 4px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;               /* Рівномірна відстань між кнопками */
-    box-sizing: border-box;  /* Важливо: щоб padding не розширював блок */
-}
-
-.terminal-btn {
-    display: block;          /* Кнопка стає блоком */
-    width: 100%;             /* Займає 100% ширини батьківського контейнера */
-    box-sizing: border-box;  /* Враховує внутрішні відступи в ширину */
-    padding: 12px 15px;
-    background: rgba(102, 252, 241, 0.02);
-    border: 1px solid rgba(102, 252, 241, 0.2);
-    color: var(--accent);
-    text-decoration: none;
-    font-size: 0.85rem;
-    text-align: left;        /* Вирівнювання по лівому краю для стабільності */
-    letter-spacing: 1px;
-    transition: all 0.3s ease;
-    white-space: nowrap;     /* Текст не переноситься на інший рядок */
-    overflow: hidden;        /* Якщо текст задовгий — він не зламає кнопку */
-}
-
-/* Ефект при наведенні та для активної сторінки */
-.terminal-btn:hover, 
-.terminal-btn.active {
-    background: rgba(102, 252, 241, 0.1);
-    border-color: var(--accent);
-    box-shadow: inset 0 0 10px rgba(102, 252, 241, 0.2);
-    padding-left: 22px;      /* Легке зміщення вправо при ховері */
-}
-
-/* Додаємо невеликий префікс перед текстом для стилю */
-.terminal-btn::before {
-    content: "[ ";
-    opacity: 0.5;
-}
-
-.terminal-btn::after {
-    content: " ]";
-    opacity: 0.5;
-    float: right;            /* Закриваюча дужка завжди справа */
-}
-
-        /* Блок фактів СУВОРО знизу на всю ширину */
-        .facts-section {
-            width: 100%;
-            border-top: 1px solid rgba(102, 252, 241, 0.3);
-            padding-top: 30px;
-            margin-top: 20px;
+            height: 400px !important; /* Зменшуємо висоту карти на телефоні */
         }
 
         .facts-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-top: 20px;
+            grid-template-columns: 1fr !important; /* Факти в один стовпчик */
         }
+    }
 
-        .fact-card {
-            background: rgba(31, 40, 51, 0.4);
-            border: 1px solid #1f2833;
-            padding: 20px;
-            border-radius: 4px;
-            transition: border 0.3s;
-        }
+    .content-area {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        min-width: 0;
+    }
 
-        .fact-card:hover {
-            border-color: var(--accent);
-        }
+    .intro-text-block {
+        background: rgba(102, 252, 241, 0.05);
+        border-left: 4px solid var(--accent);
+        padding: 20px;
+        border-radius: 0 4px 4px 0;
+    }
 
-        .fact-card h4 {
-            color: var(--accent);
-            margin-bottom: 10px;
-            font-size: 1rem;
-        }
+    .iframe-window {
+        width: 100%;
+        height: 650px;
+        border: 1px solid var(--accent);
+        border-radius: 4px;
+        background: rgba(0, 0, 0, 0.5);
+        overflow: hidden;
+    }
 
-        .fact-card p {
-            font-size: 0.9rem;
-            line-height: 1.5;
-            color: #c5c6c7;
-        }
-    </style>
+    iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+
+    .sidebar-right {
+        width: 280px;
+        flex-shrink: 0;
+        border: 1px solid var(--accent);
+        padding: 20px 15px;
+        background: rgba(11, 12, 16, 0.95);
+        border-radius: 4px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        box-sizing: border-box;
+    }
+
+    .terminal-btn {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 12px 15px;
+        background: rgba(102, 252, 241, 0.02);
+        border: 1px solid rgba(102, 252, 241, 0.2);
+        color: #66fcf1;
+        text-decoration: none;
+        font-size: 0.85rem;
+        text-align: left;
+        letter-spacing: 1px;
+        transition: all 0.3s ease;
+    }
+
+    .terminal-btn:hover, .terminal-btn.active {
+        background: rgba(102, 252, 241, 0.1);
+        border-color: #66fcf1;
+        padding-left: 22px;
+    }
+
+    .facts-section {
+        width: 100%;
+        border-top: 1px solid rgba(102, 252, 241, 0.3);
+        padding-top: 30px;
+        margin-top: 20px;
+    }
+
+    .facts-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 25px;
+    }
+
+    .fact-card {
+        background: rgba(31, 40, 51, 0.4);
+        border: 1px solid #1f2833;
+        padding: 20px;
+        border-radius: 4px;
+    }
+</style>
 </head>
 <body>
     <canvas id="stars-canvas"></canvas>
