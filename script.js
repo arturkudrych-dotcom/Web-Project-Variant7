@@ -307,3 +307,60 @@ setInterval(addLog, 3500);
 
 // Додаємо перший лог відразу при завантаженні
 addLog();
+
+function showSolarSystem() {
+    // Приховуємо всі основні блоки
+    document.querySelector('.main-content').style.display = 'none';
+    
+    // Створюємо або показуємо блок Сонячної системи
+    let solarSection = document.getElementById('solar-system-view');
+    if (!solarSection) {
+        solarSection = document.createElement('section');
+        solarSection.id = 'solar-system-view';
+        solarSection.innerHTML = `
+            <h2 style="color: #66fcf1; text-align: center;">МИТТЄВИЙ МОНІТОРИНГ ПЛАНЕТАРНИХ ДАНИХ</h2>
+            <div class="iframe-container" style="height: 600px; border: 1px solid #66fcf1;">
+                <iframe src="https://eyes.nasa.gov/apps/solar-system/#/home" width="100%" height="100%" frameborder="0"></iframe>
+            </div>
+            <div class="planet-data-grid">
+                </div>
+        `;
+        document.body.appendChild(solarSection);
+    } else {
+        solarSection.style.display = 'block';
+    }
+}
+
+function showPage(pageId) {
+    // 1. Знаходимо всі блоки з класом content-page і ховаємо їх
+    const pages = document.querySelectorAll('.content-page');
+    pages.forEach(page => {
+        page.style.display = 'none';
+    });
+
+    // 2. Показуємо тільки той блок, ID якого ми передали
+    const activePage = document.getElementById(pageId);
+    if (activePage) {
+        activePage.style.display = 'block';
+        // Додаємо ефект плавної появи, який ми робили раніше
+        activePage.classList.add('fade-in-section');
+    }
+}
+
+function openSection(sectionId) {
+    // 1. Знаходимо всі блоки сторінок
+    const pages = document.querySelectorAll('.page-content');
+    
+    // 2. Ховаємо всі сторінки
+    pages.forEach(page => {
+        page.style.display = 'none';
+    });
+
+    // 3. Показуємо потрібну
+    const target = document.getElementById(sectionId);
+    if (target) {
+        target.style.display = 'block';
+        // Додаємо плавний ефект появи
+        target.classList.add('fade-in-section');
+    }
+}
