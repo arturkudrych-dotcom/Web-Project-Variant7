@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Контакти | Центр Зв'язку</title>
+    <style>
+        :root {
+            --accent: #66fcf1;
+            --bg-dark: #0b0c10;
+            --card-bg: #121b22;
+            --text-gray: #c5c6c7;
+        }
+
+        body {
+            background: var(--bg-dark);
+            color: var(--text-gray);
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .contact-container {
+            width: 90%;
+            max-width: 900px;
+            display: flex;
+            gap: 30px;
+            border: 1px solid var(--accent);
+            background: var(--card-bg);
+            padding: 40px;
+            box-shadow: 0 0 20px rgba(102, 252, 241, 0.1);
+        }
+
+        /* Ліва частина: Інфо */
+        .contact-info {
+            flex: 1;
+        }
+
+        .contact-info h1 {
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            margin-top: 0;
+        }
+
+        .status-box {
+            border-left: 3px solid var(--accent);
+            padding-left: 15px;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+
+        .status-online { color: #00ff00; font-weight: bold; }
+
+        /* Права частина: Форма */
+        .contact-form {
+            flex: 1.5;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .input-group label {
+            font-size: 12px;
+            color: var(--accent);
+            text-transform: uppercase;
+        }
+
+        input, textarea {
+            background: #000;
+            border: 1px solid rgba(102, 252, 241, 0.3);
+            padding: 12px;
+            color: #fff;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus, textarea:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 10px rgba(102, 252, 241, 0.2);
+        }
+
+        .send-btn {
+            background: transparent;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 15px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        .send-btn:hover {
+            background: var(--accent);
+            color: #000;
+            font-weight: bold;
+        }
+
+        /* Кнопка назад */
+        .back-link {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<a href="index.html" class="back-link">← ПОВЕРНУТИСЯ ДО РЕЄСТРУ</a>
+
+<div class="contact-container">
+    <div class="contact-info">
+        <h1>ЗВ'ЯЗОК</h1>
+        <div class="status-box">
+            <p>ЛОКАЦІЯ: СЕКТОР 001, ЗЕМЛЯ</p>
+            <p>СТАТУС КАНАЛУ: <span class="status-online">ONLINE</span></p>
+            <p>ЧАС ВІДПОВІДІ: 24-48 ГОДИН</p>
+        </div>
+        <p>Маєте запитання щодо екзопланет або бажаєте додати новий об'єкт до нашої бази даних? Надішліть нам сигнал.</p>
+        
+        <div style="margin-top: 40px;">
+            <p style="color: var(--accent);">Пряма пошта:</p>
+            <p>mission-control@student.uzhnu.edu.ua</p>
+        </div>
+    </div>
+
+    <form class="contact-form">
+        <div class="input-group">
+            <label>Ідентифікатор (Ваше ім'я)</label>
+            <input type="text" placeholder="Введіть ім'я..." required>
+        </div>
+        <div class="input-group">
+            <label>Канал зв'язку (Email)</label>
+            <input type="email" placeholder="example@space.com" required>
+        </div>
+        <div class="input-group">
+            <label>Повідомлення (Ваш сигнал)</label>
+            <textarea rows="6" placeholder="Ваш запит до ЦУП..."></textarea>
+        </div>
+        <button type="submit" class="send-btn">ВІДПРАВИТИ СИГНАЛ</button>
+    </form>
+</div>
+
+</body>
+</html>
