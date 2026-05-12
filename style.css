@@ -918,3 +918,51 @@ footer {
         padding: 15px 0 !important;
     }
 }
+
+/* Аварійна адаптація */
+/* РАДИКАЛЬНИЙ ФІКС ДЛЯ МОБІЛОК */
+@media screen and (max-width: 900px) {
+    /* 1. Скидаємо фіксовану ширину для ВСІХ блоків */
+    div, section, header, main, footer, table {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+        box-sizing: border-box !important;
+        float: none !important;
+        position: relative !important;
+        left: 0 !important;
+    }
+
+    /* 2. Фікс заголовків (щоб текст не вилазив) */
+    h1, h2, h3, .logo-link h1, .logo-link h2 {
+        font-size: 1.5rem !important;
+        white-space: normal !important; /* Дозволяємо перенос тексту */
+        text-align: center !important;
+        word-wrap: break-word !important;
+    }
+
+    /* 3. Фікс картинок (Венера на скріншоті) */
+    img, iframe {
+        max-width: 100% !important;
+        height: auto !important;
+        display: block !important;
+        margin: 0 auto !important;
+    }
+
+    /* 4. Якщо у тебе Flexbox (блоки в ряд), ставимо їх у стовпчик */
+    .terminal-main, .flex-container, [style*="display: flex"] {
+        flex-direction: column !important;
+        display: flex !important;
+    }
+
+    /* 5. Прибираємо горизонтальну прокрутку назавжди */
+    body, html {
+        overflow-x: hidden !important;
+        width: 100% !important;
+        position: relative !important;
+    }
+}
