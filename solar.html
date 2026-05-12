@@ -156,6 +156,49 @@
         padding: 20px;
         border-radius: 4px;
     }
+	/* ЦЕЙ БЛОК ПЕРЕБ'Є ВСЕ І ЗМУСИТЬ САЙТ СТАТИ РІВНИМ */
+@media screen and (max-width: 900px) {
+    /* 1. Робимо головний контейнер гнучким */
+    .layout-wrapper {
+        padding: 10px !important;
+        display: block !important; /* Відміняємо флекс, щоб усе йшло зверху вниз */
+    }
+
+    /* 2. Текст і Карта стають на всю ширину */
+    .main-display-row {
+        display: block !important; /* Усе в один стовпчик */
+    }
+
+    /* 3. Контейнер з текстом і картою */
+    .content-area {
+        width: 100% !important;
+        margin-bottom: 20px !important;
+    }
+
+    /* 4. Виправляємо висоту карти для телефону */
+    .iframe-window {
+        height: 350px !important; 
+    }
+
+    /* 5. МЕНЮ (sidebar-right) - ось де воно ламалося */
+    .sidebar-right {
+        width: 100% !important;   /* Тепер воно не 280px, а на весь екран */
+        max-width: 100% !important;
+        margin: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 8px !important;
+        border: 2px solid var(--accent) !important;
+    }
+
+    /* 6. Кнопки робимо великими для пальців */
+    .terminal-btn {
+        width: 100% !important;
+        text-align: center !important;
+        padding: 15px !important;
+        white-space: normal !important; /* Текст зможе переноситися, якщо назва довга */
+    }
+}
 </style>
 </head>
 <body>
