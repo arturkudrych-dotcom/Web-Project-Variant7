@@ -5,8 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ГАЛЕРЕЯ | ВІДКРИТИЙ КОСМОС</title>
     <link rel="stylesheet" href="style.css">
-	<link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
     <style>
+        :root {
+            --accent: #66fcf1;
+        }
+
         body, html {
             margin: 0;
             padding: 0;
@@ -14,27 +18,21 @@
             color: #c5c6c7;
             overflow-y: auto;
         }
-		
-		body {
-    /* Колір глибокого космосу */
-    background-color: #05080a; 
-    
-    /* Комбінація: зірковий пил + радіальний градієнт для об'єму */
-    background-image: 
-        radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 40px 70px, #ffffff, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 130px 80px, #fff, rgba(0,0,0,0)),
-        radial-gradient(circle at center, #0b1a24 0%, #05080a 100%);
-    
-    /* Щоб зірки повторювалися по всьому екрану */
-    background-size: 200px 200px, 200px 200px, 300px 300px, 250px 250px, 220px 220px, 100% 100%;
-    background-attachment: fixed; /* Фон не рухається при прокрутці */
-    
-    margin: 0;
-    color: #fff;
-}
+        
+        body {
+            background-color: #05080a; 
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 40px 70px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 130px 80px, #fff, rgba(0,0,0,0)),
+                radial-gradient(circle at center, #0b1a24 0%, #05080a 100%);
+            background-size: 200px 200px, 200px 200px, 300px 300px, 250px 250px, 220px 220px, 100% 100%;
+            background-attachment: fixed;
+            margin: 0;
+            color: #fff;
+        }
 
         .layout-wrapper {
             max-width: 1400px; 
@@ -47,18 +45,12 @@
 
         .header { text-align: center; padding: 20px 0; }
 
-        .main-display-row {
-           display: flex;
-    gap: 20px;
-    align-items: flex-start; /* ОСНОВНА КОМАНДА: меню буде зверху */
-}
-		
-		.main-container {
-    display: flex;
-    align-items: flex-start; /* Підтягує меню до самого верху заголовка */
-    gap: 20px;
-    max-width: 100%;
-}
+        .main-container {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            max-width: 100%;
+        }
 
         .content-area {
             flex: 1;
@@ -71,315 +63,168 @@
         .intro-text-block {
             background: rgba(102, 252, 241, 0.05);
             border-left: 4px solid var(--accent);
-			width: 100%;      /* Текст займає всю ширину ЛІВОЇ частини */
-			box-sizing: border-box;
+            width: 100%;
+            box-sizing: border-box;
             padding: 20px;
         }
 
-        /* Стилі для фотогалереї */
-        .photo-gallery {
+        .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 15px;
-            margin-top: 20px;
         }
 
-        .photo-item {
-            border: 1px solid var(--accent);
-            border-radius: 4px;
+        .planet-card {
+            border: 1px solid rgba(102, 252, 241, 0.4);
+            background: #000;
+            transition: 0.3s;
+            cursor: pointer;
             overflow: hidden;
+        }
+
+        .planet-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            display: block;
+            transition: 0.4s;
+        }
+
+        .planet-card:hover img {
+            transform: scale(1.1);
+            filter: brightness(1.2);
+        }
+
+        .planet-info {
+            padding: 10px;
+            text-align: center;
+            border-top: 1px solid rgba(102, 252, 241, 0.2);
+            font-size: 11px;
+            color: var(--accent);
+            text-transform: uppercase;
             background: #000;
         }
 
-        .photo-item img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            display: block;
-            transition: transform 0.5s;
-            opacity: 0.8;
-        }
-
-        .photo-item img:hover {
-            transform: scale(1.1);
-            opacity: 1;
-        }
-
-        .photo-caption {
-            padding: 10px;
-            font-size: 0.8rem;
-            text-align: center;
-            background: rgba(11, 12, 16, 0.9);
-        }
-/* ВИПРАВЛЕННЯ МЕНЮ */
-.sidebar-right {
-    width: 260px;            /* Фіксована ширина контейнера */
-    flex-shrink: 0;
-    border: 1px solid var(--accent);
-    padding: 20px 15px;      /* Внутрішні відступи */
-    background: rgba(11, 12, 16, 0.95);
-    border-radius: 4px;
-    display: flex;
-	position: sticky;
-    flex-direction: column;
-    gap: 10px;
-	top: 20px;	/* Рівномірна відстань між кнопками */
-    box-sizing: border-box;  /* Важливо: щоб padding не розширював блок */
-}
-
-.terminal-btn {
-    display: block;          /* Кнопка стає блоком */
-    width: 100%;             /* Займає 100% ширини батьківського контейнера */
-    box-sizing: border-box;  /* Враховує внутрішні відступи в ширину */
-    padding: 12px 15px;
-    background: rgba(102, 252, 241, 0.02);
-    border: 1px solid rgba(102, 252, 241, 0.2);
-    color: var(--accent);
-    text-decoration: none;
-    font-size: 0.85rem;
-    text-align: left;        /* Вирівнювання по лівому краю для стабільності */
-    letter-spacing: 1px;
-    transition: all 0.3s ease;
-    white-space: nowrap;     /* Текст не переноситься на інший рядок */
-    overflow: hidden;        /* Якщо текст задовгий — він не зламає кнопку */
-}
-
-/* Ефект при наведенні та для активної сторінки */
-.terminal-btn:hover, 
-.terminal-btn.active {
-    background: rgba(102, 252, 241, 0.1);
-    border-color: var(--accent);
-    box-shadow: inset 0 0 10px rgba(102, 252, 241, 0.2);
-    padding-left: 22px;      /* Легке зміщення вправо при ховері */
-}
-
-/* Додаємо невеликий префікс перед текстом для стилю */
-.terminal-btn::before {
-    content: "[ ";
-    opacity: 0.5;
-}
-
-.terminal-btn::after {
-    content: " ]";
-    opacity: 0.5;
-    float: right;            /* Закриваюча дужка завжди справа */
-}
-
-}
-
-        .facts-section {
-            width: 100%;
-            border-top: 1px solid rgba(102, 252, 241, 0.3);
-            padding-top: 30px;
-        }
-
-        .facts-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-        }
-
-        .fact-card {
-            background: rgba(31, 40, 51, 0.4);
-            border: 1px solid #1f2833;
-            padding: 20px;
-        }
-		
-		/* Стилі для сітки галереї */
-.gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Авто-заповнення */
-    gap: 15px;
-}
-
-.planet-card img {
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.planet-card img:hover {
-    filter: brightness(1.2);
-}
-
-.planet-card {
-    border: 1px solid rgba(102, 252, 241, 0.4);
-    background: #000;
-    transition: 0.3s;
-    cursor: pointer;
-}
-
-.planet-card:hover {
-    border-color: #66fcf1;
-    box-shadow: 0 0 15px rgba(102, 252, 241, 0.2);
-    transform: translateY(-3px);
-}
-
-.planet-card img {
-    width: 100%;
-    height: 150px;
-    object-fit: cover;
-    display: block;
-    filter: grayscale(30%);
-}
-
-.planet-info {
-    padding: 10px;
-    text-align: center;
-    border-top: 1px solid rgba(102, 252, 241, 0.2);
-    font-size: 11px;
-    color: #66fcf1;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.9);
-    padding-top: 50px;
-}
-
-.modal-content {
-    margin: auto;
-    display: block;
-    max-width: 80%;
-    max-height: 80vh;
-    border: 2px solid var(--accent);
-}
-
-.close-modal {
-    position: absolute;
-    top: 20px;
-    right: 35px;
-    color: var(--accent);
-    font-size: 40px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-#caption {
-    text-align: center;
-    color: var(--accent);
-    padding: 10px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
-
-/* АДАПТАЦІЯ ДЛЯ МОБІЛЬНИХ ПРИСТРОЇВ (CHORNI.HTML) */
-@media screen and (max-width: 950px) {
-    /* Робимо головний контейнер вертикальним */
-    .layout-wrapper {
-        display: flex !important;
-        flex-direction: column !important;
-        padding: 10px !important;
-        gap: 20px !important;
-    }
-
-    /* Скасовуємо горизонтальний ряд для тексту, карти та меню */
-    .main-display-row {
-        display: flex !important;
-        flex-direction: column !important;
-        width: 100% !important;
-    }
-
-    /* Контейнер із контентом (текст + вікно) */
-    .content-area {
-        width: 100% !important;
-    }
-
-    /* Вікно з візуалізацією NASA (робимо меншим, щоб не займало весь екран) */
-    .iframe-window {
-        height: 400px !important;
-        width: 100% !important;
-    }
-
-    /* МЕНЮ (sidebar-right) — тепер воно внизу і на всю ширину */
-    .sidebar-right {
-        width: 100% !important;
-        max-width: 100% !important;
-        position: static !important;
-        margin: 15px 0 !important;
-        padding: 15px !important;
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 10px !important;
-        box-sizing: border-box !important;
-    }
-
-    /* Кнопки меню робимо великими та зручними */
-    .terminal-btn {
-        width: 100% !important;
-        text-align: center !important;
-        padding: 15px !important;
-        font-size: 0.9rem !important;
-        white-space: normal !important;
-    }
-
-    /* Факти внизу сторінки — в одну колонку */
-    .facts-grid {
-        grid-template-columns: 1fr !important;
-    }
-}
-
-.gallery-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        gap: 20px;
-    }
-
-    .gallery-item img {
-        width: 100%;
-        height: 250px;
-        object-fit: cover;
-        border: 1px solid var(--accent);
-        border-radius: 5px;
-    }
-
-    @media screen and (max-width: 900px) {
-        .main-display-row { flex-direction: column !important; }
-        
-        .gallery-grid {
-            grid-template-columns: 1fr !important; /* Одна картинка в ряд на весь екран */
-        }
-
+        /* МЕНЮ */
         .sidebar-right {
-            width: 100% !important;
-            position: static !important;
+            width: 260px;
+            flex-shrink: 0;
+            border: 1px solid var(--accent);
+            padding: 20px 15px;
+            background: rgba(11, 12, 16, 0.95);
+            border-radius: 4px;
+            display: flex;
+            position: sticky;
+            flex-direction: column;
+            gap: 10px;
+            top: 20px;
+            box-sizing: border-box;
         }
-    }
-</style>	
+
+        .terminal-btn {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px 15px;
+            background: rgba(102, 252, 241, 0.02);
+            border: 1px solid rgba(102, 252, 241, 0.2);
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.85rem;
+            text-align: left;
+            transition: all 0.3s ease;
+        }
+
+        .terminal-btn.active {
+            background: rgba(102, 252, 241, 0.1);
+            border-color: var(--accent);
+        }
+
+        /* МОДАЛЬНЕ ВІКНО */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.95);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 80vh;
+            border: 1px solid var(--accent);
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: var(--accent);
+            font-size: 40px;
+            cursor: pointer;
+            z-index: 2100;
+        }
+
+        #caption {
+            text-align: center;
+            color: var(--accent);
+            padding: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: absolute;
+            width: 100%;
+            bottom: 20px;
+        }
+
+        /* АДАПТАЦІЯ */
+        @media (max-width: 850px) {
+            .main-container { flex-direction: column; }
+            .sidebar-right {
+                width: 100%;
+                position: static;
+                order: -1;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+            .gallery-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 480px) {
+            .sidebar-right { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
-<div class="content-container animate-appearance">
-    <div class="layout-wrapper">
-        <header class="header">
-            <a href="index.html" style="text-decoration: none;">
-                <h1>
-                    <span class="glitch-word" data-text="ВІДКРИТИЙ">ВІДКРИТИЙ</span>
-                    <span class="neon-word">КОСМОС</span>
-                </h1>
-            </a>
-        </header>
 
- <div class="main-container">
-    <!-- ЛІВА ЧАСТИНА: Контент (Текст + Галерея) -->
-    <div class="content-area">
-        
-        <!-- Блок з текстом -->
-        <section class="intro-text-block">
-            <h2>🚀 РЕЄСТР ПОЗАСОНЯЧНИХ ОБ'ЄКТІВ</h2>
-            <p>Від перших кроків у пошуку екзопланет до аналізу атмосфер далеких світів. Технічний огляд найважливіших об'єктів за межами Сонячної системи.</p>
-            <p style="font-size: 11px;"><span class="cyan-label">● СТАТУС: АРХІВ ДОСТУПНИЙ ● ОНОВЛЕНО: 12.05.2026</span></p>
-        </section>
+<div class="layout-wrapper">
+    <header class="header">
+        <a href="index.html" style="text-decoration: none;">
+            <h1>
+                <span style="color: var(--accent);">ВІДКРИТИЙ</span>
+                <span style="color: #fff;">КОСМОС</span>
+            </h1>
+        </a>
+    </header>
 
-        <!-- Сітка галереї -->
-        <div class="gallery-grid">
+    <div class="main-container">
+        <div class="content-area">
+            <section class="intro-text-block">
+                <h2>🚀 РЕЄСТР ПОЗАСОНЯЧНИХ ОБ'ЄКТІВ</h2>
+                <p>Технічний огляд найважливіших об'єктів за межами Сонячної системи.</p>
+                <p style="font-size: 11px;"><span style="color: var(--accent);">● СТАТУС: АРХІВ ДОСТУПНИЙ ● ОНОВЛЕНО: 13.05.2026</span></p>
+            </section>
+
+            <div class="gallery-grid">
             <!-- Картка 1 -->
             <div class="planet-card">
                 <img src="g1.jpg" alt="55 Cancri e">
@@ -458,67 +303,62 @@
         </div>
     </div> <!-- Кінець content-area -->
 
-    <!-- ПРАВА ЧАСТИНА: Меню -->
-    <nav class="sidebar-right">
-          <a href="index.html" class="terminal-btn">ГОЛОВНА</a>
-		<a href="solar.html" class="terminal-btn">СОНЯЧНА СИСТЕМА</a>
-		<a href="exo.html" class="terminal-btn">ЕКЗОПЛАНЕТИ</a>
-		<a href="chorni.html" class="terminal-btn">ЧОРНІ ДІРИ</a>
-		<a href="teles.html" class="terminal-btn">ТЕЛЕСКОПИ</a>
-		<a href="mnasa.html" class="terminal-btn">МІСІЇ NASA</a> 
-		<a href="gallarey.html" class="terminal-btn">ГАЛЕРЕЯ</a>
-		<a href="contact.html" class="terminal-btn">КОНТАКТИ</a>
-    </nav>
+        <nav class="sidebar-right">
+            <a href="index.html" class="terminal-btn">ГОЛОВНА</a>
+            <a href="solar.html" class="terminal-btn">СОНЯЧНА СИСТЕМА</a>
+            <a href="exo.html" class="terminal-btn">ЕКЗОПЛАНЕТИ</a>
+            <a href="chorni.html" class="terminal-btn">ЧОРНІ ДІРИ</a>
+            <a href="teles.html" class="terminal-btn">ТЕЛЕСКОПИ</a>
+            <a href="mnasa.html" class="terminal-btn">МІСІЇ NASA</a> 
+            <a href="gallarey.html" class="terminal-btn">ГАЛЕРЕЯ</a>
+            <a href="contact.html" class="terminal-btn">КОНТАКТИ</a>
+        </nav>
+    </div>
 </div>
-</main>
-	
-	<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // Отримуємо назву поточного файлу (наприклад, missions.html)
-        const currentPath = window.location.pathname.split("/").pop();
-        
-        // Знаходимо всі кнопки меню
-        const navLinks = document.querySelectorAll('.terminal-btn');
 
-        navLinks.forEach(link => {
-            // Якщо посилання кнопки збігається з назвою файлу
-            if (link.getAttribute('href') === currentPath) {
-                link.classList.add('active'); // Додаємо підсвітку
-            } else {
-                link.classList.remove('active'); // Прибираємо у всіх інших
-            }
-        });
-    });
-</script>
+<!-- СТРУКТУРА МОДАЛЬНОГО ВІКНА (ОБОВ'ЯЗКОВО) -->
+<div id="photoModal" class="modal">
+    <span class="close-modal">&times;</span>
+    <img class="modal-content" id="fullImage">
+    <div id="caption"></div>
+</div>
 
 <script>
-    const modal = document.getElementById("photoModal");
-    const modalImg = document.getElementById("fullImage");
-    const captionText = document.getElementById("caption");
+    document.addEventListener("DOMContentLoaded", function() {
+        // 1. ПІДСВІТКА КНОПОК МЕНЮ
+        const currentPath = window.location.pathname.split("/").pop() || "index.html";
+        const navLinks = document.querySelectorAll('.terminal-btn');
+        navLinks.forEach(link => {
+            if (link.getAttribute('href') === currentPath) {
+                link.classList.add('active');
+            }
+        });
 
-    // Знаходимо всі картинки в картках
-    document.querySelectorAll('.planet-card img').forEach(img => {
-        img.onclick = function() {
-            modal.style.display = "block";
-            modalImg.src = this.src;
-            // Беремо текст з блоку planet-info, який іде після картинки
-            captionText.innerHTML = this.parentElement.querySelector('.planet-info').innerHTML;
-        }
-    });
+        // 2. ЛОГІКА МОДАЛЬНОГО ВІКНА
+        const modal = document.getElementById("photoModal");
+        const modalImg = document.getElementById("fullImage");
+        const captionText = document.getElementById("caption");
+        const closeModal = document.querySelector('.close-modal');
 
-    // Закриття при кліку на хрестик
-    document.querySelector('.close-modal').onclick = function() {
-        modal.style.display = "none";
-    }
+        document.querySelectorAll('.planet-card img').forEach(img => {
+            img.onclick = function() {
+                modal.style.display = "block";
+                modalImg.src = this.src;
+                captionText.innerHTML = this.parentElement.querySelector('.planet-info').innerText;
+            }
+        });
 
-    // Закриття при кліку поза фото
-    window.onclick = function(event) {
-        if (event.target == modal) {
+        closeModal.onclick = function() {
             modal.style.display = "none";
         }
-    }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    });
 </script>
-	
-	<script src="script.js"></script>
+
 </body>
 </html>
