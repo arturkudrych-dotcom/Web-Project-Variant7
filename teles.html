@@ -212,29 +212,45 @@
     }
 }
 
-@media screen and (max-width: 900px) {
-    /* Робимо, щоб картинка була зверху, а текст знизу, а не в ряд */
-    .telescope-card {
-        flex-direction: column !important;
-        align-items: center !important;
-        text-align: center !important;
+.telescope-card {
+        display: flex;
+        gap: 20px;
+        background: rgba(31, 40, 51, 0.4);
+        border: 1px solid #1f2833;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        transition: 0.3s;
     }
 
     .telescope-image {
-        width: 100% !important;
-        max-width: 350px !important;
-        height: auto !important;
-        margin: 0 0 15px 0 !important;
+        width: 300px;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 4px;
+        flex-shrink: 0;
     }
 
-    .telescope-info {
-        width: 100% !important;
+    /* АДАПТАЦІЯ ТУТ */
+    @media screen and (max-width: 900px) {
+        .main-display-row { flex-direction: column !important; }
+        
+        .telescope-card {
+            flex-direction: column !important; /* Картинка зверху, текст знизу */
+            align-items: center;
+        }
+
+        .telescope-image {
+            width: 100% !important;
+            height: auto !important;
+        }
+
+        .sidebar-right {
+            width: 100% !important;
+            position: static !important;
+            margin-top: 20px;
+        }
     }
-    
-    /* Загальні фікси для меню */
-    .main-display-row { flex-direction: column !important; }
-    .sidebar-right { width: 100% !important; position: static !important; }
-}
 
     </style>
 </head>
