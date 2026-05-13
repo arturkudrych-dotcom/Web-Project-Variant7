@@ -325,6 +325,24 @@
         grid-template-columns: 1fr !important;
     }
 }
+
+@media screen and (max-width: 850px) {
+    .layout-wrapper { padding: 10px !important; }
+    
+    /* Галерея в один стовпчик */
+    .gallery-grid {
+        grid-template-columns: 1fr !important; 
+        gap: 15px !important;
+    }
+
+    .gallery-item img {
+        height: auto !important;
+        max-height: 300px !important;
+    }
+
+    .main-display-row { flex-direction: column !important; }
+    .sidebar-right { width: 100% !important; position: static !important; }
+}
 		
     </style>
 </head>

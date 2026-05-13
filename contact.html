@@ -225,6 +225,30 @@
         grid-template-columns: 1fr !important;
     }
 }
+
+@media screen and (max-width: 850px) {
+    .main-display-row {
+        flex-direction: column !important;
+    }
+
+    .contact-container {
+        width: 100% !important;
+        padding: 10px !important;
+    }
+
+    /* Якщо є форма, робимо інпути на всю ширину */
+    .contact-form input, 
+    .contact-form textarea {
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    .sidebar-right { 
+        width: 100% !important; 
+        position: static !important; 
+        margin-top: 20px !important;
+    }
+}
 		
     </style>
 </head>
