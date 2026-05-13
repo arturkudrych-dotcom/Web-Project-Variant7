@@ -54,12 +54,10 @@
         }
 
         /* Основний ряд: Контент зліва + Меню справа */
-        .main-display-row {
-            display: flex;
-            flex-direction: row;
-            gap: 30px;
-            align-items: flex-start;
-        }
+     .main-display-row {
+        flex-direction: column !important; /* Скасовуємо горизонтальний ряд */
+        width: 100% !important;
+    }
 
         .content-area {
             flex: 1;
@@ -189,6 +187,56 @@
             font-size: 0.85rem;
             line-height: 1.4;
         }
+		
+	/* ДОДАЙ ЦЕ В КІНЕЦЬ БЛОКУ <style> У ФАЙЛІ exo.html */
+@media screen and (max-width: 950px) {
+    /* 1. Обгортка сторінки */
+    .layout-wrapper {
+        padding: 10px !important;
+        display: flex !important;
+        flex-direction: column !important; /* Усе в стовпчик */
+        gap: 15px !important;
+    }
+
+    /* 2. Основний ряд (Текст + Карта + Меню) */
+    .main-display-row {
+        flex-direction: column !important; /* Скасовуємо горизонтальний ряд */
+        width: 100% !important;
+    }
+
+    /* 3. Блок з текстом і картою */
+    .content-area {
+        width: 100% !important;
+    }
+
+    /* 4. Вікно з картою (робимо нижчим для зручності) */
+    .iframe-window {
+        height: 400px !important;
+    }
+
+    /* 5. МЕНЮ (sidebar-right) - ФІКС */
+    .sidebar-right {
+        width: 100% !important; /* Тепер воно не 280px, а на весь екран */
+        max-width: 100% !important;
+        position: static !important;
+        margin: 10px 0 !important;
+        padding: 15px !important;
+        order: 3; /* Ставимо меню після карти */
+    }
+
+    /* 6. Кнопки меню */
+    .terminal-btn {
+        text-align: center !important;
+        padding: 15px !important;
+        font-size: 0.9rem !important;
+    }
+
+    /* 7. Скидаємо сітку фактів */
+    .facts-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+		
     </style>
 </head>
 <body>
