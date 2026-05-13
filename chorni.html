@@ -173,6 +173,63 @@
             border: 1px solid #1f2833;
             padding: 20px;
         }
+		
+		/* АДАПТАЦІЯ ДЛЯ МОБІЛЬНИХ ПРИСТРОЇВ (CHORNI.HTML) */
+@media screen and (max-width: 950px) {
+    /* Робимо головний контейнер вертикальним */
+    .layout-wrapper {
+        display: flex !important;
+        flex-direction: column !important;
+        padding: 10px !important;
+        gap: 20px !important;
+    }
+
+    /* Скасовуємо горизонтальний ряд для тексту, карти та меню */
+    .main-display-row {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+    }
+
+    /* Контейнер із контентом (текст + вікно) */
+    .content-area {
+        width: 100% !important;
+    }
+
+    /* Вікно з візуалізацією NASA (робимо меншим, щоб не займало весь екран) */
+    .iframe-window {
+        height: 400px !important;
+        width: 100% !important;
+    }
+
+    /* МЕНЮ (sidebar-right) — тепер воно внизу і на всю ширину */
+    .sidebar-right {
+        width: 100% !important;
+        max-width: 100% !important;
+        position: static !important;
+        margin: 15px 0 !important;
+        padding: 15px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 10px !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Кнопки меню робимо великими та зручними */
+    .terminal-btn {
+        width: 100% !important;
+        text-align: center !important;
+        padding: 15px !important;
+        font-size: 0.9rem !important;
+        white-space: normal !important;
+    }
+
+    /* Факти внизу сторінки — в одну колонку */
+    .facts-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+		
     </style>
 </head>
 <body>
