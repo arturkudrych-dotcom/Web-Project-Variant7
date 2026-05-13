@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Телескопи | ВІДКРИТИЙ КОСМОС</title>
     <link rel="stylesheet" href="style.css">
-	<link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
     <style>
         body, html {
             margin: 0;
@@ -14,27 +14,21 @@
             color: #c5c6c7;
             overflow-y: auto;
         }
-		
-		body {
-    /* Колір глибокого космосу */
-    background-color: #05080a; 
-    
-    /* Комбінація: зірковий пил + радіальний градієнт для об'єму */
-    background-image: 
-        radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 40px 70px, #ffffff, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 130px 80px, #fff, rgba(0,0,0,0)),
-        radial-gradient(circle at center, #0b1a24 0%, #05080a 100%);
-    
-    /* Щоб зірки повторювалися по всьому екрану */
-    background-size: 200px 200px, 200px 200px, 300px 300px, 250px 250px, 220px 220px, 100% 100%;
-    background-attachment: fixed; /* Фон не рухається при прокрутці */
-    
-    margin: 0;
-    color: #fff;
-}
+        
+        body {
+            background-color: #05080a; 
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 40px 70px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 130px 80px, #fff, rgba(0,0,0,0)),
+                radial-gradient(circle at center, #0b1a24 0%, #05080a 100%);
+            background-size: 200px 200px, 200px 200px, 300px 300px, 250px 250px, 220px 220px, 100% 100%;
+            background-attachment: fixed;
+            margin: 0;
+            color: #fff;
+        }
 
         .layout-wrapper {
             max-width: 1400px;
@@ -49,6 +43,7 @@
 
         .main-display-row {
             display: flex;
+            flex-direction: row; /* На ПК в рядок */
             gap: 30px;
             align-items: flex-start;
         }
@@ -70,197 +65,115 @@
 
         .telescope-card {
             display: flex;
+            gap: 20px;
             background: rgba(31, 40, 51, 0.4);
             border: 1px solid #1f2833;
+            padding: 20px;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .telescope-img {
+            width: 300px;
+            height: 200px;
+            object-fit: cover;
             border-radius: 4px;
+            cursor: pointer;
+            transition: opacity 0.3s;
+            flex-shrink: 0;
+        }
+
+        .telescope-img:hover { opacity: 0.8; }
+
+        /* МЕНЮ */
+        .sidebar-right {
+            width: 280px;
+            flex-shrink: 0;
+            border: 1px solid var(--accent);
+            padding: 20px 15px;
+            background: rgba(11, 12, 16, 0.95);
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            box-sizing: border-box;
+        }
+
+        .terminal-btn {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px 15px;
+            background: rgba(102, 252, 241, 0.02);
+            border: 1px solid rgba(102, 252, 241, 0.2);
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.85rem;
+            text-align: left;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
             overflow: hidden;
         }
 
-        /* Стиль для фото, які можна "відкрити" */
-        .telescope-img {
-            width: 250px;
-            height: 180px;
-            object-fit: cover;
-            border-right: 1px solid var(--accent);
-            cursor: pointer; /* Показуємо, що можна клікнути */
-            transition: opacity 0.3s;
+        .terminal-btn:hover, 
+        .terminal-btn.active {
+            background: rgba(102, 252, 241, 0.1);
+            border-color: var(--accent);
+            box-shadow: inset 0 0 10px rgba(102, 252, 241, 0.2);
+            padding-left: 22px;
         }
 
-        .telescope-img:hover {
-            opacity: 0.8;
-        }
+        .terminal-btn::before { content: "[ "; opacity: 0.5; }
+        .terminal-btn::after { content: " ]"; opacity: 0.5; float: right; }
 
-        /* МОДАЛЬНЕ ВІКНО (для відкриття фото) */
+        /* МОДАЛЬНЕ ВІКНО */
         .modal {
             display: none;
             position: fixed;
             z-index: 1000;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             background-color: rgba(0, 0, 0, 0.9);
             justify-content: center;
             align-items: center;
-            cursor: pointer;
         }
+        .modal img { max-width: 90%; max-height: 90%; border: 2px solid var(--accent); }
 
-        .modal img {
-            max-width: 90%;
-            max-height: 90%;
-            border: 2px solid var(--accent);
-            box-shadow: 0 0 20px var(--accent);
+        /* ВИПРАВЛЕНА АДАПТАЦІЯ ТУТ */
+        @media screen and (max-width: 1024px) {
+            .main-display-row {
+                flex-direction: column !important;
+            }
+
+            .sidebar-right {
+                width: 100% !important;
+                order: 2; /* Меню падає вниз тільки на малих екранах */
+            }
+
+            .telescope-card {
+                flex-direction: column !important;
+                align-items: center;
+            }
+
+            .telescope-img {
+                width: 100% !important;
+                height: auto !important;
+            }
+
+            .terminal-btn {
+                text-align: center !important;
+            }
         }
-
-               /* ВИПРАВЛЕННЯ МЕНЮ */
-.sidebar-right {
-    width: 280px;            /* Фіксована ширина контейнера */
-    flex-shrink: 0;
-    border: 1px solid var(--accent);
-    padding: 20px 15px;      /* Внутрішні відступи */
-    background: rgba(11, 12, 16, 0.95);
-    border-radius: 4px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;               /* Рівномірна відстань між кнопками */
-    box-sizing: border-box;  /* Важливо: щоб padding не розширював блок */
-}
-
-.terminal-btn {
-    display: block;          /* Кнопка стає блоком */
-    width: 100%;             /* Займає 100% ширини батьківського контейнера */
-    box-sizing: border-box;  /* Враховує внутрішні відступи в ширину */
-    padding: 12px 15px;
-    background: rgba(102, 252, 241, 0.02);
-    border: 1px solid rgba(102, 252, 241, 0.2);
-    color: var(--accent);
-    text-decoration: none;
-    font-size: 0.85rem;
-    text-align: left;        /* Вирівнювання по лівому краю для стабільності */
-    letter-spacing: 1px;
-    transition: all 0.3s ease;
-    white-space: nowrap;     /* Текст не переноситься на інший рядок */
-    overflow: hidden;        /* Якщо текст задовгий — він не зламає кнопку */
-}
-
-/* Ефект при наведенні та для активної сторінки */
-.terminal-btn:hover, 
-.terminal-btn.active {
-    background: rgba(102, 252, 241, 0.1);
-    border-color: var(--accent);
-    box-shadow: inset 0 0 10px rgba(102, 252, 241, 0.2);
-    padding-left: 22px;      /* Легке зміщення вправо при ховері */
-}
-
-/* Додаємо невеликий префікс перед текстом для стилю */
-.terminal-btn::before {
-    content: "[ ";
-    opacity: 0.5;
-}
-
-.terminal-btn::after {
-    content: " ]";
-    opacity: 0.5;
-    float: right;            /* Закриваюча дужка завжди справа */
-}
-
-/* АДАПТАЦІЯ ДЛЯ МОБІЛЬНИХ ПРИСТРОЇВ (CHORNI.HTML) */
-
-    /* Скасовуємо горизонтальний ряд для тексту, карти та меню */
-    .main-display-row {
-        display: flex !important;
-        flex-direction: column !important;
-        width: 100% !important;
-    }
-
-    /* Контейнер із контентом (текст + вікно) */
-    .content-area {
-        width: 100% !important;
-    }
-
-    /* Вікно з візуалізацією NASA (робимо меншим, щоб не займало весь екран) */
-    .iframe-window {
-        height: 400px !important;
-        width: 100% !important;
-    }
-
-    /* МЕНЮ (sidebar-right) — тепер воно внизу і на всю ширину */
-    .sidebar-right {
-        width: 100% !important;
-        max-width: 100% !important;
-        position: static !important;
-        margin: 15px 0 !important;
-        padding: 15px !important;
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 10px !important;
-        box-sizing: border-box !important;
-    }
-
-    /* Кнопки меню робимо великими та зручними */
-    .terminal-btn {
-        width: 100% !important;
-        text-align: center !important;
-        padding: 15px !important;
-        font-size: 0.9rem !important;
-        white-space: normal !important;
-    }
-
-    /* Факти внизу сторінки — в одну колонку */
-    .facts-grid {
-        grid-template-columns: 1fr !important;
-    }
-}
-
-.telescope-card {
-        display: flex;
-        gap: 20px;
-        background: rgba(31, 40, 51, 0.4);
-        border: 1px solid #1f2833;
-        padding: 20px;
-        border-radius: 8px;
-        margin-bottom: 20px;
-        transition: 0.3s;
-    }
-
-    .telescope-image {
-        width: 300px;
-        height: 200px;
-        object-fit: cover;
-        border-radius: 4px;
-        flex-shrink: 0;
-    }
-
-    /* АДАПТАЦІЯ ТУТ */
-    @media screen and (max-width: 900px) {
-        .main-display-row { flex-direction: column !important; }
-        
-        .telescope-card {
-            flex-direction: column !important; /* Картинка зверху, текст знизу */
-            align-items: center;
-        }
-
-        .telescope-image {
-            width: 100% !important;
-            height: auto !important;
-        }
-
-        .sidebar-right {
-            width: 100% !important;
-            position: static !important;
-            margin-top: 20px;
-        }
-    }
-
     </style>
 </head>
 <body>
     <div id="imageModal" class="modal" onclick="this.style.display='none'">
         <img id="modalImg" src="">
     </div>
-<div class="content-container animate-appearance">
+
     <div class="layout-wrapper">
-       <header class="header">
+        <header class="header">
             <a href="index.html" style="text-decoration: none;">
                 <h1>
                     <span class="glitch-word" data-text="ВІДКРИТИЙ">ВІДКРИТИЙ</span>
@@ -271,34 +184,31 @@
 
         <main class="main-display-row">
             <div class="content-area">
-                <div class="intro-text-block" style="background: rgba(102, 252, 241, 0.05); border-left: 4px solid var(--accent); padding: 20px;">
+                <div class="intro-text-block">
                     <h2>📡 АРХІВ ОПТИЧНИХ ТА РАДІОСИСТЕМ</h2>
                     <p>Клікніть на зображення телескопа, щоб роздивитися деталі конструкції антени чи дзеркала.</p>
                 </div>
 
                 <div class="telescope-grid">
                     <div class="telescope-card">
-                        <img src="teles1.jpg" 
-                             class="telescope-img" onclick="openModal(this.src)" alt="James Webb">
-                        <div class="telescope-info" style="padding: 15px;">
+                        <img src="teles1.jpg" class="telescope-img" onclick="openModal(this.src)" alt="James Webb">
+                        <div class="telescope-info">
                             <h3 style="color: var(--accent);">James Webb (JWST)</h3>
                             <p>Працює в інфрачервоному діапазоні. Його головна фішка — позолочене дзеркало з 18 сегментів.</p>
                         </div>
                     </div>
 
                     <div class="telescope-card">
-                        <img src="teles2.jpg" 
-                             class="telescope-img" onclick="openModal(this.src)" alt="Hubble">
-                        <div class="telescope-info" style="padding: 15px;">
+                        <img src="teles2.jpg" class="telescope-img" onclick="openModal(this.src)" alt="Hubble">
+                        <div class="telescope-info">
                             <h3 style="color: var(--accent);">Hubble Space Telescope</h3>
                             <p>Стара добра класика. Знаходиться на орбіті з 1990 року і досі передає унікальні дані.</p>
                         </div>
                     </div>
 
                     <div class="telescope-card">
-                        <img src="teles3.jpg" 
-                             class="telescope-img" onclick="openModal(this.src)" alt="Radio Telescope">
-                        <div class="telescope-info" style="padding: 15px;">
+                        <img src="teles3.jpg" class="telescope-img" onclick="openModal(this.src)" alt="Radio Telescope">
+                        <div class="telescope-info">
                             <h3 style="color: var(--accent);">Система ALMA</h3>
                             <p>Радіоінтерферометр, що складається з 66 радіотелескопів. Ідеально для вивчення холодного газу.</p>
                         </div>
@@ -308,17 +218,17 @@
 
             <aside class="sidebar-right">
                 <a href="index.html" class="terminal-btn">ГОЛОВНА</a>
-					<a href="solar.html" class="terminal-btn">СОНЯЧНА СИСТЕМА</a>
-					<a href="exo.html" class="terminal-btn">ЕКЗОПЛАНЕТИ</a>
-					<a href="chorni.html" class="terminal-btn">ЧОРНІ ДІРИ</a>
-					<a href="teles.html" class="terminal-btn">ТЕЛЕСКОПИ</a>
-					<a href="mnasa.html" class="terminal-btn">МІСІЇ NASA</a> 
-					<a href="gallarey.html" class="terminal-btn">ГАЛЕРЕЯ</a>
-					<a href="contact.html" class="terminal-btn">КОНТАКТИ</a>
+                <a href="solar.html" class="terminal-btn">СОНЯЧНА СИСТЕМА</a>
+                <a href="exo.html" class="terminal-btn">ЕКЗОПЛАНЕТИ</a>
+                <a href="chorni.html" class="terminal-btn">ЧОРНІ ДІРИ</a>
+                <a href="teles.html" class="terminal-btn">ТЕЛЕСКОПИ</a>
+                <a href="mnasa.html" class="terminal-btn">МІСІЇ NASA</a> 
+                <a href="gallarey.html" class="terminal-btn">ГАЛЕРЕЯ</a>
+                <a href="contact.html" class="terminal-btn">КОНТАКТИ</a>
             </aside>
         </main>
-		
-		<section class="facts-section">
+
+        <section class="facts-section">
             <h2 style="color: var(--accent);">🔍 ТЕХНІЧНІ ОСОБЛИВОСТІ</h2>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 20px;">
                 <div style="background: rgba(31, 40, 51, 0.4); padding: 15px; border: 1px solid #1f2833;">
@@ -334,31 +244,20 @@
     </div>
 
     <script>
-        // Функція для відкриття модального вікна
         function openModal(src) {
             document.getElementById('imageModal').style.display = "flex";
             document.getElementById('modalImg').src = src;
         }
-    </script>
-	
-	<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // Отримуємо назву поточного файлу (наприклад, missions.html)
-        const currentPath = window.location.pathname.split("/").pop();
-        
-        // Знаходимо всі кнопки меню
-        const navLinks = document.querySelectorAll('.terminal-btn');
 
-        navLinks.forEach(link => {
-            // Якщо посилання кнопки збігається з назвою файлу
-            if (link.getAttribute('href') === currentPath) {
-                link.classList.add('active'); // Додаємо підсвітку
-            } else {
-                link.classList.remove('active'); // Прибираємо у всіх інших
-            }
+        document.addEventListener("DOMContentLoaded", function() {
+            const currentPath = window.location.pathname.split("/").pop();
+            const navLinks = document.querySelectorAll('.terminal-btn');
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPath) {
+                    link.classList.add('active');
+                }
+            });
         });
-    });
-</script>
-	
+    </script>
 </body>
 </html>
