@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Екзопланети | ВІДКРИТИЙ КОСМОС</title>
     <link rel="stylesheet" href="style.css">
-	<link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
     <style>
-        /* Уніфіковані стилі для дотримання однакової ширини */
+        /* Уніфіковані стилі */
         body, html {
             margin: 0;
             padding: 0;
@@ -16,27 +16,21 @@
             overflow-x: hidden;
             overflow-y: auto;
         }
-		
-		body {
-    /* Колір глибокого космосу */
-    background-color: #05080a; 
-    
-    /* Комбінація: зірковий пил + радіальний градієнт для об'єму */
-    background-image: 
-        radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 40px 70px, #ffffff, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 130px 80px, #fff, rgba(0,0,0,0)),
-        radial-gradient(circle at center, #0b1a24 0%, #05080a 100%);
-    
-    /* Щоб зірки повторювалися по всьому екрану */
-    background-size: 200px 200px, 200px 200px, 300px 300px, 250px 250px, 220px 220px, 100% 100%;
-    background-attachment: fixed; /* Фон не рухається при прокрутці */
-    
-    margin: 0;
-    color: #fff;
-}
+        
+        body {
+            background-color: #05080a; 
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 40px 70px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 130px 80px, #fff, rgba(0,0,0,0)),
+                radial-gradient(circle at center, #0b1a24 0%, #05080a 100%);
+            background-size: 200px 200px, 200px 200px, 300px 300px, 250px 250px, 220px 220px, 100% 100%;
+            background-attachment: fixed;
+            margin: 0;
+            color: #fff;
+        }
 
         .layout-wrapper {
             max-width: 1400px; 
@@ -53,11 +47,13 @@
             width: 100%;
         }
 
-        /* Основний ряд: Контент зліва + Меню справа */
-     .main-display-row {
-        flex-direction: column !important; /* Скасовуємо горизонтальний ряд */
-        width: 100% !important;
-    }
+        /* ВИПРАВЛЕНО: Ряд тепер працює горизонтально на ПК */
+        .main-display-row {
+            display: flex;
+            flex-direction: row; 
+            gap: 20px;
+            width: 100%;
+        }
 
         .content-area {
             flex: 1;
@@ -67,7 +63,6 @@
             min-width: 0;
         }
 
-        /* Технічний опис */
         .intro-text-block {
             background: rgba(102, 252, 241, 0.05);
             border-left: 4px solid var(--accent);
@@ -83,7 +78,6 @@
             text-transform: uppercase;
         }
 
-        /* Вікно 3D карти екзопланет */
         .iframe-window {
             width: 100%;
             height: 600px;
@@ -99,59 +93,49 @@
             border: none;
         }
 
-        /* ВИПРАВЛЕННЯ МЕНЮ */
-.sidebar-right {
-    width: 280px;            /* Фіксована ширина контейнера */
-    flex-shrink: 0;
-    border: 1px solid var(--accent);
-    padding: 20px 15px;      /* Внутрішні відступи */
-    background: rgba(11, 12, 16, 0.95);
-    border-radius: 4px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;               /* Рівномірна відстань між кнопками */
-    box-sizing: border-box;  /* Важливо: щоб padding не розширював блок */
-}
+        /* МЕНЮ */
+        .sidebar-right {
+            width: 280px;
+            flex-shrink: 0;
+            border: 1px solid var(--accent);
+            padding: 20px 15px;
+            background: rgba(11, 12, 16, 0.95);
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            box-sizing: border-box;
+        }
 
-.terminal-btn {
-    display: block;          /* Кнопка стає блоком */
-    width: 100%;             /* Займає 100% ширини батьківського контейнера */
-    box-sizing: border-box;  /* Враховує внутрішні відступи в ширину */
-    padding: 12px 15px;
-    background: rgba(102, 252, 241, 0.02);
-    border: 1px solid rgba(102, 252, 241, 0.2);
-    color: var(--accent);
-    text-decoration: none;
-    font-size: 0.85rem;
-    text-align: left;        /* Вирівнювання по лівому краю для стабільності */
-    letter-spacing: 1px;
-    transition: all 0.3s ease;
-    white-space: nowrap;     /* Текст не переноситься на інший рядок */
-    overflow: hidden;        /* Якщо текст задовгий — він не зламає кнопку */
-}
+        .terminal-btn {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px 15px;
+            background: rgba(102, 252, 241, 0.02);
+            border: 1px solid rgba(102, 252, 241, 0.2);
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.85rem;
+            text-align: left;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            overflow: hidden;
+        }
 
-/* Ефект при наведенні та для активної сторінки */
-.terminal-btn:hover, 
-.terminal-btn.active {
-    background: rgba(102, 252, 241, 0.1);
-    border-color: var(--accent);
-    box-shadow: inset 0 0 10px rgba(102, 252, 241, 0.2);
-    padding-left: 22px;      /* Легке зміщення вправо при ховері */
-}
+        .terminal-btn:hover, 
+        .terminal-btn.active {
+            background: rgba(102, 252, 241, 0.1);
+            border-color: var(--accent);
+            box-shadow: inset 0 0 10px rgba(102, 252, 241, 0.2);
+            padding-left: 22px;
+        }
 
-/* Додаємо невеликий префікс перед текстом для стилю */
-.terminal-btn::before {
-    content: "[ ";
-    opacity: 0.5;
-}
+        .terminal-btn::before { content: "[ "; opacity: 0.5; }
+        .terminal-btn::after { content: " ]"; opacity: 0.5; float: right; }
 
-.terminal-btn::after {
-    content: " ]";
-    opacity: 0.5;
-    float: right;            /* Закриваюча дужка завжди справа */
-}
-
-        /* Блок фактів знизу */
+        /* Блок фактів */
         .facts-section {
             width: 100%;
             border-top: 1px solid rgba(102, 252, 241, 0.3);
@@ -174,76 +158,28 @@
             transition: 0.3s;
         }
 
-        .fact-card:hover {
-            border-color: var(--accent);
+        .fact-card:hover { border-color: var(--accent); }
+
+        /* ВИПРАВЛЕННЯ ДЛЯ ТЕЛЕФОНІВ */
+        @media screen and (max-width: 950px) {
+            .main-display-row {
+                flex-direction: column !important; /* На ТФ блоки один під одним */
+            }
+            .sidebar-right {
+                width: 100% !important;
+                order: 3; /* Меню в самому низу */
+            }
+            .iframe-window {
+                height: 400px !important;
+            }
+            .terminal-btn {
+                text-align: center !important;
+            }
         }
-
-        .fact-card h4 {
-            color: var(--accent);
-            margin-bottom: 8px;
-        }
-
-        .fact-card p {
-            font-size: 0.85rem;
-            line-height: 1.4;
-        }
-		
-	/* ДОДАЙ ЦЕ В КІНЕЦЬ БЛОКУ <style> У ФАЙЛІ exo.html */
-@media screen and (max-width: 950px) {
-    /* 1. Обгортка сторінки */
-    .layout-wrapper {
-        padding: 10px !important;
-        display: flex !important;
-        flex-direction: column !important; /* Усе в стовпчик */
-        gap: 15px !important;
-    }
-
-    /* 2. Основний ряд (Текст + Карта + Меню) */
-    .main-display-row {
-        flex-direction: column !important; /* Скасовуємо горизонтальний ряд */
-        width: 100% !important;
-    }
-
-    /* 3. Блок з текстом і картою */
-    .content-area {
-        width: 100% !important;
-    }
-
-    /* 4. Вікно з картою (робимо нижчим для зручності) */
-    .iframe-window {
-        height: 400px !important;
-    }
-
-    /* 5. МЕНЮ (sidebar-right) - ФІКС */
-    .sidebar-right {
-        width: 100% !important; /* Тепер воно не 280px, а на весь екран */
-        max-width: 100% !important;
-        position: static !important;
-        margin: 10px 0 !important;
-        padding: 15px !important;
-        order: 3; /* Ставимо меню після карти */
-    }
-
-    /* 6. Кнопки меню */
-    .terminal-btn {
-        text-align: center !important;
-        padding: 15px !important;
-        font-size: 0.9rem !important;
-    }
-
-    /* 7. Скидаємо сітку фактів */
-    .facts-grid {
-        grid-template-columns: 1fr !important;
-    }
-}
-		
     </style>
 </head>
 <body>
-    <canvas id="stars-canvas"></canvas>
-
     <div class="layout-wrapper">
-        <div class="content-container animate-appearance">
         <header class="header">
             <a href="index.html" style="text-decoration: none;">
                 <h1>
@@ -254,16 +190,10 @@
         </header>
 
         <main class="main-display-row">
-            
             <div class="content-area">
                 <div class="intro-text-block">
                     <h2>🌌 РЕЄСТР ПОЗАСОНЯЧНИХ ОБ'ЄКТІВ</h2>
-                    <p><b>ОПИС:</b> Даний розділ містить дані про планети, що обертаються навколо інших зірок. Візуалізація дозволяє досліджувати тисячі відкритих світів за межами нашої системи.</p>
-                    <p style="margin-top: 8px;"><b>МЕТОДИ ДЕТЕКЦІЇ:</b> Аналіз базується на транзитній фотометрії та вимірюванні радіальних швидкостей зірок. Використовуються дані телескопів <b>Kepler, TESS та James Webb</b>.</p>
-                    <div style="margin-top: 15px; display: flex; gap: 20px; font-size: 0.8rem; color: #45a29e; font-weight: bold;">
-                        <span>● СТАТУС: АРХІВ ДОСТУПНИЙ</span>
-                        <span>● СИСТЕМА: ГАЛАКТИКА_NET</span>
-                    </div>
+                    <p><b>ОПИС:</b> Даний розділ містить дані про планети, що обертаються навколо інших зірок.</p>
                 </div>
 
                 <div class="iframe-window">
@@ -271,18 +201,16 @@
                 </div>
             </div>
 
-            
-                <aside class="sidebar-right">
-					<a href="index.html" class="terminal-btn">ГОЛОВНА</a>
-					<a href="solar.html" class="terminal-btn">СОНЯЧНА СИСТЕМА</a>
-					<a href="exo.html" class="terminal-btn">ЕКЗОПЛАНЕТИ</a>
-					<a href="chorni.html" class="terminal-btn">ЧОРНІ ДІРИ</a>
-					<a href="teles.html" class="terminal-btn">ТЕЛЕСКОПИ</a>
-					<a href="mnasa.html" class="terminal-btn">МІСІЇ NASA</a> 
-					<a href="gallarey.html" class="terminal-btn">ГАЛЕРЕЯ</a>
-					<a href="contact.html" class="terminal-btn">КОНТАКТИ</a>
+            <aside class="sidebar-right">
+                <a href="index.html" class="terminal-btn">ГОЛОВНА</a>
+                <a href="solar.html" class="terminal-btn">СОНЯЧНА СИСТЕМА</a>
+                <a href="exo.html" class="terminal-btn">ЕКЗОПЛАНЕТИ</a>
+                <a href="chorni.html" class="terminal-btn">ЧОРНІ ДІРИ</a>
+                <a href="teles.html" class="terminal-btn">ТЕЛЕСКОПИ</a>
+                <a href="mnasa.html" class="terminal-btn">МІСІЇ NASA</a> 
+                <a href="gallarey.html" class="terminal-btn">ГАЛЕРЕЯ</a>
+                <a href="contact.html" class="terminal-btn">КОНТАКТИ</a>
             </aside>
-
         </main>
 
         <section class="facts-section">
@@ -290,43 +218,15 @@
             <div class="facts-grid">
                 <div class="fact-card">
                     <h4>💎 Діамантова планета</h4>
-                    <p>Планета <b>55 Cancri e</b> вдвічі більша за Землю і, за розрахунками фізиків, на третину складається з чистого алмазу через високий тиск та вміст вуглецю.</p>
+                    <p>Планета <b>55 Cancri e</b> вдвічі більша за Землю.</p>
                 </div>
                 <div class="fact-card">
                     <h4>💧 Скляні дощі</h4>
-                    <p>На яскраво-блакитній планеті <b>HD 189733b</b> дмуть вітри швидкістю 7000 км/год, а замість води там йдуть дощі з розплавленого скла.</p>
-                </div>
-                <div class="fact-card">
-                    <h4>🔴 Сім сестер TRAPPIST-1</h4>
-                    <p>У цій системі відкрито цілих сім скелястих планет, схожих на Землю, три з яких знаходяться в "зоні життя", де може бути рідка вода.</p>
-                </div>
-                <div class="fact-card">
-                    <h4>🌑 Найтемніший світ</h4>
-                    <p>Екзопланета <b>TrES-2b</b> відбиває менше 1% світла, що падає на неї. Вона чорніша за вугілля і світиться ледь помітним червоним кольором.</p>
+                    <p>На планеті <b>HD 189733b</b> йдуть дощі з розплавленого скла.</p>
                 </div>
             </div>
         </section>
-
     </div>
-	
-	<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // Отримуємо назву поточного файлу (наприклад, missions.html)
-        const currentPath = window.location.pathname.split("/").pop();
-        
-        // Знаходимо всі кнопки меню
-        const navLinks = document.querySelectorAll('.terminal-btn');
-
-        navLinks.forEach(link => {
-            // Якщо посилання кнопки збігається з назвою файлу
-            if (link.getAttribute('href') === currentPath) {
-                link.classList.add('active'); // Додаємо підсвітку
-            } else {
-                link.classList.remove('active'); // Прибираємо у всіх інших
-            }
-        });
-    });
-</script>
 
     <script src="script.js"></script>
 </body>
