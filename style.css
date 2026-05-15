@@ -96,7 +96,7 @@ body {
 }
 
 .neon-word {
-    display: block; /* Зробимо його на новому рядку */
+    display: block; 
     font-weight: 800;
     color: var(--accent);
     font-size: 1.4rem;
@@ -132,7 +132,7 @@ body {
     background: #000;
     border-radius: 8px;
     max-height: 180px;
-    overflow: hidden; /* Обов'язково, щоб картинка не вилазила за межі при збільшенні */
+    overflow: hidden; /* щоб картинка не вилазила за межі при збільшенні */
     border: 1px solid rgba(102, 252, 241, 0.2);
     cursor: pointer; /* Показує, що на фото можна клікнути */
 }
@@ -417,7 +417,7 @@ footer {
 
 .scroll-indicator { 
     height: 100%; 
-    background: var(--accent); /* Твій бірюзовий колір */
+    background: var(--accent); /* бірюзовий колір */
     width: 0%; /* Початкова ширина */
     box-shadow: 0 0 15px var(--accent), 0 0 5px #fff; 
     transition: width 0.1s ease-out;
@@ -661,7 +661,7 @@ footer {
 .sidebar-right {
     width: 280px;            /* Фіксована ширина, щоб меню не "гуляло" */
     flex-shrink: 0;
-    border: 1px solid #66fcf1; /* Бірюзова рамка як на скріні */
+    border: 1px solid #66fcf1; /* Бірюзова рамка*/
     padding: 15px;
     background: rgba(11, 12, 16, 0.95);
     border-radius: 4px;
@@ -682,7 +682,7 @@ footer {
     color: #66fcf1;
     text-decoration: none;
     font-size: 0.85rem;
-    text-align: center;      /* Текст по центру як на скріні */
+    text-align: center;      /* Текст по центру*/
     letter-spacing: 2px;     /* Космічний відступ між літерами */
     text-transform: uppercase;
     transition: all 0.3s ease;
@@ -804,7 +804,7 @@ footer {
     top: 0; left: 0;
     width: 100%; height: 100%;
     border: none;
-    filter: hue-rotate(180deg) brightness(0.8) contrast(1.2); /* Підганяємо під твій неоновий колір */
+    filter: hue-rotate(180deg) brightness(0.8) contrast(1.2); /* Підганяємо під неоновий колір */
 }
 
 .terminal-window {
@@ -851,7 +851,7 @@ footer {
 .log-msg-info { color: #66fcf1; }
 .log-msg-warn { color: #ffbd2e; }
 
-/* Анімація появи (з твого скріншоту image_8cee41.png) */
+/* Анімація появи*/
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -871,7 +871,6 @@ footer {
 /* Універсальні виправлення для мобілок */
 @media (max-width: 600px) {
     
-    /* 1. Виправляємо логотип (щоб не обрізався як на скріншоті) */
     h1, h2, .logo-link h1, .logo-link h2 {
         font-size: 24px !important; /* Зменшуємо текст заголовка */
         text-align: center;
@@ -919,7 +918,6 @@ footer {
     }
 }
 
-/* ПОВНИЙ ФІКС ДЛЯ ВСІХ СТОРІНОК (MOBILE) */
 /* РОЗУМНА АДАПТАЦІЯ ДЛЯ ВСІХ СТОРІНОК */
 @media screen and (max-width: 950px) {
     /* Дозволяємо контейнеру переходити з сітки у звичайний стовпчик */
@@ -959,14 +957,14 @@ footer {
         order: 1;
     }
 
-    /* Права панель з кнопками (твоє меню) */
+    /* Права панель з кнопками*/
     .sidebar-right {
         width: 100% !important;
         position: static !important;
         border-left: none !important;
         border-top: 2px solid var(--accent);
         padding: 20px !important;
-        order: 2; /* Меню буде під контентом або над ним, залежно від потреби */
+        order: 2; 
     }
 
     /* Фікс кнопок */
@@ -988,8 +986,6 @@ footer {
         display: none !important;
     }
 }
-
-/* Якщо екран зовсім маленький (телефони вертикально) */
 @media screen and (max-width: 480px) {
     .menu {
         grid-template-columns: 1fr !important; /* Кнопки в один ряд */

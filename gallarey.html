@@ -203,8 +203,8 @@
             .sidebar-right { grid-template-columns: 1fr; }
         }
 		
-		/* Індикатор прокрутки сторінки */
-.scroll-indicator {
+	/* Індикатор прокрутки сторінки */
+	.scroll-indicator {
     position: fixed;
     top: 0;
     left: 0;
@@ -214,8 +214,7 @@
     z-index: 9999; /* Щоб смуга була поверх усіх елементів сайту */
     box-shadow: 0 0 8px #66fcf1, 0 0 15px #66fcf1; /* Неонове світіння */
     transition: width 0.1s ease-out;
-}
-		
+}	
     </style>
 </head>
 <body>
@@ -330,7 +329,7 @@
     </div>
 </div>
 
-<!-- СТРУКТУРА МОДАЛЬНОГО ВІКНА (ОБОВ'ЯЗКОВО) -->
+<!-- СТРУКТУРА МОДАЛЬНОГО ВІКНА -->
 <div id="photoModal" class="modal">
     <span class="close-modal">&times;</span>
     <img class="modal-content" id="fullImage">
@@ -383,8 +382,7 @@
         indicator.style.width = scrolled + '%';
     }
 });
-	
-</script>
+	</script>
 
 </body>
 </html>

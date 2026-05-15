@@ -1,9 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     console.log("Всі космічні системи моніторингу активовані!");
 
-    // --- 1. МОДАЛЬНЕ ВІКНО ДЛЯ ФОТО (НАЙНАДІЙНІША ВЕРСІЯ) ---
-    // Ми створюємо модалку динамічно, щоб вона не залежала від CSS файлу
-    
+    // --- 1. МОДАЛЬНЕ ВІКНО ДЛЯ ФОТО---   
     // Створюємо фон модалки
     const modal = document.createElement('div');
     modal.id = 'dynamic-modal';
@@ -149,15 +147,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Запуск систем
     if (canvas) drawOscilloscope();
-    setInterval(updateTelemetry, 2500); // Оновлення даних кожні 2.5 сек
+    setInterval(updateTelemetry, 2000); // Оновлення даних кожні 2 сек
 });
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Весь твій код (window.onscroll, функції тощо) помісти сюди
     console.log("Система готова до моніторингу!");
 });
 
-// Оновлена функція виводу даних
 function showInfo(id, name, dist, freq, status) {
     const panel = document.getElementById('target-details');
     if (panel) {
@@ -223,7 +219,7 @@ const canvas = document.getElementById('stars-canvas');
 const ctx = canvas.getContext('2d');
 
 let stars = [];
-const starCount = 150; // Кількість зірок
+const starCount = 550; // Кількість зірок
 
 function resizeCanvas() {
     canvas.width = window.innerWidth;
@@ -342,7 +338,7 @@ function showPage(pageId) {
     const activePage = document.getElementById(pageId);
     if (activePage) {
         activePage.style.display = 'block';
-        // Додаємо ефект плавної появи, який ми робили раніше
+        // Додаємо ефект плавної появи
         activePage.classList.add('fade-in-section');
     }
 }
