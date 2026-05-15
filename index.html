@@ -1,53 +1,415 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Космічні Дослідження</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
+	<style>
+/* Головний контейнер адаптується під ширину екрана */
+  .radar-section {
+    background: rgba(10, 16, 26, 0.95);
+    border: 1px solid rgba(0, 240, 255, 0.25);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 0 30px rgba(0, 240, 255, 0.08), inset 0 0 20px rgba(0, 240, 255, 0.05);
+    font-family: 'Courier New', Courier, monospace;
+    color: #ffffff;
+    max-width: 1050px;
+    margin: 15px auto;
+    box-sizing: border-box;
+  }
+
+  .radar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .radar-title {
+    font-size: 1.15rem;
+    font-weight: bold;
+    color: #00f0ff;
+    text-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
+    letter-spacing: 1px;
+  }
+
+  .scanning-blink {
+    color: #ff3333;
+    font-weight: bold;
+    text-shadow: 0 0 8px rgba(255, 51, 51, 0.6);
+    animation: radar-blink-anim 1.5s infinite ease-in-out;
+  }
+
+  /* НАСТРОЙКА СІТКИ: На ПК — 2 колонки, на Смартфонах — 1 колонка */
+  .radar-body {
+    display: grid;
+    grid-template-columns: 1.35fr 1fr;
+    gap: 25px;
+  }
+
+  /* Спеціальний мобільний контейнер екрана */
+  .radar-display-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    padding: 15px;
+    border: 1px solid rgba(0, 240, 255, 0.12);
+    gap: 10px;
+  }
+
+  .radar-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    font-size: 0.8rem;
+    width: 25%;
+  }
+
+  .meta-label { color: rgba(0, 240, 255, 0.7); display: block; margin-bottom: 4px; }
+  .neon-text { color: #ffffff; font-weight: bold; text-shadow: 0 0 5px rgba(255,255,255,0.3); }
+  .btn-group { display: flex; gap: 4px; margin-top: 5px; }
+  
+  .radar-btn {
+    background: transparent;
+    border: 1px solid #00f0ff;
+    color: #00f0ff;
+    padding: 6px 14px; /* Збільшено для кращого тачу на ТФ */
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+  }
+
+  .radar-btn:hover {
+    background: rgba(0, 240, 255, 0.2);
+    box-shadow: 0 0 8px #00f0ff;
+  }
+
+  /* Фіксоване адаптивне коло радара */
+  .radar-screen {
+    position: relative;
+    width: 220px;
+    height: 220px;
+    background: radial-gradient(circle, rgba(0,35,45,0.3) 0%, rgba(0,8,12,0.9) 100%);
+    border: 2px solid rgba(0, 240, 255, 0.4);
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 0 25px rgba(0, 240, 255, 0.15);
+    flex-shrink: 0;
+  }
+
+  .radar-sweep-arm {
+    position: absolute;
+    width: 50%; height: 50%;
+    top: 0; left: 50%;
+    transform-origin: left bottom;
+    animation: sweep-rotation-anim 4s linear infinite;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .sweep-line {
+    position: absolute; left: 0; bottom: 0;
+    width: 2px; height: 100%;
+    background: #00f0ff;
+    box-shadow: 0 0 15px #00f0ff;
+  }
+
+  .sweep-fade {
+    position: absolute; right: 0; bottom: 0;
+    width: 100%; height: 100%;
+    background: conic-gradient(from 0deg, rgba(0, 240, 255, 0.3) 0deg, rgba(0, 240, 255, 0) 70deg);
+    transform: scaleX(-1) rotate(-90deg);
+    transform-origin: left bottom;
+  }
+
+  .radar-circle {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px dashed rgba(0, 240, 255, 0.15);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .c-1 { width: 33.3%; height: 33.3%; }
+  .c-2 { width: 66.6%; height: 66.6%; }
+  .c-3 { width: 95%; height: 95%; }
+
+  .radar-cross-x, .radar-cross-y {
+    position: absolute; background: rgba(0, 240, 255, 0.1); pointer-events: none;
+  }
+  .radar-cross-x { width: 100%; height: 1px; top: 50%; left: 0; }
+  .radar-cross-y { height: 100%; width: 1px; left: 50%; top: 0; }
+
+  .radar-targets-layer {
+    position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 3;
+  }
+
+  /* ТОЧКИ (БЛІПИ) З ЗБІЛЬШЕНОЮ ЗОНОЮ КЛІКУ ДЛЯ ПАЛЬЦІВ */
+  .blip {
+    position: absolute;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    transition: left 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), 
+                top 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), 
+                transform 0.2s ease, opacity 0.3s ease;
+  }
+
+  /* НЕВИДИМИЙ СУПЕР-ХІТБОКС (Щоб на телефоні легко натискалося палицями) */
+  .blip::after {
+    content: '';
+    position: absolute;
+    top: -10px; left: -10px;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: transparent;
+  }
+
+  .blip:hover { transform: translate(-50%, -50%) scale(1.5); z-index: 10; }
+
+  .blip-pulse-ring {
+    position: absolute; top: -5px; left: -5px;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: inherit;
+    opacity: 0.6;
+    animation: ring-pulse-anim 2s infinite ease-in-out;
+    pointer-events: none;
+  }
+
+  .blip-id {
+    position: absolute; top: -14px; left: 10px;
+    font-size: 0.65rem; font-weight: bold;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 0 5px #000;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  .center-base { background: #00f0ff; top: 50%; left: 50%; box-shadow: 0 0 12px #00f0ff; cursor: default; }
+  .center-base::after { display: none; }
+  .target-red { background: #ff3333; box-shadow: 0 0 15px #ff3333; }
+  .target-orange { background: #ffaa00; box-shadow: 0 0 15px #ffaa00; }
+  .target-white { background: #ffffff; box-shadow: 0 0 15px #ffffff; }
+  .target-cyan { background: #00ffaa; box-shadow: 0 0 15px #00ffaa; }
+
+  /* ПАНЕЛЬ ТЕРМІНАЛУ */
+  .radar-terminal {
+    border-left: 3px solid #00f0ff;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .terminal-title {
+    font-size: 1.1rem; color: #00f0ff; font-weight: bold;
+    margin-bottom: 12px; text-shadow: 0 0 8px rgba(0, 240, 255, 0.3);
+  }
+
+  .terminal-content { display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; }
+  .terminal-guide { font-size: 0.85rem; color: rgba(255, 255, 255, 0.5); font-style: italic; line-height: 1.4; }
+
+  .object-info-panel {
+    background: rgba(0, 240, 255, 0.04);
+    border: 1px dashed rgba(0, 240, 255, 0.35);
+    padding: 12px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    animation: card-appear-anim 0.3s ease-out;
+  }
+
+  .info-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px solid rgba(0, 240, 255, 0.15); padding-bottom: 4px;}
+  .info-title { color: #00f0ff; font-weight: bold; font-size: 0.9rem; }
+  
+  .hazard-badge { font-size: 0.65rem; padding: 2px 6px; border-radius: 3px; font-weight: bold; }
+  .hazard-critical { background: rgba(255, 51, 51, 0.2); color: #ff3333; border: 1px solid #ff3333; }
+  .hazard-high { background: rgba(255, 170, 0, 0.2); color: #ffaa00; border: 1px solid #ffaa00; }
+  .hazard-safe { background: rgba(0, 255, 170, 0.2); color: #00ffaa; border: 1px solid #00ffaa; }
+
+  .info-grid { display: flex; flex-direction: column; gap: 5px; }
+  .info-row { font-size: 0.85rem; color: rgba(255, 255, 255, 0.9); }
+
+  .terminal-logs {
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(0, 240, 255, 0.1);
+    padding: 10px; border-radius: 4px;
+    font-size: 0.75rem; display: flex; flex-direction: column; gap: 6px;
+    margin-top: 15px; margin-bottom: 15px;
+  }
+  .log-tag { color: #00ffaa; }
+  .log-line { color: rgba(255, 255, 255, 0.65); line-height: 1.3; }
+
+  .terminal-footer { display: flex; align-items: center; justify-content: space-between; gap: 15px; }
+  .signal-graph { display: flex; align-items: flex-end; gap: 3px; height: 35px; width: 70px; flex-shrink: 0; }
+  .graph-bar {
+    flex-grow: 1; background: #00f0ff;
+    border-radius: 1px 1px 0 0; animation: bar-vibration-anim 1s infinite ease-in-out alternate;
+    transform-origin: bottom;
+  }
+
+  .send-signal-btn {
+    background: transparent; border: 1px solid #00f0ff; color: #00f0ff;
+    padding: 10px 16px; font-family: inherit; font-weight: bold; font-size: 0.85rem;
+    cursor: pointer; transition: all 0.2s ease; flex-grow: 1; text-align: center;
+  }
+  .send-signal-btn:hover { background: #00f0ff; color: #000; box-shadow: 0 0 15px rgba(0, 240, 255, 0.4); }
+
+  /* ===================== МОДАЛЬНЕ ВІКНО ========================= */
+  .radar-modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(5, 10, 15, 0.88); backdrop-filter: blur(5px);
+    z-index: 1000; display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+    padding: 15px;
+  }
+  .radar-modal-overlay.active { opacity: 1; pointer-events: auto; }
+
+  .radar-modal-window {
+    background: #0a101a; border: 2px solid #00f0ff; border-radius: 8px;
+    width: 100%; max-width: 420px; padding: 20px; position: relative;
+    box-shadow: 0 0 35px rgba(0, 240, 255, 0.2); font-family: 'Courier New', Courier, monospace; color: #fff;
+    box-sizing: border-box;
+  }
+  .modal-cyber-lines {
+    position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+    background: linear-gradient(90deg, #00f0ff, transparent, #ff3333);
+  }
+
+  .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+  .modal-title { font-size: 0.95rem; font-weight: bold; color: #00f0ff; }
+  .modal-close-btn { background: transparent; border: none; color: rgba(255,255,255,0.6); font-size: 1.4rem; cursor: pointer; padding: 5px; }
+
+  .pulse-transmission-animation { position: relative; width: 80px; height: 80px; margin: 0 auto 15px; }
+  .core-dot {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 12px; height: 12px; background: #00f0ff; border-radius: 50%; box-shadow: 0 0 10px #00f0ff;
+  }
+  .wave-ring {
+    position: absolute; top: 0; left: 0; width: 80px; height: 80px;
+    border: 2px solid #00f0ff; border-radius: 50%; opacity: 0;
+    animation: wave-spread-anim 2.5s infinite linear;
+  }
+  .wr-2 { animation-delay: 0.8s; }
+  .wr-3 { animation-delay: 1.6s; }
+
+  .transmission-status-text { font-size: 0.8rem; text-align: center; color: #00ffaa; margin-bottom: 12px; }
+
+  .cyber-progress-container {
+    background: rgba(0, 240, 255, 0.05); border: 1px solid rgba(0, 240, 255, 0.3);
+    height: 12px; border-radius: 2px; overflow: hidden; margin-bottom: 15px;
+  }
+  .cyber-progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, #00f0ff, #00ffaa); transition: width 0.1s linear; }
+
+  .modal-live-logs {
+    background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.05);
+    padding: 10px; font-size: 0.7rem; color: rgba(255,255,255,0.6);
+    display: flex; flex-direction: column; gap: 4px; min-height: 60px;
+  }
+
+  .modal-complete-btn {
+    background: rgba(0, 240, 255, 0.04); border: 1px solid #00f0ff; color: #00f0ff;
+    width: 100%; padding: 12px; margin-top: 15px; font-family: inherit; font-weight: bold; font-size: 0.85rem;
+    cursor: pointer; display: none; animation: card-appear-anim 0.4s ease-out;
+  }
+  .modal-complete-btn:hover { background: #00f0ff; color: #01080e; }
+
+  /* ====================================================================== */
+  /* ===================== МЕДІА-ЗАПИТИ ДЛЯ МОБІЛОК (📱) =================== */
+  /* ====================================================================== */
+  @media (max-width: 768px) {
+    .radar-body {
+      grid-template-columns: 1fr; /* Перебудова в 1 колонку */
+      gap: 15px;
+    }
+    
+    .radar-display-container {
+      flex-direction: row;
+      justify-content: space-around;
+      padding: 10px;
+    }
+
+    .radar-meta {
+      width: auto;
+      gap: 10px;
+    }
+
+    .radar-terminal {
+      border-left: none;
+      border-top: 3px solid #00f0ff; /* Лінія тепер зверху */
+      padding-left: 0;
+      padding-top: 15px;
+    }
+
+    .radar-screen {
+      width: 180px; /* Злегка зменшуємо екран, щоб вліз на маленькі ТФ */
+      height: 180px;
+    }
+
+    /* Адаптація збережених координат на маленькому радарі */
+    .blip-id { display: none; } /* Ховаємо ID на мобільних, щоб не захаращувати інтерфейс */
+  }
+
+  @keyframes sweep-rotation-anim { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  @keyframes radar-blink-anim { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
+  @keyframes ring-pulse-anim { 0% { transform: scale(0.5); opacity: 0.9; } 100% { transform: scale(2); opacity: 0; } }
+  @keyframes bar-vibration-anim { from { transform: scaleY(1); } to { transform: scaleY(0.2); } }
+  @keyframes card-appear-anim { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes wave-spread-anim { 0% { transform: scale(0.1); opacity: 1; } 100% { transform: scale(1.2); opacity: 0; border-color: #00ffaa; } }
+</style>
 </head>
 <body>
-<canvas id="stars-canvas"></canvas>
-<div id="loader-overlay">
-    <div class="loader-content">
-        <div class="scanner-line"></div>
-        <h2 class="loading-text">INITIALIZING DEEP SPACE LINK...</h2>
-        <div class="progress-container">
-            <div id="progress-fill"></div>
+
+    <canvas id="stars-canvas"></canvas>
+
+    <div id="loader-overlay">
+        <div class="loader-content">
+            <div class="scanner-line"></div>
+            <h2 class="loading-text">INITIALIZING DEEP SPACE LINK...</h2>
+            <div class="progress-container">
+                <div id="progress-fill"></div>
+            </div>
+            <p class="system-status">CONNECTED TO UzhNU PHYSICAL FACULTY STATION</p>
         </div>
-        <p class="system-status">CONNECTED TO UzhNU PHYSICAL FACULTY STATION</p>
     </div>
-</div>
+
     <div class="scroll-container">
-    <div class="scroll-indicator" id="progress-bar"></div>
-	</div>
+        <div class="scroll-indicator" id="progress-bar"></div>
+    </div>
     
     <div class="layout-wrapper">
-	
-        <div id="home-page" class="page-content">
-    </div>
+    
+        <div id="home-page" class="page-content"></div>
 
-<div id="solar-page" class="page-content" style="display: none;">
-    <h2 class="terminal-title">МОНІТОРИНГ СОНЯЧНОЇ СИСТЕМИ</h2>
-    <div class="iframe-container" style="height: 600px; border: 1px solid #66fcf1;">
-        <iframe src="https://eyes.nasa.gov/apps/solar-system/#/home" width="100%" height="100%" frameborder="0"></iframe>
-    </div>
-</div>
+        <div id="solar-page" class="page-content" style="display: none;">
+            <h2 class="terminal-title">МОНІТОРИНГ СОНЯЧНОЇ СИСТЕМИ</h2>
+            <div class="iframe-container" style="height: 600px; border: 1px solid #66fcf1;">
+                <iframe src="https://eyes.nasa.gov/apps/solar-system/#/home" width="100%" height="100%" frameborder="0"></iframe>
+            </div>
+        </div>
 
-<div id="exo-page" class="page-content" style="display: none;">
-    <h2 class="terminal-title">АРХІВ ЕКЗОПЛАНЕТ</h2>
-    <p>Доступ до бази даних кеплерових об'єктів...</p>
-</div>
+        <div id="exo-page" class="page-content" style="display: none;">
+            <h2 class="terminal-title">АРХІВ ЕКЗОПЛАНЕТ</h2>
+            <p>Доступ до бази даних кеплерових об'єктів...</p>
+        </div>
+
         <header class="header">
-    <a href="index.html" class="logo-link">
-        <h1>
-            <span class="glitch-word" data-text="ВІДКРИТИЙ">ВІДКРИТИЙ</span>
-            <span class="neon-word">КОСМОС</span>
-        </h1>
-    </a>
-</header>
+            <a href="index.html" class="logo-link">
+                <h1>
+                    <span class="glitch-word" data-text="ВІДКРИТИЙ">ВІДКРИТИЙ</span>
+                    <span class="neon-word">КОСМОС</span>
+                </h1>
+            </a>
+        </header>
                
         <div class="image-box">
             <img src="space-img.jpg" alt="Галактика" id="theme-image">
@@ -65,7 +427,7 @@
                 <li><a href="contact.html">Контакти</a></li>
             </ul>
         </nav>
-		
+        
         <main class="main-content">
             <section class="intro-section">
                 <h2>🛰️ ТЕХНІЧНИЙ МОНІТОРІНГ СИСТЕМ</h2>
@@ -140,63 +502,205 @@
                     </tbody>
                 </table>
             </div>
-			
-			<section class="radar-section">
-    <div class="radar-card">
-        <div class="radar-header">
-            <h3><i class="fas fa-satellite-dish"></i> СЕКТОР СПОСТЕРЕЖЕННЯ: X-2026</h3>
-            <span class="live-indicator">ACTIVE SCANNING</span>
+            
+            <section class="radar-section">
+            <div class="radar-section">
+  
+  <div class="radar-header">
+    <div class="radar-title">📡 СЕКТОР СПОСТЕРЕЖЕННЯ: X-2026</div>
+    <div class="radar-status">СТАТУС: <span class="scanning-blink">ACTIVE SCANNING</span></div>
+  </div>
+
+  <div class="radar-body">
+    
+    <div class="radar-display-container">
+      
+      <div class="radar-meta meta-left">
+        <div class="meta-item">
+          <span class="meta-label">ДІАПАЗОН:</span> 
+          <span id="radar-range-val" class="neon-text">500 AU</span>
         </div>
+        <div class="meta-item"><span class="meta-label">ПОТУЖНІСТЬ:</span> <span class="neon-text">98%</span></div>
+      </div>
+
+      <div class="radar-screen">
+        <div class="radar-circle c-1"></div>
+        <div class="radar-circle c-2"></div>
+        <div class="radar-circle c-3"></div>
+        <div class="radar-cross-x"></div>
+        <div class="radar-cross-y"></div>
         
-        <div class="radar-main">
-            <div class="radar-display">
-                <div class="radar-sweep"></div>
-                <div class="radar-circles"></div>
-                
-                <div class="satellite-point" id="earth-target" onclick="showInfo('EARTH-01', 'Земля (Base)', '0 km', '14.15 GHz', 'STABLE')"></div>
-				<div class="satellite-point" id="moon-target" onclick="showInfo('LUNA-02', 'Місяць', '384,400 km', '2.1 GHz', 'STABLE')"></div>
-				<div class="satellite-point" id="mars-target" onclick="showInfo('MARS-ORB', 'Марс-Орбітер', '225 млн км', '8.42 GHz', 'STABLE')"></div>
-				<div class="satellite-point" id="starlink-target" onclick="showInfo('SL-1024', 'Starlink-K1', '550 km', '12.5 GHz', 'ACTIVE')"></div>
-				<div class="satellite-point" id="cassini-target" onclick="showInfo('CSSN-09', 'Кассіні (Archive)', '1.4 млрд км', 'X-band', 'NO SIGNAL')"></div>
-				<div class="satellite-point" id="voyager-target" onclick="showInfo('VYGR-1', 'Вояджер-1', '24 млрд км', '2.29 GHz', 'WEAK')"></div>
-            </div>
+        <div class="radar-sweep-arm">
+          <div class="sweep-line"></div>
+          <div class="sweep-fade"></div>
+        </div>
 
-            <div class="info-panel" id="info-panel">
-                <div class="panel-glitch">DATA TERMINAL</div>
-                <div id="target-details">
-                    <p class="placeholder">Виберіть об'єкт на радарі для отримання даних...</p>
+        <div class="radar-targets-layer">
+          <div class="blip center-base"></div>
+          
+          <div class="blip target-red interactive-blip" 
+               data-x="-50" data-y="-60"
+               data-id="T-01" 
+               data-name="Астероїд T-01" 
+               data-type="Клас: М-металевий (Залізо/Нікель)" 
+               data-distance="Дистанція: 142 AU"
+               data-temp="Температура: -185°C"
+               data-mass="Маса: 4.2 × 10¹² кг"
+               data-atmosphere="Атмосфера: Відсутня"
+               data-hazard="CRITICAL DANGER">
+            <span class="blip-pulse-ring"></span>
+            <span class="blip-id">T-01</span>
+          </div>
+          
+          <div class="blip target-orange interactive-blip" 
+               data-x="-65" data-y="55"
+               data-id="T-02" 
+               data-name="Уламок станції T-02" 
+               data-type="Клас: Штучне космічне сміття" 
+               data-distance="Дистанція: 210 AU"
+               data-temp="Температура: -40°C"
+               data-mass="Маса: 180 тонн"
+               data-atmosphere="Атмосфера: Контейнерні гази"
+               data-hazard="NONE">
+            <span class="blip-pulse-ring"></span>
+            <span class="blip-id">T-02</span>
+          </div>
+          
+          <div class="blip target-white interactive-blip" 
+               data-x="70" data-y="-25"
+               data-id="T-03" 
+               data-name="Радіо-Аномалія T-03" 
+               data-type="Клас: Пульсуюче випромінювання" 
+               data-distance="Дистанція: 380 AU"
+               data-temp="Температура: Невизначено"
+               data-mass="Маса: Світлова сингулярність"
+               data-atmosphere="Атмосфера: Іонізуюче поле"
+               data-hazard="HIGH HAZARD">
+            <span class="blip-pulse-ring"></span>
+            <span class="blip-id">T-03</span>
+          </div>
+          
+          <div class="blip target-cyan interactive-blip" 
+               data-x="-20" data-y="10"
+               data-id="EXO-99" 
+               data-name="Екзопланета EXO-99" 
+               data-type="Клас: Суперземля (Карбонатна)" 
+               data-distance="Дистанція: 45 AU"
+               data-temp="Температура: +22°C"
+               data-mass="Маса: 1.4 Маси Землі"
+               data-atmosphere="Атмосфера: Кисень 24%, Азот"
+               data-hazard="HABITABLE ZONE">
+            <span class="blip-pulse-ring"></span>
+            <span class="blip-id">EXO-99</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="radar-meta meta-right">
+        <div class="meta-item"><span class="meta-label">СИГНАЛ:</span> <span class="neon-text">100%</span></div>
+        <div class="meta-item radar-controls">
+          <span class="meta-label">МАСШТАБ:</span>
+          <div class="btn-group">
+            <button class="radar-btn" id="radar-zoom-out">-</button>
+            <button class="radar-btn" id="radar-zoom-in">+</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="radar-terminal">
+      <div class="terminal-title">DATA TERMINAL</div>
+      <div class="terminal-content">
+        
+        <p class="terminal-guide" id="terminal-instruction">Виберіть об'єкт на екрані радара для дешифрування телеметрії...</p>
+        
+        <div class="object-info-panel" id="object-info" style="display: none;">
+          <div class="info-header">
+            <span class="info-title" id="obj-name">ОБ'ЄКТ: ---</span>
+            <span class="hazard-badge" id="obj-hazard">---</span>
+          </div>
+          <div class="info-grid">
+            <div class="info-row" id="obj-type">Клас: ---</div>
+            <div class="info-row" id="obj-distance">Дистанція: ---</div>
+            <div class="info-row" id="obj-temp">Температура: ---</div>
+            <div class="info-row" id="obj-mass">Маса: ---</div>
+            <div class="info-row" id="obj-atmosphere">Атмосфера: ---</div>
+          </div>
+        </div>
+
+        <div class="terminal-logs">
+          <div class="log-line"><span class="log-tag">[SYSTEM]:</span> Модуль сенсорів активовано. Сектор стабільний.</div>
+          <div class="log-line" id="latest-log"><span class="log-tag">[STATUS]:</span> Очікування імпульсу відповіді...</div>
+        </div>
+
+        <div class="terminal-footer">
+          <div class="signal-graph">
+            <div class="graph-bar" style="height: 40%; animation-duration: 0.6s;"></div>
+            <div class="graph-bar" style="height: 75%; animation-duration: 0.4s;"></div>
+            <div class="graph-bar" style="height: 25%; animation-duration: 0.8s;"></div>
+            <div class="graph-bar" style="height: 90%; animation-duration: 0.5s;"></div>
+            <div class="graph-bar" style="height: 55%; animation-duration: 0.7s;"></div>
+          </div>
+          
+          <button class="send-signal-btn" id="trigger-signal-pulse">ВІДПРАВИТИ СИГНАЛ</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="radar-modal-overlay" id="signal-modal">
+  <div class="radar-modal-window">
+    <div class="modal-cyber-lines"></div>
+    <div class="modal-header">
+      <div class="modal-title">🛰️ КВАНТОВИЙ ТРАНСМІТЕР ЦУП</div>
+      <button class="modal-close-btn" id="close-modal-btn">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="pulse-transmission-animation">
+        <div class="wave-ring wr-1"></div>
+        <div class="wave-ring wr-2"></div>
+        <div class="wave-ring wr-3"></div>
+        <div class="core-dot"></div>
+      </div>
+      
+      <div class="transmission-status-text" id="transmission-status-title">НАПРАВЛЕННЯ СИГНАЛУ В ГЛИБОКИЙ КОСМОС...</div>
+      
+      <div class="cyber-progress-container">
+        <div class="cyber-progress-bar" id="signal-progress"></div>
+      </div>
+
+      <div class="modal-live-logs" id="modal-log-box">
+        <div>[CONNECTING]: Пошук несучої частоти...</div>
+        <div>[ENCRYPT]: Шифрування пакету даних...</div>
+      </div>
+
+      <button class="modal-complete-btn" id="modal-complete-btn">ПІДТВЕРДИТИ ТА ЗАКРИТИ КАНАЛ</button>
+    </div>
+  </div>
+</div>
+            </section>
+
+            <section id="solar-system-view" class="fade-in-section" style="margin-top: 50px;">
+                <h2 style="color: #66fcf1; font-family: monospace; text-align: center;">СИСТЕМА МОНІТОРИНГУ СОНЯЧНОЇ СИСТЕМИ</h2>
+                <div style="width: 100%; height: 600px; border: 1px solid #66fcf1; border-radius: 10px; overflow: hidden; box-shadow: 0 0 20px rgba(102, 252, 241, 0.3);">
+                    <iframe src="https://eyes.nasa.gov/apps/solar-system/#/home" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>
                 </div>
-				
-            </div>
-        </div>
-    </div>
-</section>
+            </section>
 
-<section id="solar-system-view" class="fade-in-section" style="margin-top: 50px;">
-    <h2 style="color: #66fcf1; font-family: monospace; text-align: center;">СИСТЕМА МОНІТОРИНГУ СОНЯЧНОЇ СИСТЕМИ</h2>
-    <div style="width: 100%; height: 600px; border: 1px solid #66fcf1; border-radius: 10px; overflow: hidden; box-shadow: 0 0 20px rgba(102, 252, 241, 0.3);">
-        <iframe 
-            src="https://eyes.nasa.gov/apps/solar-system/#/home" 
-            width="100%" 
-            height="100%" 
-            frameborder="0" 
-            allowfullscreen>
-        </iframe>
-    </div>
-</section>
-
-<section class="log-section fade-in-section">
-    <div class="terminal-window">
-        <div class="terminal-header">
-            <span class="dot red"></span>
-            <span class="dot yellow"></span>
-            <span class="dot green"></span>
-            <span class="terminal-title">SYSTEM_LOG_STREAM: VOYAGER_LINK</span>
-        </div>
-        <div id="log-container" class="terminal-body">
-            </div>
-    </div>
-</section>
+            <section class="log-section fade-in-section">
+                <div class="terminal-window">
+                    <div class="terminal-header">
+                        <span class="dot red"></span>
+                        <span class="dot yellow"></span>
+                        <span class="dot green"></span>
+                        <span class="terminal-title">SYSTEM_LOG_STREAM: VOYAGER_LINK</span>
+                    </div>
+                    <div id="log-container" class="terminal-body"></div>
+                </div>
+            </section>
 
             <section class="details-section">
                 <h3>Дослідження космічного випромінювання</h3>
@@ -210,41 +714,210 @@
         </footer>
 
     </div>
-	
-	<div class="monitor-card fade-in-section">...</div>
-<div class="telemetry-table fade-in-section">...</div>
-<div class="radar-section fade-in-section">...</div>
+    
+    <div class="monitor-card fade-in-section"></div>
+    <div class="telemetry-table fade-in-section"></div>
+    <div class="radar-section fade-in-section"></div>
 
     <div id="imageModal" class="modal">
         <span class="close">&times;</span>
         <img class="modal-content" id="img01">
     </div>
 	
-	<div id="signal-modal" class="modal-overlay">
-    <div class="modal-window">
-        <div class="modal-header">
-            <span class="status-dot"></span>
-            <span class="title">SYSTEM TRANSMISSION</span>
-        </div>
-        <div class="modal-body">
-            <i class="fas fa-satellite-dish pulse-icon"></i>
-            <p id="signal-status-text">Ініціалізація зв'язку...</p>
-            <div class="mini-progress">
-                <div class="mini-bar"></div>
+    <div id="signal-modal" class="modal-overlay">
+        <div class="modal-window">
+            <div class="modal-header">
+                <span class="status-dot"></span>
+                <span class="title">SYSTEM TRANSMISSION</span>
+            </div>
+            <div class="modal-body">
+                <i class="fas fa-satellite-dish pulse-icon"></i>
+                <p id="signal-status-text">Ініціалізація зв'язку...</p>
+                <div class="mini-progress">
+                    <div class="mini-bar"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button onclick="closeSignalModal()" class="modal-btn">ПРИЙНЯТИ</button>
             </div>
         </div>
-        <div class="modal-footer">
-            <button onclick="closeSignalModal()" class="modal-btn">ПРИЙНЯТИ</button>
-        </div>
-    </div>
-</div>	
+    </div>	
+
+    <script>
+        window.onscroll = function() {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrolled = (winScroll / height) * 100;
+            document.getElementById("progress-bar").style.width = scrolled + "%";
+        };
+    </script>
+	
 <script>
-    window.onscroll = function() {
-        let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-        let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        let scrolled = (winScroll / height) * 100;
-        document.getElementById("progress-bar").style.width = scrolled + "%";
-    };
+  document.addEventListener("DOMContentLoaded", function () {
+    // Коефіцієнти масштабу динамічно адаптовані під мобільний радіус екрана
+    const isMobile = window.innerWidth <= 768;
+    const baseRadiusMod = isMobile ? 0.75 : 1.0;
+
+    const zoomLevels = [
+      { factor: 0.45 * baseRadiusMod, label: "1000 AU" },
+      { factor: 1.0 * baseRadiusMod,  label: "500 AU" },
+      { factor: 1.8 * baseRadiusMod,  label: "250 AU" }
+    ];
+    let currentZoomIndex = 1; 
+    
+    const blips = document.querySelectorAll(".interactive-blip");
+    const rangeDisplay = document.getElementById("radar-range-val");
+
+    function updateRadarScaling() {
+      const factor = zoomLevels[currentZoomIndex].factor;
+      rangeDisplay.textContent = zoomLevels[currentZoomIndex].label;
+      const maxLimit = isMobile ? 86 : 116; // Границя видимості кола
+
+      blips.forEach(blip => {
+        const bx = parseFloat(blip.getAttribute("data-x"));
+        const by = parseFloat(blip.getAttribute("data-y"));
+        
+        const finalX = bx * factor;
+        const finalY = by * factor;
+        const distanceFromCenter = Math.sqrt(finalX * finalX + finalY * finalY);
+        
+        if (distanceFromCenter > maxLimit) {
+          blip.style.opacity = "0";
+          blip.style.pointerEvents = "none";
+        } else {
+          blip.style.opacity = "1";
+          blip.style.pointerEvents = "auto";
+          blip.style.left = `calc(50% + ${finalX}px)`;
+          blip.style.top = `calc(50% + ${finalY}px)`;
+        }
+      });
+    }
+
+    document.getElementById("radar-zoom-in").addEventListener("click", function() {
+      if (currentZoomIndex < zoomLevels.length - 1) {
+        currentZoomIndex++;
+        updateRadarScaling();
+      }
+    });
+
+    document.getElementById("radar-zoom-out").addEventListener("click", function() {
+      if (currentZoomIndex > 0) {
+        currentZoomIndex--;
+        updateRadarScaling();
+      }
+    });
+
+    updateRadarScaling();
+
+    // --- ОБРОБКА ТАЧІВ / КЛІКІВ ---
+    const instruction = document.getElementById("terminal-instruction");
+    const infoPanel = document.getElementById("object-info");
+    const latestLog = document.getElementById("latest-log");
+    
+    const objName = document.getElementById("obj-name");
+    const objHazard = document.getElementById("obj-hazard");
+    const objType = document.getElementById("obj-type");
+    const objDistance = document.getElementById("obj-distance");
+    const objTemp = document.getElementById("obj-temp");
+    const objMass = document.getElementById("obj-mass");
+    const objAtmosphere = document.getElementById("obj-atmosphere");
+
+    function handleBlipActivation(elem) {
+      const id = elem.getAttribute("data-id");
+      const name = elem.getAttribute("data-name");
+      const type = elem.getAttribute("data-type");
+      const dist = elem.getAttribute("data-distance");
+      const temp = elem.getAttribute("data-temp");
+      const mass = elem.getAttribute("data-mass");
+      const atmos = elem.getAttribute("data-atmosphere");
+      const hazardText = elem.getAttribute("data-hazard");
+
+      instruction.style.display = "none";
+      infoPanel.style.display = "block";
+
+      objName.textContent = "🎯 " + name.toUpperCase();
+      objType.textContent = type;
+      objDistance.textContent = dist;
+      objTemp.textContent = temp;
+      objMass.textContent = mass;
+      objAtmosphere.textContent = atmos;
+      
+      objHazard.textContent = hazardText;
+      objHazard.className = "hazard-badge"; 
+      if (hazardText.includes("CRITICAL")) {
+        objHazard.classList.add("hazard-critical");
+      } else if (hazardText.includes("HIGH") || hazardText.includes("DANGER")) {
+        objHazard.classList.add("hazard-high");
+      } else {
+        objHazard.classList.add("hazard-safe");
+      }
+
+      latestLog.innerHTML = `<span class="log-tag">[DECODE]:</span> Сенсор активовано на ${id}. Передача телеметрії...`;
+      
+      // Скролимо вниз до терміналу на мобільних пристроях для зручності
+      if(isMobile) {
+        infoPanel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }
+    }
+
+    blips.forEach(blip => {
+      blip.addEventListener("click", function() { handleBlipActivation(this); });
+    });
+
+    // --- КВАНТОВИЙ СИГНАЛ ТА МOДАЛКА ---
+    const modal = document.getElementById("signal-modal");
+    const triggerBtn = document.getElementById("trigger-signal-pulse");
+    const closeCrossBtn = document.getElementById("close-modal-btn");
+    const modalCompleteBtn = document.getElementById("modal-complete-btn");
+    const progressBar = document.getElementById("signal-progress");
+    const modalLogBox = document.getElementById("modal-log-box");
+    const statusTitle = document.getElementById("transmission-status-title");
+
+    let progressInterval = null;
+
+    function closeModalWindow() {
+      modal.classList.remove("active");
+      clearInterval(progressInterval);
+    }
+
+    triggerBtn.addEventListener("click", function() {
+      modal.classList.add("active");
+      progressBar.style.width = "0%";
+      modalCompleteBtn.style.display = "none";
+      statusTitle.textContent = "СИНХРОНІЗАЦІЯ КВАНТОВОГО ПОКУ...";
+      statusTitle.style.color = "#00ffaa";
+
+      modalLogBox.innerHTML = `
+        <div>[CONNECTING]: З'єднання з супутником...</div>
+        <div>[ENCRYPT]: Генерація захищеного токена...</div>
+      `;
+
+      let progress = 0;
+      progressInterval = setInterval(() => {
+        progress += Math.floor(Math.random() * 10) + 5;
+        if (progress >= 100) {
+          progress = 100;
+          clearInterval(progressInterval);
+          
+          modalLogBox.innerHTML += `<div style="color: #00ffaa;">[SUCCESS]: Сигнал доставлено. Канал стабільний.</div>`;
+          statusTitle.textContent = "СЕАНС ЗВ'ЯЗКУ ЗАВЕРШЕНО";
+          modalCompleteBtn.style.display = "block";
+          
+          latestLog.innerHTML = `<span class="log-tag">[TRANSMIT]:</span> Надіслано широкомовний імпульс.`;
+        }
+        
+        progressBar.style.width = progress + "%";
+
+        if (progress > 35 && progress < 55 && !modalLogBox.innerHTML.includes("BROADCAST")) {
+          modalLogBox.innerHTML += `<div>[BROADCAST]: Надсилання пакету даних...</div>`;
+        }
+      }, 120);
+    });
+
+    closeCrossBtn.addEventListener("click", closeModalWindow);
+    modalCompleteBtn.addEventListener("click", closeModalWindow);
+    modal.addEventListener("click", function(e) { if (e.target === modal) closeModalWindow(); });
+  });
 </script>
     <script src="script.js"></script>
 </body>
